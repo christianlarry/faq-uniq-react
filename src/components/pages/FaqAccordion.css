@@ -1,0 +1,20 @@
+.accordion{
+  padding: 8px 15px;
+  border-radius: 10px;
+  border: 1.5px solid #9b9b9b;
+  overflow: hidden;
+}
+
+.accordion-label{
+  display: block;
+  cursor: pointer;
+}
+
+.accordion-content{
+  display: none;
+}
+
+.accordion.collapsed .accordion-content{
+  display: block;
+  margin-top: 10px;
+}
