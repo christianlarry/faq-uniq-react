@@ -1,0 +1,12 @@
+:root{
+  --bg-primary: #0E1117;
+  --bg-secondary: #000;
+  --gradient-red: #FF6A6A;
+  --gradient-yellow: #FFFD80;
+
+  --white: #fff;
+  --black: #000;
+
+  --font-primary: "sans-serif";
+  --font-secondary: "sans-serif";
+}

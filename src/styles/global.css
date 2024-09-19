@@ -1,0 +1,24 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul,li,a{
+  text-decoration: none;
+  list-style: none;
+}
+
+button{
+  background: none;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+body{
+  background-color: var(--bg-primary);
+  color: var(--white);
+}
