@@ -1,0 +1,12 @@
+.faq-header-action{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 80px;
+}
+
+@media only screen and (max-width:500px){
+  .faq-header-action{
+    gap: 40px;
+  }
+}

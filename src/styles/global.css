@@ -18,7 +18,16 @@ button{
   cursor: pointer;
 }
 
+img{
+  display: block;
+}
+
 body{
   background-color: var(--bg-primary);
   color: var(--white);
+}
+
+.container{
+  max-width: 1300px;
+  margin: 0 auto;
 }

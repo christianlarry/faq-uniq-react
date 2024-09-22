@@ -1,0 +1,21 @@
+.icon-btn{
+  background: none;
+  cursor: pointer;
+  transition: transform 0.1s;
+  width: 35px;
+}
+
+.icon-btn >:first-child{
+  display: block;
+  width: 100%;
+}
+
+.icon-btn:hover{
+  transform: scale(1.12);
+}
+
+@media only screen and (max-width: 600px){
+  .icon-btn{
+    width: 30px;
+  }
+}

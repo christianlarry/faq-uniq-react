@@ -1,13 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // PAGES
-import HomePage from "./components/pages/HomePage";
+import HomePage from "./components/pages/home/HomePage"
+
+// LAYOUT
+import MainLayout from "./components/templates/main-layout/MainLayout";
 
 const AppRouter = () => {
 	return (
 		<Router>
 			<Routes>
-				<Route index element={<HomePage/>}/>
+				<Route element={<MainLayout/>}>
+					<Route index element={<HomePage/>}/>
+				</Route>
 			</Routes>
 		</Router>
 	)
