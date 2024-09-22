@@ -2,12 +2,13 @@ import LogoUNIQ from "../../atoms/icon-logo/LogoUNIQ"
 import FaqActionButton from "../../molecules/FaqHeaderAction"
 import "./Header.css"
 
-const Header = ()=>{
-
-
-
+const Header = ({
+  className,
+  ...props
+}:React.HTMLAttributes<HTMLElement>)=>{
+  
   return (
-    <header className="page-header">
+    <header className={`page-header${className ? " "+className:""}`} {...props}>
       <div className="container page-header-wrapper">
         <div className="page-header-action-wrap">
           <FaqActionButton/>

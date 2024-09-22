@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./components/pages/home/HomePage"
 
 // LAYOUT
-import MainLayout from "./components/templates/main-layout/MainLayout";
+import MainLayout from "./components/templates/layout/MainLayout";
 
 const AppRouter = () => {
 	return (

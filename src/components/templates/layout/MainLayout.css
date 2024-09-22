@@ -1,0 +1,15 @@
+.page-header-box{
+  position: relative;
+  margin-bottom: 125px;
+  overflow: hidden;
+}
+
+.page-header-slide-wrap{
+  margin-top: -65px;
+  position: relative;
+  transition: margin-top 0.4s;
+}
+
+.page-header-box.show .page-header-slide-wrap{
+  margin-top: 0;
+}

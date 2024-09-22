@@ -9,9 +9,13 @@
   background: var(--gradient-red-t-yellow);
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
+  transition: border-radius 0.6s;
 
-  margin-bottom: 130px;
   padding: 15px 0;
+}
+
+.page-header.no-border{
+  border-radius: 0;
 }
 
 .page-header-wrapper{
