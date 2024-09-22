@@ -7,7 +7,9 @@ import "./IconButton.css"
 const IconButton = ({children,className,...props}:Props)=>{
   return (
     <button className={`icon-btn${className?" "+className:""}`} {...props}>
-      {children}
+      <i>
+        {children}
+      </i>
     </button>
   )
 }

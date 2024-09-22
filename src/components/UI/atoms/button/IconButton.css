@@ -5,7 +5,7 @@
   width: 35px;
 }
 
-.icon-btn >:first-child{
+.icon-btn > i >:first-child{
   display: block;
   width: 100%;
 }
