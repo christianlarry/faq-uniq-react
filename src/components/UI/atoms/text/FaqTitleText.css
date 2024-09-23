@@ -3,6 +3,7 @@
   font-weight: 300;
   font-style: italic;
   font-size: 48px;
+  text-align: center;
 }
 
 .faq-title-text span{
@@ -13,5 +14,11 @@
 @keyframes blinking{
   50% {
     opacity: 0;
+  }
+}
+
+@media only screen and (max-width:768px){
+  .faq-title-text{
+    font-size: 40px;
   }
 }

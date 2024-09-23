@@ -2,7 +2,8 @@ import FaqSearchInput from "../../atoms/input/FaqSearchInput"
 import FaqTitleText from "../../atoms/text/FaqTitleText"
 import "./FaqSearchBox.css"
 
-const FaqSearchBox = () => {
+const FaqSearchBox = () => {  
+
   return (
     <div className="faq-search-box">
       <FaqTitleText/>
