@@ -1,0 +1,17 @@
+.faq-title-text{
+  font-family: var(--font-secondary);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 48px;
+}
+
+.faq-title-text span{
+  color: var(--orange);
+  animation: blinking 1s infinite step-start;
+}
+
+@keyframes blinking{
+  50% {
+    opacity: 0;
+  }
+}

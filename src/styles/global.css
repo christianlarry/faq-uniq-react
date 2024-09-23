@@ -25,6 +25,7 @@ img{
 body{
   background-color: var(--bg-primary);
   color: var(--white);
+  font-family: var(--font-primary);
 }
 
 .container{

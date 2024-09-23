@@ -7,9 +7,8 @@
 
   --white: #fff;
   --black: #000;
+  --orange: #ff831d;
 
-  --font-primary: "sans-serif";
-  --font-secondary: "sans-serif";
-
-  
+  --font-primary: "Montserrat";
+  --font-secondary: "roboto";
 }

@@ -5,6 +5,8 @@ import "./MainLayout.css"
 import { useEffect, useRef, useState } from "react"
 import IconButton from "../../UI/atoms/button/IconButton"
 import { FaChevronUp } from "react-icons/fa6"
+import Sidebar from "../../UI/organisms/aside/Sidebar"
+import FaqSearchBox from "../../UI/organisms/faq-search-box/FaqSearchBox"
 
 interface Props {
   children?: React.ReactNode
@@ -51,7 +53,7 @@ const MainLayout = ({
 
   return (
     <div className="main-layout">
-      <div className="page-header-box">
+      <section className="page-header-box">
         <div ref={pageHeaderSlideWrapRef} className="page-header-slide-wrap">
           <Header className={!isShowHeader ? "no-border" : undefined} />
         </div>
@@ -59,19 +61,18 @@ const MainLayout = ({
         <IconButton className={`slide-down-btn${!isShowHeader? " collapse":""}`} onClick={() => setIsShowHeader(!isShowHeader)}>
           <FaChevronUp />
         </IconButton>
-      </div>
-      <div>
-        <aside>
-          <h2>Category</h2>
-          <ul>
-            <li>POS</li>
-            <li>CRM</li>
-          </ul>
-        </aside>
+      </section>
+
+      <section>
+        <FaqSearchBox/>
+      </section>
+
+      <section>
+        <Sidebar/>
         <main>
           {children || <Outlet />}
         </main>
-      </div>
+      </section>
     </div>
   )
 
