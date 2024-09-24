@@ -69,6 +69,7 @@ const MainLayout = ({
         </div>
       </section>
 
+      {/* ASIDE MAIN SECTION */}
       <section>
         <div className="container">
           <div className="sidebar-main-container">
@@ -81,6 +82,8 @@ const MainLayout = ({
           </div>
         </div>
       </section>
+
+      
     </div>
   )
 

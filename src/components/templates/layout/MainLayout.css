@@ -1,3 +1,7 @@
+.main-layout{
+  margin-bottom: 2rem;
+}
+
 .page-header-box{
   position: relative;
   margin-bottom: 125px;
@@ -10,7 +14,7 @@
 
 .page-header-slide-wrap{
   position: relative;
-  transition: margin-top 0.4s;
+  transition: margin-top var(--transition);
   width: 100%;
 }
 
@@ -18,7 +22,7 @@
   font-size: 20px;
   color: rgba(255, 255, 255, 0.7);
   margin-top: 15px;
-  transition: 0.4s;
+  transition: var(--transition);
 }
 
 .slide-down-btn.collapse{
