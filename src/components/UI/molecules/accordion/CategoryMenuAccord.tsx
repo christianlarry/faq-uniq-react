@@ -27,9 +27,11 @@ const CategoryMenuAccord = ({categoryName,subCategoryLists}:Props) => {
   return (
     <GradientBox>
       <div className={`cat-accordion${isShow?" show":""}`}>
-        <label className="cat-accordion-label" onClick={handleAccordionLabelClick}>
-          <span>{categoryName}</span>
-          <FaChevronDown className="cat-accordion-chevron"/>
+        <label className="cat-accordion-label">
+          <Link to="/" className="cat-label-link">{categoryName}</Link>
+          <i className="cat-accordion-chevron" onClick={handleAccordionLabelClick}>
+            <FaChevronDown/>
+          </i>
         </label>
         <div className="cat-accordion-content">
           <ul className="sub-cat-lists">
