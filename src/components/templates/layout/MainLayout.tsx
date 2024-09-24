@@ -64,14 +64,22 @@ const MainLayout = ({
       </section>
 
       <section>
-        <FaqSearchBox/>
+        <div className="container">
+          <FaqSearchBox/>
+        </div>
       </section>
 
       <section>
-        <Sidebar/>
-        <main>
-          {children || <Outlet />}
-        </main>
+        <div className="container">
+          <div className="sidebar-main-container">
+            <aside className="sidebar-container">
+              <Sidebar/>
+            </aside>
+            <main className="main-container">
+              {children || <Outlet />}
+            </main>
+          </div>
+        </div>
       </section>
     </div>
   )

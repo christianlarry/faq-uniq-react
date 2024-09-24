@@ -1,0 +1,15 @@
+.category-menu-title{
+  font-weight: 400;
+  font-size: 35px;
+  margin-bottom: 20px;
+}
+
+.category-menu-lists{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.category-menu-lists > div{
+  padding: 15px;
+}

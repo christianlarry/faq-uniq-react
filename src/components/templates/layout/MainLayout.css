@@ -25,3 +25,17 @@
   transform: rotate(-180deg);
   transform-origin: center;
 }
+
+/* SIDEBAR & MAIN */
+.sidebar-main-container{
+  display: flex;
+  gap: 50px;
+}
+
+.sidebar-container{
+  flex: 1;
+}
+
+.main-container{
+  flex: 3;
+}

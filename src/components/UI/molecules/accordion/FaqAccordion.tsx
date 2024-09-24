@@ -1,9 +1,9 @@
 import { useState } from "react"
 import ReactMarkdown from "react-markdown"
 
-import "./Accordion.css"
+import "./FaqAccordion.css"
 
-const Accordion = (data:{title:string,answer:string}) => {
+const FaqAccordion = (data:{title:string,answer:string}) => {
 
   const [isCollapse,setIsCollapse] = useState<boolean>(false)
 
@@ -25,4 +25,4 @@ const Accordion = (data:{title:string,answer:string}) => {
   )
 }
 
-export default Accordion
+export default FaqAccordion
