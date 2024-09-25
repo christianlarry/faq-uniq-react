@@ -1,6 +1,12 @@
 .faq-accordion-label{
   display: flex;
   gap: 5px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-accordion-label-left{
+  display: flex;
 }
 
 .faq-accordion-title{
@@ -12,6 +18,7 @@
   text-overflow: ellipsis;
 
   transition: var(--transition);
+  display: block;
 }
 
 .faq-accordion-label:hover .faq-accordion-title, .accordion-container.show .faq-accordion-title{
@@ -21,9 +28,27 @@
 .faq-accordion-chevron{
   padding: 12px 16px;
   transition: var(--transition);
+  display: block;
 }
 
 .accordion-container.show .faq-accordion-chevron{
   transform: rotate(-180deg);
   transform-origin: center;
+}
+
+.faq-admin-action-wrap{
+  display: none;
+}
+
+.accordion-container.show .faq-admin-action-wrap{
+  display: block;
+}
+
+.faq-accordion-content{
+  padding-top: 10px;
+}
+
+.faq-accordion-content li, .faq-accordion-content ul{
+  list-style-type: inherit;
+  list-style-position: inside;
 }

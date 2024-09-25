@@ -5,21 +5,36 @@ import AccordionLabel from "../../atoms/accordion/AccordionLabel"
 
 import "./FaqAccordion.css"
 import AccordionContent from "../../atoms/accordion/AccordionContent"
+import AdminActionMenu from "../button-group/AdminActionMenu"
 
-const FaqAccordion = () => {
+interface Props{
+  title:string,
+  answer:string
+}
+
+const FaqAccordion = ({title,answer}:Props) => {
+
+  // LOGIC TO CHECK IF USER IS ADMIN
+  const isUserAdmin = true
 
   return (
     <GradientBox>
       <AccordionContainer>
         <AccordionLabel className="faq-accordion-label">
-          <i className="faq-accordion-chevron">
-            <FaChevronDown />
-          </i>
-          <span className="faq-accordion-title">Lorem ipsum dolor sit, amet consectetur adipisicing elit?</span>
+          <div className="faq-accordion-label-left">
+            <i className="faq-accordion-chevron">
+              <FaChevronDown />
+            </i>
+            <span className="faq-accordion-title">{title}</span>
+          </div>
+          {isUserAdmin && <div className="faq-admin-action-wrap"><AdminActionMenu/></div>}
         </AccordionLabel>
         <AccordionContent>
           <div className="faq-accordion-content">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident officiis, perspiciatis, harum atque rem sit cumque veritatis minus eius natus possimus repellendus, temporibus rerum? Quam corporis cumque accusamus inventore omnis?
+            <h3 style={{marginBottom: "1rem"}}><b>Jawaban pertanyaan:  </b></h3>
+            <div className="faq-accordion-content-answer">
+              <div dangerouslySetInnerHTML={{__html: answer}}/>
+            </div>
           </div>
         </AccordionContent>
       </AccordionContainer>
