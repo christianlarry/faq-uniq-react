@@ -1,4 +1,4 @@
-import Accordion from "../../UI/molecules/accordion/Accordion"
+import FaqAccordion from "../../UI/molecules/accordion/FaqAccordion"
 import "./HomePage.css"
 
 const HomePage = ()=>{
@@ -6,8 +6,8 @@ const HomePage = ()=>{
   return (
     <div>
       <div className="faq-question-lists">
-        <Accordion/>
-        <Accordion/>  
+        <FaqAccordion/>
+        <FaqAccordion/>  
       </div>
     </div>
   )

@@ -1,0 +1,15 @@
+.accordion-content{
+  padding: 0 16px;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: 0.4s;
+}
+
+.accordion-content-wrap{
+  overflow: hidden;
+}
+
+.accordion-container.show .accordion-content{
+  grid-template-rows: 1fr;
+  padding-bottom: 12px;
+}

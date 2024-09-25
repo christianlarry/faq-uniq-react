@@ -1,0 +1,29 @@
+.faq-accordion-label{
+  display: flex;
+  gap: 5px;
+}
+
+.faq-accordion-title{
+  color: var(--white);
+  padding: 12px 16px;
+  padding-left: 0;
+  
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+
+  transition: var(--transition);
+}
+
+.faq-accordion-label:hover .faq-accordion-title, .accordion-container.show .faq-accordion-title{
+  transform: translateX(5px);
+}
+
+.faq-accordion-chevron{
+  padding: 12px 16px;
+  transition: var(--transition);
+}
+
+.accordion-container.show .faq-accordion-chevron{
+  transform: rotate(-180deg);
+  transform-origin: center;
+}
