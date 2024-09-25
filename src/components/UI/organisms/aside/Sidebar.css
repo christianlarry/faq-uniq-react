@@ -1,7 +1,13 @@
 .category-menu-title{
   font-weight: 400;
-  font-size: 35px;
+  font-size: 32px;
   margin-bottom: 20px;
+}
+
+@media only screen and (max-width:768px){
+  .category-menu-title{
+    font-size: 26px;
+  }
 }
 
 .category-menu-lists{

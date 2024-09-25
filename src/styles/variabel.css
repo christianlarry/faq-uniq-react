@@ -8,6 +8,9 @@
   --white: #fff;
   --black: #000;
   --orange: #ff831d;
+  --red: #FF6A6A;
+  --yellow: #FFFD80;
+  --yellow-05: rgba(255, 253, 128, 0.3);
 
   --font-primary: "Montserrat";
   --font-secondary: "roboto";
