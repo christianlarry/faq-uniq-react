@@ -7,7 +7,7 @@ import './styles/variabel.css'
 function App() {
 
   return (
-    <AppRouter/>
+    <AppRouter/> 
   )
 }
 
