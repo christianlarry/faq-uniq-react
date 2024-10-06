@@ -68,9 +68,9 @@
   transition: var(--transition);
   font-size: 1rem;
 
-  overflow-x: hidden;
+  /* overflow-x: hidden;
   text-wrap: nowrap;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; */
 
   text-align: end;
 }

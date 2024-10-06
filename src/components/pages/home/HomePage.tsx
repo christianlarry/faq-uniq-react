@@ -7,7 +7,9 @@ import { FaqModel } from "../../../interfaces/faqInterfaces"
 import { useLocation } from "react-router-dom"
 
 const HomePage = ()=>{
-
+  
+  // STATE
+  const [allFaq,setAllFaq] = useState<FaqModel[]>()
   const [faq,setFaq] = useState<FaqModel[]>()
 
   const getFaq = async ()=>{
