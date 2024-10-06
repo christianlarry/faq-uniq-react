@@ -5,3 +5,9 @@ export interface FaqModel{
   questions:string[],
   answer:string
 }
+
+export interface FaqCategoryModel{
+  _id:string,
+  name:string,
+  faqs:string[]
+}

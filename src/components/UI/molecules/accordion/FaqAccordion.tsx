@@ -7,6 +7,8 @@ import "./FaqAccordion.css"
 import AccordionContent from "../../atoms/accordion/AccordionContent"
 import AdminActionMenu from "../button-group/AdminActionMenu"
 
+import ReactMarkdown from "react-markdown"
+
 interface Props{
   title:string,
   answer:string
@@ -33,7 +35,8 @@ const FaqAccordion = ({title,answer}:Props) => {
           <div className="faq-accordion-content">
             <h3 style={{marginBottom: "1rem"}}><b>Jawaban pertanyaan:  </b></h3>
             <div className="faq-accordion-content-answer">
-              <div dangerouslySetInnerHTML={{__html: answer}}/>
+              {/* <div dangerouslySetInnerHTML={{__html: answer}}/> */}
+              <ReactMarkdown>{answer}</ReactMarkdown>
             </div>
           </div>
         </AccordionContent>

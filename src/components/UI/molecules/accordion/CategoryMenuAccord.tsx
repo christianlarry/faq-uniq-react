@@ -4,16 +4,11 @@ import "./CategoryMenuAccord.css"
 import GradientBox from "../../atoms/box/GradientBox"
 import { FaChevronDown } from "react-icons/fa6"
 import { Link } from "react-router-dom"
-
-
-interface SubCategoryListInterface{
-  name:string,
-  url:string
-}
+import { FaqCategoryModel } from "../../../../interfaces/faqInterfaces"
 
 interface Props{
   categoryName:string,
-  subCategoryLists:SubCategoryListInterface[]
+  subCategoryLists:FaqCategoryModel[]
 }
 
 const CategoryMenuAccord = ({categoryName,subCategoryLists}:Props) => {
@@ -35,9 +30,9 @@ const CategoryMenuAccord = ({categoryName,subCategoryLists}:Props) => {
         </label>
         <div className="cat-accordion-content">
           <ul className="sub-cat-lists">
-            {subCategoryLists.map(sub=>(
-              <li key={sub.name}>
-                <Link to={sub.url} className="sub-cat-lists-link">{sub.name}</Link>
+            {subCategoryLists.map((sub,i)=>(
+              <li key={i}>
+                <Link to={`?category=${sub._id}`} className="sub-cat-lists-link" title={sub.name}>{sub.name}</Link>
               </li>
             ))}
           </ul>

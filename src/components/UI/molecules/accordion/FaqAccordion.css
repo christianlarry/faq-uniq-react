@@ -52,10 +52,16 @@
 
 .faq-accordion-content li, .faq-accordion-content ul{
   list-style-type: inherit;
-  list-style-position: inside;
+  list-style-position: outside;
 }
 
 .faq-accordion-content img{
   width: 100%;
   display: block;
+}
+
+.faq-accordion-content-answer *{
+  margin: revert;
+  padding: revert;
+  list-style-position: inside;
 }
