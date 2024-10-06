@@ -15,7 +15,7 @@ interface Props{
 const FaqAccordion = ({title,answer}:Props) => {
 
   // LOGIC TO CHECK IF USER IS ADMIN
-  const isUserAdmin = true
+  const isAdmin = true
 
   return (
     <GradientBox>
@@ -27,7 +27,7 @@ const FaqAccordion = ({title,answer}:Props) => {
             </i>
             <span className="faq-accordion-title">{title}</span>
           </div>
-          {isUserAdmin && <div className="faq-admin-action-wrap"><AdminActionMenu/></div>}
+          {isAdmin && <div className="faq-admin-action-wrap"><AdminActionMenu/></div>}
         </AccordionLabel>
         <AccordionContent>
           <div className="faq-accordion-content">

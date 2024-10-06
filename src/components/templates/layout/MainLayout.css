@@ -43,3 +43,9 @@
 .main-container{
   flex: 3;
 }
+
+@media only screen and (max-width:1000px){
+  .sidebar-main-container{
+    flex-direction: column;
+  }
+}

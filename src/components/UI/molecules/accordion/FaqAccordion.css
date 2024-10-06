@@ -3,6 +3,7 @@
   gap: 5px;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .faq-accordion-label-left{
@@ -14,9 +15,9 @@
   padding: 12px 16px;
   padding-left: 0;
 
-  text-wrap: nowrap;
+  /* text-wrap: nowrap;
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow: hidden; */
 
   transition: var(--transition);
   display: block;
@@ -52,4 +53,9 @@
 .faq-accordion-content li, .faq-accordion-content ul{
   list-style-type: inherit;
   list-style-position: inside;
+}
+
+.faq-accordion-content img{
+  width: 100%;
+  display: block;
 }

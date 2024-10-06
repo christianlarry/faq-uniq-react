@@ -1,4 +1,5 @@
 import FaqAccordion from "../../UI/molecules/accordion/FaqAccordion"
+import Modal from "../../UI/organisms/modal/Modal"
 import "./HomePage.css"
 
 const HomePage = ()=>{
@@ -29,12 +30,12 @@ const HomePage = ()=>{
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, qui perspiciatis. Temporibus totam a aut incidunt esse, necessitatibus, minima numquam recusandae magni ipsum libero, dolorum nobis illum suscipit ex unde?</p>`
 
   return (
-    <div>
-      <div className="faq-question-lists">
+    <>
+      <section className="faq-question-lists">
         <FaqAccordion title="Pertanyaan apakah ini?" answer={answer}/>
         <FaqAccordion title="Pertanyaan apakah ini?" answer={answer}/>
-      </div>
-    </div>
+      </section>
+    </>
   )
 }
 
