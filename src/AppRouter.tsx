@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 // PAGES
 import HomePage from "./components/pages/home/HomePage"
@@ -11,7 +11,8 @@ const AppRouter = () => {
 		<Router>
 			<Routes>
 				<Route element={<MainLayout/>}>
-					<Route index element={<HomePage/>}/>
+					<Route index element={<Navigate to={"/faq"}/>}/>
+					<Route path="faq" element={<HomePage/>}/>
 				</Route>
 			</Routes>
 		</Router>

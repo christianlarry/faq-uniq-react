@@ -7,9 +7,7 @@ import { FaqModel } from "../../../interfaces/faqInterfaces"
 import { useLocation } from "react-router-dom"
 
 const HomePage = ()=>{
-  
-  // STATE
-  const [allFaq,setAllFaq] = useState<FaqModel[]>()
+
   const [faq,setFaq] = useState<FaqModel[]>()
 
   const getFaq = async ()=>{
@@ -26,12 +24,25 @@ const HomePage = ()=>{
     setFaq(data.data)
   }
 
+  const searchFaq = async(search:string)=>{
+    const result = await axios.get(`http://localhost:3000/api/v1/faq?search=${search}`)
+    const data = result.data
+
+    setFaq(data.data)
+  }
+
   // LOCATION
   const location = useLocation()
 
   useEffect(()=>{
     const searchParams = new URLSearchParams(location.search)
     const category = searchParams.get("category")
+    const search = searchParams.get("search")
+
+    if(search){
+      searchFaq(search)
+      return
+    }
 
     if(category){
       getFaqByCategoryId(category)
