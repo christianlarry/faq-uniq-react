@@ -1,9 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import "./CategoryMenuAccord.css"
 import GradientBox from "../../atoms/box/GradientBox"
 import { FaChevronDown } from "react-icons/fa6"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { FaqCategoryModel } from "../../../../interfaces/faqInterfaces"
 
 interface Props{
@@ -14,10 +14,26 @@ interface Props{
 const CategoryMenuAccord = ({categoryName,subCategoryLists}:Props) => {
 
   const [isShow,setIsShow] = useState<boolean>(false)
+  const [categoryQuery,setCategoryQuery] = useState<string>()
 
   const handleAccordionLabelClick = ()=>{
     setIsShow(!isShow)
   }
+
+  // LOCATION GET CATEGORY PARAMS
+  const location = useLocation()
+  useEffect(()=>{
+    const queryParams = new URLSearchParams(location.search)
+    const category = queryParams.get("category")
+
+    if(category){
+      setIsShow(true)
+      setCategoryQuery(category)
+    }else{
+      setIsShow(false)
+      setCategoryQuery(undefined)
+    }
+  },[location])
 
   return (
     <GradientBox>
@@ -32,7 +48,7 @@ const CategoryMenuAccord = ({categoryName,subCategoryLists}:Props) => {
           <ul className="sub-cat-lists">
             {subCategoryLists.map((sub,i)=>(
               <li key={i}>
-                <Link to={`?category=${sub._id}`} className="sub-cat-lists-link" title={sub.name}>{sub.name}</Link>
+                <Link to={`?category=${sub._id}`} className={`sub-cat-lists-link ${sub._id == categoryQuery?"active":""}`} title={sub.name}>{sub.name}</Link>
               </li>
             ))}
           </ul>

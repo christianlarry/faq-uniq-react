@@ -76,6 +76,6 @@
 }
 
 .sub-cat-lists-link:hover, .sub-cat-lists-link.active{
-  transform: translateX(-5px);
-  color: rgba(255,255,255,0.8);
+  transform: translateX(-10px);
+  color: rgba(255,255,255,0.6);
 }

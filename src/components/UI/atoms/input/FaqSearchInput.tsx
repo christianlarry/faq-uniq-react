@@ -7,6 +7,7 @@ const Input = () => {
 
   // STATE
   const [inputValue,setInputValue] = useState<string>("") 
+  const [page,setPage] = useState()
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -26,6 +27,7 @@ const Input = () => {
       if(inputValue){
         navigate(`?search=${inputValue}`)
       }else{
+        // ! PR, IF PAGE IS INDEX THEN DO NOT RUN THIS CODE
         navigate("/")
       }
     }
@@ -33,6 +35,9 @@ const Input = () => {
 
   const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
     setInputValue(e.currentTarget.value)
+    
+    // ! PR, IF PAGE IS INDEX THEN DO NOT RUN THIS CODE
+    if(e.currentTarget.value === "") navigate("/")
   }
 
   // GET SEARCH VALUE IF IT WAS
