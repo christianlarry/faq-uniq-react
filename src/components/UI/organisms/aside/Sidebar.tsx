@@ -1,6 +1,7 @@
 import CategoryMenuAccord from "../../molecules/accordion/CategoryMenuAccord"
 import "./Sidebar.css"
 import { getFaqCategory } from "../../../../api/api"
+import FetchLoader from "../../atoms/loader/FetchLoader"
 
 
 const Sidebar = (props: React.HTMLAttributes<HTMLElement>) => {
@@ -10,7 +11,14 @@ const Sidebar = (props: React.HTMLAttributes<HTMLElement>) => {
   return (
     <div {...props}>
       
-      <h2 className="category-menu-title">Categories</h2>
+      <div className="section-title">
+        <h2>Categories</h2>
+      </div>
+
+      {categoryResult.isLoading &&
+        <FetchLoader message="Loading"/>
+      }
+
       {categoryResult.data &&
         <div className="category-menu-lists">
           {categoryResult.data.data.map((category,idx)=>(

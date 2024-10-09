@@ -3,3 +3,27 @@
   flex-direction: column;
   gap: 20px;
 }
+
+.faq-section-title{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.faq-section-title h2{
+  margin-right: 5px;
+}
+
+.button-text{
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--white);
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  border-radius: 12px;
+  padding: 5px 10px;
+}
+
+.button-text:hover{
+  background-color: rgba(255, 255, 255, 0.3);
+}

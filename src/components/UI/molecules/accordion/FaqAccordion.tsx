@@ -33,7 +33,7 @@ const FaqAccordion = ({title,answer}:Props) => {
         </AccordionLabel>
         <AccordionContent>
           <div className="faq-accordion-content">
-            <h3 style={{marginBottom: "1rem"}}><b>Jawaban pertanyaan:  </b></h3>
+            <h5 style={{marginBottom: "1rem"}}><b>Jawaban pertanyaan:  </b></h5>
             <div className="faq-accordion-content-answer">
               {/* <div dangerouslySetInnerHTML={{__html: answer}}/> */}
               <ReactMarkdown>{answer}</ReactMarkdown>
