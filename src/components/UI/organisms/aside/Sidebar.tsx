@@ -1,50 +1,28 @@
-import { useEffect, useState } from "react"
 import CategoryMenuAccord from "../../molecules/accordion/CategoryMenuAccord"
 import "./Sidebar.css"
-import { FaqCategoryModel } from "../../../../interfaces/faqInterfaces"
-import axios from "axios"
+import { getFaqCategory } from "../../../../api/api"
+import { useEffect } from "react"
 
-// DUMMY DATA - FEEL FREE TO DELETE
-const subCategory = [
-  {
-    name: "Pembayaran Layanan",
-    url:"/"
-  },
-  {
-    name: "Apakah blabla",
-    url:"/"
-  },
-  {
-    name: "Pembayaran pelanggan",
-    url:"/"
-  },
-]
-// DELETE UNTIL THIS LINE
 
 const Sidebar = (props: React.HTMLAttributes<HTMLElement>) => {
 
-  const [category,setCategory] = useState<FaqCategoryModel[]>()
-
-  const getCategory = async ()=>{
-    const result = await axios.get("http://localhost:3000/api/v1/faq-category")
-    const data = result.data
-
-    setCategory(data.data)
-  }
-
-  useEffect(()=>{
-    getCategory()
-  },[])
+  const categoryResult = getFaqCategory()
 
   return (
     <div {...props}>
       
       <h2 className="category-menu-title">Categories</h2>
-      <div className="category-menu-lists">
-        {category &&
-        <CategoryMenuAccord categoryName="POS & CRM" subCategoryLists={category}/>
-        }
-      </div>
+      {categoryResult.data &&
+        <div className="category-menu-lists">
+          {categoryResult.data.data.map((category,idx)=>(
+            <CategoryMenuAccord key={idx} category={category}/>
+          ))}
+        </div>
+      }
+      
+      {categoryResult.error &&
+        <h2>Some error happen berodih</h2>
+      }
     </div>
   )
 }

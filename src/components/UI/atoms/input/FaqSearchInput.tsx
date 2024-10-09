@@ -6,16 +6,22 @@ import { useLocation, useNavigate } from "react-router-dom"
 const Input = () => {
 
   // STATE
-  const [inputValue,setInputValue] = useState<string>("") 
-  const [page,setPage] = useState()
+  const [inputValue,setInputValue] = useState<string>("")
 
   const inputRef = useRef<HTMLInputElement>(null)
 
   const navigate = useNavigate()
 
+  // FOCUS ON INPUT WHEN SEARCH ICON CLICK
   const handleSearchIconClick = ()=>{
     if(inputRef.current){
       inputRef.current.focus()
+    }
+  }
+
+  const navigateToHome = ()=>{
+    if(location.search){
+      navigate("/")
     }
   }
 
@@ -27,8 +33,7 @@ const Input = () => {
       if(inputValue){
         navigate(`?search=${inputValue}`)
       }else{
-        // ! PR, IF PAGE IS INDEX THEN DO NOT RUN THIS CODE
-        navigate("/")
+        navigateToHome()
       }
     }
   }
@@ -36,8 +41,7 @@ const Input = () => {
   const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
     setInputValue(e.currentTarget.value)
     
-    // ! PR, IF PAGE IS INDEX THEN DO NOT RUN THIS CODE
-    if(e.currentTarget.value === "") navigate("/")
+    if(e.currentTarget.value === "") navigateToHome()
   }
 
   // GET SEARCH VALUE IF IT WAS
@@ -56,9 +60,7 @@ const Input = () => {
       <FaSearch className="search-icon" onClick={handleSearchIconClick}/>
       <input ref={inputRef} className="faq-uniq-input" onKeyDown={handleOnKeydown} type="search" placeholder="Got any questions?" value={inputValue} onChange={handleInputChange}/>
     </div>
-
   )
-
 }
 
 export default Input

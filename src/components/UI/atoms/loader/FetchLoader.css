@@ -1,0 +1,40 @@
+.data-loader{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+.data-loader-gif{
+  display: block;
+  margin-bottom: -20px;
+  width: 65px;
+}
+
+.data-loader-message{
+  font-size: 15px;
+  display: block;
+  margin-top: 5px;
+}
+
+@media only screen and (max-width:800px){
+  .data-loader-img{
+    width: 60px;
+  }
+
+  .data-loader-message{
+    font-size: 15px;
+  }
+}
+
+@media only screen and (max-width:500px){
+  .data-loader-img{
+    width: 40px;
+    margin-bottom: -10px;
+  }
+
+  .data-loader-message{
+    font-size: 12px;
+  }
+}

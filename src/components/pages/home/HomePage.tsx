@@ -1,35 +1,18 @@
-import { useEffect, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import FaqAccordion from "../../UI/molecules/accordion/FaqAccordion"
 import "./HomePage.css"
 
-import axios from "axios"
-import { FaqModel } from "../../../interfaces/faqInterfaces"
 import { useLocation } from "react-router-dom"
+import { getFaq } from "../../../api/api"
+import FetchLoader from "../../UI/atoms/loader/FetchLoader"
 
 const HomePage = ()=>{
 
-  const [faq,setFaq] = useState<FaqModel[]>()
+  // STATE
+  const [faqApiQuery,setFaqApiQuery] = useState<string>("")
 
-  const getFaq = async ()=>{
-    const result = await axios.get("http://localhost:3000/api/v1/faq")
-    const data = result.data
-
-    setFaq(data.data)
-  }
-
-  const getFaqByCategoryId = async (id:string)=>{
-    const result = await axios.get(`http://localhost:3000/api/v1/faq?category=${id}`)
-    const data = result.data
-
-    setFaq(data.data)
-  }
-
-  const searchFaq = async(search:string)=>{
-    const result = await axios.get(`http://localhost:3000/api/v1/faq?search=${search}`)
-    const data = result.data
-
-    setFaq(data.data)
-  }
+  // SWR
+  const faqResult = getFaq(faqApiQuery)
 
   // LOCATION
   const location = useLocation()
@@ -37,17 +20,19 @@ const HomePage = ()=>{
   useEffect(()=>{
     const searchParams = new URLSearchParams(location.search)
     const category = searchParams.get("category")
+    const subCategory = searchParams.get("sub_category")
     const search = searchParams.get("search")
 
     if(search){
-      searchFaq(search)
+      setFaqApiQuery(`search=${search}`)
       return
     }
-
     if(category){
-      getFaqByCategoryId(category)
+      setFaqApiQuery(`category=${category}`)
+    }else if(subCategory){
+      setFaqApiQuery(`sub_category=${subCategory}`)
     }else{
-      getFaq()
+      setFaqApiQuery("")
     }
 
   },[location])
@@ -55,13 +40,22 @@ const HomePage = ()=>{
   return (
     <>
       <section className="faq-question-lists">
-        {faq && faq.map((val,i)=>(
-          <div key={i}>
-          {val &&
-            <FaqAccordion title={val.title} answer={val.answer}/>
-          }
-          </div>
+        {(faqResult.isLoading) &&
+          <FetchLoader message="Loading"/>
+        }
+
+        {faqResult.data && faqResult.data.data.map((faq,i)=>(
+          <Fragment key={i}>
+            {faq !== null &&
+              <FaqAccordion title={faq.title} answer={faq.answer}/>
+            }
+          </Fragment>
         ))}
+
+        {faqResult.error &&
+          <h1>Some error happen bro</h1>
+        }
+
       </section>
     </>
   )

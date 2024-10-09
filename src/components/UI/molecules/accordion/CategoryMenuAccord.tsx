@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 
 import "./CategoryMenuAccord.css"
 import GradientBox from "../../atoms/box/GradientBox"
@@ -7,14 +7,13 @@ import { Link, useLocation } from "react-router-dom"
 import { FaqCategoryModel } from "../../../../interfaces/faqInterfaces"
 
 interface Props{
-  categoryName:string,
-  subCategoryLists:FaqCategoryModel[]
+  category:FaqCategoryModel
 }
 
-const CategoryMenuAccord = ({categoryName,subCategoryLists}:Props) => {
+const CategoryMenuAccord = ({category}:Props) => {
 
   const [isShow,setIsShow] = useState<boolean>(false)
-  const [categoryQuery,setCategoryQuery] = useState<string>()
+  const [subCategoryQuery,setSubCategoryQuery] = useState<string>()
 
   const handleAccordionLabelClick = ()=>{
     setIsShow(!isShow)
@@ -24,14 +23,12 @@ const CategoryMenuAccord = ({categoryName,subCategoryLists}:Props) => {
   const location = useLocation()
   useEffect(()=>{
     const queryParams = new URLSearchParams(location.search)
-    const category = queryParams.get("category")
+    const categoryParam = queryParams.get("category")
 
-    if(category){
+    if(categoryParam && categoryParam == category._id){
       setIsShow(true)
-      setCategoryQuery(category)
     }else{
       setIsShow(false)
-      setCategoryQuery(undefined)
     }
   },[location])
 
@@ -39,17 +36,21 @@ const CategoryMenuAccord = ({categoryName,subCategoryLists}:Props) => {
     <GradientBox>
       <div className={`cat-accordion${isShow?" show":""}`}>
         <label className="cat-accordion-label">
-          <Link to="/" className="cat-label-link">{categoryName}</Link>
+          <Link to={`?category=${category._id}`} className="cat-label-link">{category.name}</Link>
           <i className="cat-accordion-chevron" onClick={handleAccordionLabelClick}>
             <FaChevronDown/>
           </i>
         </label>
         <div className="cat-accordion-content">
           <ul className="sub-cat-lists">
-            {subCategoryLists.map((sub,i)=>(
-              <li key={i}>
-                <Link to={`?category=${sub._id}`} className={`sub-cat-lists-link ${sub._id == categoryQuery?"active":""}`} title={sub.name}>{sub.name}</Link>
-              </li>
+            {category.sub_category.map((sub,i)=>(
+              <Fragment key={i}>
+                {sub != null && (
+                  <li key={i}>
+                    <Link to={`?sub_category=${sub._id}`} className={`sub-cat-lists-link ${sub._id == subCategoryQuery?"active":""}`} title={sub.sub_category}>{sub.sub_category}</Link>
+                  </li>
+                )}
+              </Fragment>
             ))}
           </ul>
         </div>
