@@ -23,17 +23,25 @@
   transition: var(--transition);
   display: block;
   padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  border-radius: 25%;
+}
+
+.cat-accordion-chevron svg{
+  transition: var(--transition);
 }
 
 .cat-accordion-chevron:hover{
   color: rgba(255,255,255,0.7);
+  background-color: rgba(255,255,255,0.1);
 }
 
 .cat-accordion.show .cat-label-link, .cat-label-link:hover{
   transform: translateX(5px);
 }
 
-.cat-accordion.show .cat-accordion-chevron{
+.cat-accordion.show .cat-accordion-chevron svg{
   transform: rotate(-180deg);
   transform-origin: center;
 }

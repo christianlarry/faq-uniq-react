@@ -24,10 +24,26 @@ const CategoryMenuAccord = ({category}:Props) => {
   useEffect(()=>{
     const queryParams = new URLSearchParams(location.search)
     const categoryParam = queryParams.get("category")
+    const subCategoryParam = queryParams.get("sub_category")
+
+    if(subCategoryParam){
+      setSubCategoryQuery(subCategoryParam)
+
+    }else{
+      setSubCategoryQuery(undefined)
+    }
 
     if(categoryParam && categoryParam == category._id){
       setIsShow(true)
     }else{
+      const isSubCatInThisCategory = category.sub_category.filter(val => {
+        if(val != null) {
+          return val._id === subCategoryParam
+        }
+        return false
+      })
+
+      if(isSubCatInThisCategory.length > 0) return setIsShow(true)
       setIsShow(false)
     }
   },[location])

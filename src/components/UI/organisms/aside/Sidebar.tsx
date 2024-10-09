@@ -1,7 +1,6 @@
 import CategoryMenuAccord from "../../molecules/accordion/CategoryMenuAccord"
 import "./Sidebar.css"
 import { getFaqCategory } from "../../../../api/api"
-import { useEffect } from "react"
 
 
 const Sidebar = (props: React.HTMLAttributes<HTMLElement>) => {
