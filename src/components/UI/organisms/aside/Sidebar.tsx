@@ -2,7 +2,7 @@ import CategoryMenuAccord from "../../molecules/accordion/CategoryMenuAccord"
 import "./Sidebar.css"
 import { getFaqCategory } from "../../../../api/api"
 import FetchLoader from "../../atoms/loader/FetchLoader"
-import FetchError from "../../atoms/error/FetchError"
+import FetchError from "../../atoms/error/ErrorText"
 
 
 const Sidebar = (props: React.HTMLAttributes<HTMLElement>) => {

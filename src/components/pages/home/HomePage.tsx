@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { getFaq } from "../../../api/api"
 import FetchLoader from "../../UI/atoms/loader/FetchLoader"
 import ButtonText from "../../UI/atoms/button/ButtonText"
-import FetchError from "../../UI/atoms/error/FetchError"
+import ErrorText from "../../UI/atoms/error/ErrorText"
 
 const HomePage = ()=>{
 
@@ -61,9 +61,7 @@ const HomePage = ()=>{
       <section>
         <div className="section-title faq-section-title">
           <h2>Questions</h2>
-          {(faqResult.data && allFaqResult.data) &&
-            <span>({faqResult.data.data.length} of {allFaqResult.data.data.length})</span>
-          }
+          <span>({faqResult.data ? faqResult.data.data.length:""} of {allFaqResult.data ? allFaqResult.data.data.length:""})</span>
           {isShowResetBtn &&
             <ButtonText text="Reset" style={{marginLeft: "5px"}} onClick={handleResetFaq}/>
           }
@@ -81,8 +79,12 @@ const HomePage = ()=>{
             </Fragment>
           ))}
 
+          {(faqResult.data && faqResult.data.data.length === 0) &&
+            <ErrorText message="Ups, Faq not found:("/>
+          }
+
           {faqResult.error &&
-            <FetchError/>
+            <ErrorText/>
           }
         </div>
       </section>
