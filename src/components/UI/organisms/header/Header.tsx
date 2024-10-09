@@ -6,6 +6,8 @@ const Header = ({
   className,
   ...props
 }:React.HTMLAttributes<HTMLElement>)=>{
+
+  const isLogin = false
   
   return (
     <header className={`page-header${className ? " "+className:""}`} {...props}>
@@ -14,9 +16,13 @@ const Header = ({
           <div className="page-header-action-wrap">
             <FaqActionButton/>
           </div>
+
+          {isLogin &&  
           <h1 className="page-header-logo">
             <LogoUNIQ/>
           </h1>
+          }
+
           <div></div>
         </div>
       </div>

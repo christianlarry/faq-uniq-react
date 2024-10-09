@@ -1,0 +1,35 @@
+.faqu-modal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.faqu-modal-wrapper{
+  position: relative;
+  margin: 1rem;
+}
+
+.faqu-modal-container{
+  max-width: 1000px;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+  border-radius: 50px;
+
+  overflow: hidden;
+}
+
+.faqu-modal-container::before{
+  content: "";
+  position: absolute;
+  top: 0.4px; right: -0.4px; bottom: 0; left: 0;
+  z-index: -1;
+  margin: -1px;
+  border-radius: inherit;
+  background: var(--gradient-red-t-yellow);
+}

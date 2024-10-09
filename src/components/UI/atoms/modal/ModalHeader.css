@@ -1,0 +1,17 @@
+.faqu-modal-header{
+  padding: 1rem 2rem;
+  height: 85px;
+  background: linear-gradient(90deg, #FF6A6A 0%, #FFFD80 100%);
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.faqu-modal-header-content{
+  flex: 1;
+}
+
+.faqu-modal-xmark{
+  font-size: 3rem;
+  color: var(--white);
+}

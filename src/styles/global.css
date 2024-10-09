@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+body.modal-open{
+  overflow: hidden;
+}
+
 ul,li,a{
   text-decoration: none;
   list-style: none;

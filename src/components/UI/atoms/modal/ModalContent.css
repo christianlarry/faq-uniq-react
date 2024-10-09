@@ -1,0 +1,8 @@
+.faqu-modal-content{
+  padding: 1rem 2rem;
+  background-color: var(--bg-primary);
+
+  
+  overflow-y: auto;
+  max-height: 75vh;
+}
