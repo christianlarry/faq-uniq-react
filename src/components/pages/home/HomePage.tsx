@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { getFaq } from "../../../api/api"
 import FetchLoader from "../../UI/atoms/loader/FetchLoader"
 import ButtonText from "../../UI/atoms/button/ButtonText"
+import FetchError from "../../UI/atoms/error/FetchError"
 
 const HomePage = ()=>{
 
@@ -81,7 +82,7 @@ const HomePage = ()=>{
           ))}
 
           {faqResult.error &&
-            <h1>Some error happen bro</h1>
+            <FetchError/>
           }
         </div>
       </section>

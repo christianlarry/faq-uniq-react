@@ -1,9 +1,15 @@
+import { FaCircleExclamation } from "react-icons/fa6"
 import "./FetchError.css"
 
-const FetchError = ()=>{
+interface Props{
+  message?:string
+}
+
+const FetchError = ({message="Error fetching data!"}:Props)=>{
   return (
-    <div>
-      <p>Error nih bosku</p>
+    <div className="fetch-error">
+      <FaCircleExclamation/>
+      <p>{message}</p>
     </div>
   )
 }

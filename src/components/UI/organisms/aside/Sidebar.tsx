@@ -2,6 +2,7 @@ import CategoryMenuAccord from "../../molecules/accordion/CategoryMenuAccord"
 import "./Sidebar.css"
 import { getFaqCategory } from "../../../../api/api"
 import FetchLoader from "../../atoms/loader/FetchLoader"
+import FetchError from "../../atoms/error/FetchError"
 
 
 const Sidebar = (props: React.HTMLAttributes<HTMLElement>) => {
@@ -28,7 +29,7 @@ const Sidebar = (props: React.HTMLAttributes<HTMLElement>) => {
       }
       
       {categoryResult.error &&
-        <h2>Some error happen berodih</h2>
+        <FetchError/>
       }
     </div>
   )

@@ -1,0 +1,21 @@
+.fetch-error{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+  color: var(--red);
+  font-weight: 500;
+  font-family: var(--font-primary),sans-serif;
+  text-align: center;
+  line-height: 16px;
+  font-size: 18px;
+}
+
+.fetch-error i{
+  font-size: 18px;
+}
+
+@media only screen and (max-width:500px){
+  .fetch-error{font-size: 16px;}
+  .fetch-error i{font-size: 16px;}
+}
