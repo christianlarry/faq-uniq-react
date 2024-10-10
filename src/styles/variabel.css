@@ -11,6 +11,8 @@
   --red: #FF6A6A;
   --yellow: #FFFD80;
   --yellow-05: rgba(255, 253, 128, 0.3);
+  --input-text-color: rgba(217, 217, 217, 1);
+  --gray: rgba(33, 34, 35, 1);
 
   --font-primary: "Montserrat";
   --font-secondary: "roboto";

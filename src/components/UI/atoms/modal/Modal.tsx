@@ -1,4 +1,6 @@
 import { useEffect } from "react"
+import FocusLock from "react-focus-lock"
+
 import "./Modal.css"
 
 interface Props{
@@ -18,13 +20,15 @@ const Modal = ({
   },[])
 
   return (
-    <div className="faqu-modal">
-      <div className="faqu-modal-wrapper">
-        <div className="faqu-modal-container">
-          {children}
+    <FocusLock>
+      <div className="faqu-modal">
+        <div className="faqu-modal-wrapper">
+          <div className="faqu-modal-container">
+            {children}
+          </div>
         </div>
       </div>
-    </div>
+    </FocusLock>
   )
 }
 

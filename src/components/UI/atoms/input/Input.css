@@ -1,0 +1,38 @@
+.input-group{
+  width: 100%;
+  background-color: var(--gray);
+  border-radius: 50px;
+
+  display: flex;
+  align-items: center;
+}
+
+.input-label{
+  padding: 15px 15px;
+  padding-right: 0;
+  height: 100%;
+  font-size: 20px;
+
+  display: block;
+}
+
+.input-label > svg{
+  display: block;
+}
+
+.input-control{
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  color: var(--input-text-color);
+
+  display: block;
+
+  padding: 10px 15px;
+  text-align: center;
+  
+  font-size: 1rem;
+  font-style: italic;
+}
