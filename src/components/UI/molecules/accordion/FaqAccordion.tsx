@@ -20,7 +20,7 @@ const FaqAccordion = ({title,answer}:Props) => {
   const isAdmin = true
 
   return (
-    <GradientBox>
+    <GradientBox gradient="y-t-r">
       <AccordionContainer>
         <AccordionLabel className="faq-accordion-label">
           <div className="faq-accordion-label-left">

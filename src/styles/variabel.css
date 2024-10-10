@@ -4,6 +4,9 @@
   --gradient-red: #FF6A6A;
   --gradient-yellow: #FFFD80;
   --gradient-red-t-yellow: linear-gradient(89.88deg, #FF6A6A 0.89%,#FFFD80 99.9%);
+  --gradient-yellow-t-red: linear-gradient(90deg, #FFFD80 0%, #FF6A6A 100%);
+  
+  
 
   --white: #fff;
   --black: #000;
