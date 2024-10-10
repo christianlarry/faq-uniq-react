@@ -1,0 +1,38 @@
+.login-modal-content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 0;
+}
+
+.login-modal-content > div{
+  max-width: 450px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.login-modal-content form{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.login-modal-content h2{
+  align-self: center;
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.login-modal-input-group{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-btn{
+  max-width: 150px;
+  width: 100%;
+  align-self: center;
+}

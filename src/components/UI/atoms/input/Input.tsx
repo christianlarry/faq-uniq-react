@@ -1,4 +1,3 @@
-import GradientBox from "../box/GradientBox";
 import "./Input.css"
 import { IconType } from "react-icons";
 
@@ -16,13 +15,15 @@ const Input = ({
   const randomId = Math.random().toString(36).substring(2, 2 + 10);
 
   return (
-    <div className="input-group">
-      {IconElement &&
-      <label className="input-label" htmlFor={randomId}>
-        <IconElement/>
-      </label>
-      }
-      <input {...props} id={randomId} className={`input-control ${className?className:""}`} type={type} />
+    <div className="input-box">
+      <div className="input-group">
+        {IconElement &&
+        <label className="input-label" htmlFor={randomId}>
+          <IconElement/>
+        </label>
+        }
+        <input {...props} id={randomId} className={`input-control ${className?className:""}`} type={type} />
+      </div>
     </div>
   )
 }
