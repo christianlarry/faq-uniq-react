@@ -1,31 +1,45 @@
+import { forwardRef } from "react";
 import "./Input.css"
 import { IconType } from "react-icons";
+import { FaCircleExclamation } from "react-icons/fa6";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement>{
   IconElement?:IconType
+  errors?:string
 }
 
-const Input = ({
+const Input = forwardRef<HTMLInputElement, Props>(({
   IconElement,
   type = "text",
   className,
+  errors,
   ...props
-}:Props) => {
+},ref) => {
 
   const randomId = Math.random().toString(36).substring(2, 2 + 10);
 
   return (
-    <div className="input-box">
-      <div className="input-group">
-        {IconElement &&
-        <label className="input-label" htmlFor={randomId}>
-          <IconElement/>
-        </label>
-        }
-        <input {...props} id={randomId} className={`input-control ${className?className:""}`} type={type} />
+    <div>
+      <div className="input-box">
+        <div className="input-group">
+          {IconElement &&
+          <label className="input-label" htmlFor={randomId}>
+            <IconElement/>
+          </label>
+          }
+          <input ref={ref} {...props} id={randomId} className={`input-control ${className?className:""}`} type={type} />
+        </div>
       </div>
+      {errors &&  
+      <p className="input-errors">
+        <i>
+          <FaCircleExclamation/>
+        </i>
+        {errors}
+      </p>
+      }
     </div>
   )
-}
+})
 
 export default Input
