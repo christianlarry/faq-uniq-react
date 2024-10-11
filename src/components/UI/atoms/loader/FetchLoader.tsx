@@ -1,7 +1,7 @@
 import './FetchLoader.css'
 import Lottie from "lottie-react"
 
-import infinityLoaderAnimation from "../../../../assets/json/loader/infinity-loader.json"
+import infinityLoaderAnimation from "../../../../assets/json/lottie/infinity-loader.json"
 
 const FetchLoader = ({message}:{message?:string}) => { 
   return (

@@ -1,13 +1,18 @@
 import "./Button.css"
 
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement>{
+  paddingSize?: "small"|"normal"
+}
+
 const Button = ({
   children,
+  paddingSize="normal",
   className,
   type="button",
   ...props
-}:React.ButtonHTMLAttributes<HTMLButtonElement>)=>{
+}:Props)=>{
   return (
-    <button className={`button ${className?className:""}`} type={type} {...props}>
+    <button className={`button ${className?className:""} p-${paddingSize}`} type={type} {...props}>
       {children}
     </button>
   )

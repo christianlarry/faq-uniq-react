@@ -4,10 +4,12 @@ import FocusLock from "react-focus-lock"
 import "./Modal.css"
 
 interface Props{
-  children: React.ReactNode
+  children: React.ReactNode,
+  size?: "lg"|"sm"|"md"
 }
 
 const Modal = ({
+  size = "lg",
   children
 }:Props)=>{
 
@@ -23,7 +25,7 @@ const Modal = ({
     <FocusLock>
       <div className="faqu-modal">
         <div className="faqu-modal-wrapper">
-          <div className="faqu-modal-container">
+          <div className={`faqu-modal-container ${size}`}>
             {children}
           </div>
         </div>

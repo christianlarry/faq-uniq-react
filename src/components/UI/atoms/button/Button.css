@@ -21,3 +21,6 @@
   display: block;
   padding: 15px;
 }
+
+.button.p-small :first-child{padding: 6px 10px;}
+.button.p-normal :first-child{padding: 15px 18px;}

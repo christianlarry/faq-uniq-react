@@ -18,6 +18,8 @@ import { AxiosError } from "axios"
 import ErrorInput from "../../atoms/error/ErrorInput"
 import { useNavigate } from "react-router-dom"
 
+import AlertSuccess from "../alert/AlertSuccess"
+
 interface Props{
   showModalSet:React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -26,6 +28,7 @@ const LoginModal = ({showModalSet}:Props) => {
 
   // STATE
   const [loginError,setLoginError] = useState<AxiosError<any,any>>()
+  const isLoginState = useState<boolean>(false)
 
   // NAVIGATE
   const navigate = useNavigate()
@@ -51,15 +54,18 @@ const LoginModal = ({showModalSet}:Props) => {
 
       localStorage.setItem("token",token)
 
-      alert("Login success!")
-      showModalSet(false)
-      navigate(0)
+      isLoginState[1](true)
 
     } catch (err) {
       if(err instanceof AxiosError){
         setLoginError(err)
       }
     }
+  }
+
+  const handleSuccessLogin = ()=>{
+    showModalSet(false)
+    navigate(0)
   }
 
   return (
@@ -99,6 +105,12 @@ const LoginModal = ({showModalSet}:Props) => {
           </div>
         </div>
       </ModalContent>
+      
+      <AlertSuccess 
+      message="Success Login" 
+      showState={isLoginState}
+      onNext={handleSuccessLogin}/>
+
     </Modal>
   )
 }
