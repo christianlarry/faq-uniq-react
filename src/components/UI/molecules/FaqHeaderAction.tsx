@@ -1,14 +1,16 @@
 import "./FaqHeaderAction.css"
-import {base64Add,base64Download,base64Login} from "../../../assets/base64Icons"
+import {base64Add,base64Download,base64Login,base64Logout} from "../../../assets/base64Icons"
 import IconButton from "../atoms/button/IconButton"
 import { createPortal } from "react-dom"
 import { useState } from "react"
 
 import LoginModal from "../organisms/modal/LoginModal"
+import { useAuth } from "../../../hooks/useAuth"
 
 const FaqHeaderAction = ()=>{
 
-  const isAdmin = false
+  const {isAuthenticated,logout} = useAuth()
+
   // STATE
   const [showLoginModal,setShowLoginModal] = useState<boolean>(false)
 
@@ -17,22 +19,39 @@ const FaqHeaderAction = ()=>{
     setShowLoginModal(true)
   }
 
+  const handleLogoutClick = ()=>{
+    logout()
+  }
+
+  const handleDownloadClick = ()=>{
+    alert("CLICKED DOWNLOAD")
+  }
+
+  const handleAddClick = ()=>{
+    alert("ADD CLICKED")
+  }
+
   return (
     <>
       <div className="faq-header-action">
-        {isAdmin &&
+        {isAuthenticated &&
         <>  
-          <IconButton>
+          <IconButton title="Add FAQ" onClick={handleAddClick}>
             <img src={base64Add} alt="Add Icon"/>
           </IconButton>
-          <IconButton>
-            <img src={base64Download} alt="Download Icon"/>
+          <IconButton title="Download FAQ">
+            <img src={base64Download} alt="Download Icon" onClick={handleDownloadClick}/>
+          </IconButton>
+          <IconButton title="Logout" onClick={handleLogoutClick}>
+            <img src={base64Logout} alt="Logout Icon"/>
           </IconButton>
         </>
         }
-        <IconButton onClick={handleLoginClick}>
-          <img src={base64Login} alt="Login Icon"/>
-        </IconButton>
+        {!isAuthenticated &&
+          <IconButton onClick={handleLoginClick} title="Login">
+            <img src={base64Login} alt="Login Icon"/>
+          </IconButton>
+        }
       </div>
       
 

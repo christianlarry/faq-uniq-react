@@ -1,3 +1,4 @@
+import { useAuth } from "../../../../hooks/useAuth"
 import LogoUNIQ from "../../atoms/icon-logo/LogoUNIQ"
 import FaqActionButton from "../../molecules/FaqHeaderAction"
 import "./Header.css"
@@ -7,7 +8,7 @@ const Header = ({
   ...props
 }:React.HTMLAttributes<HTMLElement>)=>{
 
-  const isLogin = false
+  const {isAuthenticated} = useAuth()
   
   return (
     <header className={`page-header${className ? " "+className:""}`} {...props}>
@@ -17,7 +18,7 @@ const Header = ({
             <FaqActionButton/>
           </div>
 
-          {isLogin &&  
+          {isAuthenticated &&  
           <h1 className="page-header-logo">
             <LogoUNIQ/>
           </h1>

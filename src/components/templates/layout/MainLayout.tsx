@@ -7,6 +7,7 @@ import IconButton from "../../UI/atoms/button/IconButton"
 import { FaChevronUp } from "react-icons/fa6"
 import Sidebar from "../../UI/organisms/aside/Sidebar"
 import FaqSearchBox from "../../UI/organisms/faq-search-box/FaqSearchBox"
+import { AuthProvider } from "../../../hooks/useAuth"
 
 interface Props {
   children?: React.ReactNode
@@ -52,39 +53,40 @@ const MainLayout = ({
 
 
   return (
-    <div className="main-layout">
-      <section className="page-header-box">
-        <div ref={pageHeaderSlideWrapRef} className="page-header-slide-wrap">
-          <Header className={!isShowHeader ? "no-border" : undefined} />
-        </div>
-
-        <IconButton className={`slide-down-btn${!isShowHeader? " collapse":""}`} onClick={() => setIsShowHeader(!isShowHeader)}>
-          <FaChevronUp />
-        </IconButton>
-      </section>
-
-      <section>
-        <div className="container">
-          <FaqSearchBox/>
-        </div>
-      </section>
-
-      {/* ASIDE MAIN SECTION */}
-      <section>
-        <div className="container">
-          <div className="sidebar-main-container">
-            <aside className="sidebar-container">
-              <Sidebar/>
-            </aside>
-            <main className="main-container">
-              {children || <Outlet />}
-            </main>
+    <AuthProvider>
+      <div className="main-layout">
+        <section className="page-header-box">
+          <div ref={pageHeaderSlideWrapRef} className="page-header-slide-wrap">
+            <Header className={!isShowHeader ? "no-border" : undefined} />
           </div>
-        </div>
-      </section>
 
-      
-    </div>
+          <IconButton className={`slide-down-btn${!isShowHeader? " collapse":""}`} onClick={() => setIsShowHeader(!isShowHeader)}>
+            <FaChevronUp />
+          </IconButton>
+        </section>
+
+        <section>
+          <div className="container">
+            <FaqSearchBox/>
+          </div>
+        </section>
+
+        {/* ASIDE MAIN SECTION */}
+        <section>
+          <div className="container">
+            <div className="sidebar-main-container">
+              <aside className="sidebar-container">
+                <Sidebar/>
+              </aside>
+              <main className="main-container">
+                {children || <Outlet />}
+              </main>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </AuthProvider>
   )
 
 }

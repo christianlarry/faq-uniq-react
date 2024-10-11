@@ -14,7 +14,7 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import { LoginModel } from "../../../../interfaces/userInterfaces"
 import { LoginValidationSchema } from "../../../../validation/loginValidation"
 import { postLogin } from "../../../../api/api"
-import { AxiosError, AxiosResponse } from "axios"
+import { AxiosError } from "axios"
 import ErrorInput from "../../atoms/error/ErrorInput"
 import { useNavigate } from "react-router-dom"
 
@@ -53,6 +53,7 @@ const LoginModal = ({showModalSet}:Props) => {
 
       alert("Login success!")
       showModalSet(false)
+      navigate(0)
 
     } catch (err) {
       if(err instanceof AxiosError){

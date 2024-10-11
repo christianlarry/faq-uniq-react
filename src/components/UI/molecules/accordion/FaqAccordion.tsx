@@ -8,6 +8,7 @@ import AccordionContent from "../../atoms/accordion/AccordionContent"
 import AdminActionMenu from "../button-group/AdminActionMenu"
 
 import ReactMarkdown from "react-markdown"
+import { useAuth } from "../../../../hooks/useAuth"
 
 interface Props{
   title:string,
@@ -17,7 +18,7 @@ interface Props{
 const FaqAccordion = ({title,answer}:Props) => {
 
   // LOGIC TO CHECK IF USER IS ADMIN
-  const isAdmin = true
+  const {isAuthenticated} = useAuth()
 
   return (
     <GradientBox gradient="y-t-r">
@@ -29,7 +30,7 @@ const FaqAccordion = ({title,answer}:Props) => {
             </i>
             <span className="faq-accordion-title">{title}</span>
           </div>
-          {isAdmin && <div className="faq-admin-action-wrap"><AdminActionMenu/></div>}
+          {isAuthenticated && <div className="faq-admin-action-wrap"><AdminActionMenu/></div>}
         </AccordionLabel>
         <AccordionContent>
           <div className="faq-accordion-content">
