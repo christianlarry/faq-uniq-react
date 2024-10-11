@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import "./Input.css"
 import { IconType } from "react-icons";
-import { FaCircleExclamation } from "react-icons/fa6";
+import ErrorInput from "../error/ErrorInput";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement>{
   IconElement?:IconType
@@ -30,14 +30,9 @@ const Input = forwardRef<HTMLInputElement, Props>(({
           <input ref={ref} {...props} id={randomId} className={`input-control ${className?className:""}`} type={type} />
         </div>
       </div>
-      {errors &&  
-      <p className="input-errors">
-        <i>
-          <FaCircleExclamation/>
-        </i>
-        {errors}
-      </p>
-      }
+      <div style={{marginTop: 10}}>
+        {errors && <ErrorInput message={errors}/>}
+      </div>
     </div>
   )
 })

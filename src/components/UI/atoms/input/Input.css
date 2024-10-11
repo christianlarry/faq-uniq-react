@@ -30,6 +30,8 @@
   display: flex;
   align-items: center;
   margin: 1.5px;
+
+  overflow: hidden;
 }
 
 .input-label{
@@ -43,37 +45,4 @@
 
 .input-label > svg{
   display: block;
-}
-
-.input-control{
-  flex: 1;
-  background: none;
-  border: none;
-  outline: none;
-  width: 100%;
-  color: var(--input-text-color);
-
-  display: block;
-
-  padding: 10px 15px;
-  text-align: center;
-  
-  font-size: 1rem;
-  font-style: italic;
-}
-
-
-.input-errors{
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  gap: 5px;
-  font-family: var(--font-primary);
-
-  font-style: italic;
-}
-
-.input-errors > i{
-  color: var(--red);
-  display: flex;
 }

@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios"
 import useSWR, { SWRConfiguration } from "swr"
 import { FaqCategoryResponseModel, FaqResponseModel } from "../interfaces/faqInterfaces"
+import { LoginModel } from "../interfaces/userInterfaces"
 
 // INIT VARIABEL
 const api_baseUrl = "http://localhost:3000/api/v1/"
@@ -24,3 +25,16 @@ export const getFaqCategory = (config?:SWRConfiguration)=>useSWR<FaqCategoryResp
   fetcher,
   config
 )
+
+// POST LOGIN
+export const postLogin = async (data:LoginModel)=>{
+  return await axios.post(`${api_baseUrl}/login`,data)
+}
+
+export const postCheckToken = async (token:string)=>{
+  return await axios.post(`${api_baseUrl}/check-token`,undefined,{
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  })
+}

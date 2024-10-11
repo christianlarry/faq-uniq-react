@@ -6,19 +6,29 @@ import ModalContent from "../../atoms/modal/ModalContent"
 import ModalHeader from "../../atoms/modal/ModalHeader"
 
 import "./LoginModal.css"
-import React from "react"
+import React, { useState } from "react"
 
 import {useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
 
-import { LoginFormModel } from "../../../../interfaces/formInputInterfaces"
+import { LoginModel } from "../../../../interfaces/userInterfaces"
 import { LoginValidationSchema } from "../../../../validation/loginValidation"
+import { postLogin } from "../../../../api/api"
+import { AxiosError, AxiosResponse } from "axios"
+import ErrorInput from "../../atoms/error/ErrorInput"
+import { useNavigate } from "react-router-dom"
 
 interface Props{
   showModalSet:React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const LoginModal = ({showModalSet}:Props) => {
+
+  // STATE
+  const [loginError,setLoginError] = useState<AxiosError<any,any>>()
+
+  // NAVIGATE
+  const navigate = useNavigate()
 
   // USEFORM
   const { 
@@ -27,14 +37,28 @@ const LoginModal = ({showModalSet}:Props) => {
     formState:{
       errors
     }
-  } = useForm<LoginFormModel>({
+  } = useForm<LoginModel>({
     resolver: zodResolver(LoginValidationSchema),
     mode: "all"
   })
 
   // HANDLER
-  const handleLogin = (data:LoginFormModel)=>{
-    console.log(data)
+  const handleLogin = async (data:LoginModel)=>{
+    try {
+      
+      const result = await postLogin(data)
+      const token = result.data.data.token
+
+      localStorage.setItem("token",token)
+
+      alert("Login success!")
+      showModalSet(false)
+
+    } catch (err) {
+      if(err instanceof AxiosError){
+        setLoginError(err)
+      }
+    }
   }
 
   return (
@@ -51,6 +75,7 @@ const LoginModal = ({showModalSet}:Props) => {
                   IconElement={FaUser} 
                   placeholder="E-Mail"
                   errors={errors.email && errors.email.message}
+                  autoComplete="off"
                 />
                 <Input 
                   {...register("password",{required:true})}
@@ -58,8 +83,14 @@ const LoginModal = ({showModalSet}:Props) => {
                   placeholder="Password" 
                   type="password"
                   errors={errors.password && errors.password.message}
+                  autoComplete="off"
                 />
               </div>
+              {loginError &&
+              <div style={{alignSelf: "center"}}>
+                <ErrorInput message={loginError.response?.data.errors}/>
+              </div>
+              }
               <Button className="login-btn" type="submit">
                 <span>Login</span>
               </Button>

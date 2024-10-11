@@ -45,3 +45,9 @@ body{
   margin: 0 auto;
   padding: 0 1rem;
 }
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px var(--gray) inset;
+  box-shadow: 0 0 0px 1000px  var(--gray) inset;
+  -webkit-text-fill-color: var(--input-text-color); /* Pastikan teks mengikuti warna aslinya */
+}

@@ -1,0 +1,31 @@
+.input-control{
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  color: var(--input-text-color);
+
+  display: block;
+
+  padding: 10px 15px;
+  text-align: center;
+  
+  font-size: 1rem;
+  font-style: italic;
+}
+
+
+.input-errors{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-primary);
+
+  font-style: italic;
+}
+
+.input-errors > i{
+  color: var(--red);
+  display: flex;
+}
