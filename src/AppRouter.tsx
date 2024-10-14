@@ -13,6 +13,7 @@ const AppRouter = () => {
 				<Route element={<MainLayout/>}>
 					<Route index element={<Navigate to={"/faq"}/>}/>
 					<Route path="faq" element={<HomePage/>}/>
+					<Route path="faq/:id" element={<HomePage/>}/>
 				</Route>
 			</Routes>
 		</Router>

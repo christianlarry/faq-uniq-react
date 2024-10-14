@@ -9,16 +9,33 @@ import AdminActionMenu from "../button-group/AdminActionMenu"
 
 import ReactMarkdown from "react-markdown"
 import { useAuth } from "../../../../hooks/useAuth"
+import Button from "../../atoms/button/Button"
+import { useNavigate } from "react-router-dom"
 
 interface Props{
   title:string,
-  answer:string
+  answer:string,
+  id:string
 }
 
-const FaqAccordion = ({title,answer}:Props) => {
+const FaqAccordion = ({title,answer,id}:Props) => {
 
   // LOGIC TO CHECK IF USER IS ADMIN
   const {isAuthenticated} = useAuth()
+
+  const handleShareClick = ()=>{
+    const shareUrl = `${window.location.origin}/faq/${id}`
+
+    navigator.share({
+      title: title,
+      text: "Check out this FAQ!",
+      url: shareUrl
+    }).then(()=>{
+      console.log("Thanks for sharing!")
+    }).catch((err)=>{
+      console.log("Error sharing: ",err)
+    })
+  }
 
   return (
     <GradientBox gradient="y-t-r">
@@ -38,6 +55,11 @@ const FaqAccordion = ({title,answer}:Props) => {
             <div className="faq-accordion-content-answer">
               {/* <div dangerouslySetInnerHTML={{__html: answer}}/> */}
               <ReactMarkdown>{answer}</ReactMarkdown>
+            </div>
+            <div style={{display: "flex",justifyContent: "end"}}>
+              <Button onClick={handleShareClick}>
+                <span>Share</span>
+              </Button>
             </div>
           </div>
         </AccordionContent>

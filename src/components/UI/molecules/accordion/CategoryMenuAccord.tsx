@@ -52,7 +52,7 @@ const CategoryMenuAccord = ({category}:Props) => {
     <GradientBox>
       <div className={`cat-accordion${isShow?" show":""}`}>
         <label className="cat-accordion-label">
-          <Link to={`?category=${category._id}`} className="cat-label-link">{category.name}</Link>
+          <Link to={`faq?category=${category._id}`} className="cat-label-link">{category.name}</Link>
           <i className="cat-accordion-chevron" onClick={handleAccordionLabelClick}>
             <FaChevronDown/>
           </i>
@@ -63,7 +63,7 @@ const CategoryMenuAccord = ({category}:Props) => {
               <Fragment key={i}>
                 {sub != null && (
                   <li key={i}>
-                    <Link to={`?sub_category=${sub._id}`} className={`sub-cat-lists-link ${sub._id == subCategoryQuery?"active":""}`} title={sub.sub_category}>{sub.sub_category}</Link>
+                    <Link to={`faq?sub_category=${sub._id}`} className={`sub-cat-lists-link ${sub._id == subCategoryQuery?"active":""}`} title={sub.sub_category}>{sub.sub_category}</Link>
                   </li>
                 )}
               </Fragment>

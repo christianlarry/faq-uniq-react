@@ -1,5 +1,4 @@
-import React, { createContext, ProviderProps, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { postCheckToken } from "../api/api";
 
 interface AuthContextModel{
@@ -15,7 +14,6 @@ export const AuthProvider = ({
   
   // STATE & NAVIGATE
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const navigate = useNavigate()
 
   useEffect(()=>{
     const token = localStorage.getItem("token")
@@ -44,8 +42,6 @@ export const AuthProvider = ({
   
   const logout = () => {
     localStorage.removeItem('token');
-    alert("Logout success!")
-    navigate(0)
 
     setIsAuthenticated(false);
   };

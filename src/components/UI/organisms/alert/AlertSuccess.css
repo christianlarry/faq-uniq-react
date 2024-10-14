@@ -1,0 +1,27 @@
+.alert-success-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  text-align: center;
+}
+
+.alert-success-message{
+  font-weight: 500;
+  position: relative;
+  top: -3rem;
+  font-size: 1.4rem;
+}
+
+.alert-footer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+}
+
+@media only screen and (max-width: 400px){
+  .alert-success-message{
+    top: -1.5rem;
+  }
+}

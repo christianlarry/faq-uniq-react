@@ -6,6 +6,8 @@ import { useState } from "react"
 
 import LoginModal from "../organisms/modal/LoginModal"
 import { useAuth } from "../../../hooks/useAuth"
+import AlertSuccess from "../organisms/alert/AlertSuccess"
+import AlertConfirm from "../organisms/alert/AlertConfirm"
 
 const FaqHeaderAction = ()=>{
 
@@ -14,13 +16,21 @@ const FaqHeaderAction = ()=>{
   // STATE
   const [showLoginModal,setShowLoginModal] = useState<boolean>(false)
 
+  const confirmLogoutState = useState<boolean>(false)
+  const isLogoutState = useState<boolean>(false)
+
   // EVENT HANDLER
   const handleLoginClick = ()=>{
     setShowLoginModal(true)
   }
 
-  const handleLogoutClick = ()=>{
+  const handleLogoutButtonClick = ()=>{
+    confirmLogoutState[1](true)
+  }
+
+  const handleLogout = ()=>{
     logout()
+    isLogoutState[1](true)
   }
 
   const handleDownloadClick = ()=>{
@@ -39,10 +49,10 @@ const FaqHeaderAction = ()=>{
           <IconButton title="Add FAQ" onClick={handleAddClick}>
             <img src={base64Add} alt="Add Icon"/>
           </IconButton>
-          <IconButton title="Download FAQ">
-            <img src={base64Download} alt="Download Icon" onClick={handleDownloadClick}/>
+          <IconButton title="Download FAQ" onClick={handleDownloadClick}>
+            <img src={base64Download} alt="Download Icon"/>
           </IconButton>
-          <IconButton title="Logout" onClick={handleLogoutClick}>
+          <IconButton title="Logout" onClick={handleLogoutButtonClick}>
             <img src={base64Logout} alt="Logout Icon"/>
           </IconButton>
         </>
@@ -60,6 +70,17 @@ const FaqHeaderAction = ()=>{
           {showLoginModal &&
             <LoginModal showModalSet={setShowLoginModal}/>
           }
+
+          <AlertConfirm 
+          message="Confirm logout?"
+          showState={confirmLogoutState}
+          onNext={handleLogout}
+          />
+
+          <AlertSuccess
+          message="Logout success!"
+          showState={isLogoutState}
+          />
         </>
       ),document.body)}
     </>

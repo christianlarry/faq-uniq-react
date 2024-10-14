@@ -1,24 +1,20 @@
-import Lottie from "lottie-react"
 import Button from "../../atoms/button/Button"
 import Modal from "../../atoms/modal/Modal"
 import ModalContent from "../../atoms/modal/ModalContent"
 import ModalFooter from "../../atoms/modal/ModalFooter"
 
-import successAnimation from "../../../../assets/json/lottie/success.json"
 import React from "react"
-
-import "./AlertSuccess.css"
 
 interface Props{
   message:string,
-  onNext?:()=>void
-  nextText?:string
+  onNext:()=>void
+  onCancel?:()=>void
   showState:[boolean,React.Dispatch<React.SetStateAction<boolean>>]
 }
 
-const AlertSuccess = ({
+const AlertConfirm = ({
   message,
-  nextText="OK",
+  onCancel=()=>{},
   onNext=()=>{},
   showState
 
@@ -26,35 +22,37 @@ const AlertSuccess = ({
 
   const [show,setShow] = showState
 
-  const handleOkClick = ()=>{
+  const handleNextClick = ()=>{
     onNext()
-    
+    setShow(false)
+  }
+
+  const handleCancelClick = ()=>{
+    onCancel()
     setShow(false)
   }
 
   if(show) return (
     <Modal size="sm">
       <ModalContent>
-        <div className="alert-success-wrapper">
-          <Lottie animationData={successAnimation} loop={false}/>
-          <span className="alert-success-message">
-            {message}
-          </span>
+        <div className="alert-confirm-wrapper" style={{padding: "10px 0"}}>
+          <p style={{fontSize: 22}}>{message}</p>
         </div>
       </ModalContent>
       <ModalFooter>
-        <div className="alert-footer">
-          <Button paddingSize="normal" onClick={handleOkClick}>
-            <span>{nextText}</span>
+        <div style={{display: "flex",gap: "5px",justifyContent: "end"}}>
+          <Button paddingSize="normal" onClick={handleCancelClick}>
+            <span>Cancel</span>
+          </Button>
+          <Button paddingSize="normal" onClick={handleNextClick}>
+            <span>Next</span>
           </Button>
         </div>
       </ModalFooter>
     </Modal>
   )
 
-  return (
-    <></>
-  )
+  return (<></>)
 }
 
-export default AlertSuccess
+export default AlertConfirm
