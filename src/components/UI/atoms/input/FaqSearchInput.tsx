@@ -31,7 +31,7 @@ const Input = () => {
 
     if(key === "Enter"){
       if(inputValue){
-        navigate(`?search=${inputValue}`)
+        navigate(`/faq?search=${inputValue}`)
       }else{
         navigateToHome()
       }

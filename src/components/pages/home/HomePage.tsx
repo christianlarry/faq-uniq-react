@@ -11,8 +11,10 @@ import { FaqModel } from "../../../interfaces/faqInterfaces"
 
 const HomePage = ()=>{
 
-  // PARAMS
+  // HOOKS INIT
   const params = useParams()
+  const location = useLocation()
+  const navigate = useNavigate()
 
   // STATE
   const [faqApiQuery,setFaqApiQuery] = useState<string>("")
@@ -25,10 +27,10 @@ const HomePage = ()=>{
     revalidateOnFocus: false
   })
 
-  // IF THERE'S ID PARAMETER IN URL
   useEffect(()=>{
     const {id} = params
-
+    
+    // IF THERE'S ID PARAMETER IN URL
     if(id && allFaqResult.data){
       let faq = allFaqResult.data.data.filter(val => val._id === id)
       
@@ -49,14 +51,10 @@ const HomePage = ()=>{
     }else{
       setFaqById(undefined)
     }
-
   },[allFaqResult.data])
 
-  // LOCATION
-  const location = useLocation()
-  const navigate = useNavigate()
-
   useEffect(()=>{
+
     const searchParams = new URLSearchParams(location.search)
     const category = searchParams.get("category")
     const subCategory = searchParams.get("sub_category")
@@ -90,7 +88,7 @@ const HomePage = ()=>{
 
   return (
     <>
-      <section>
+      <section id="faq">
         <div className="section-title faq-section-title">
           <h2>Questions</h2>
           {!faqById && (
@@ -146,3 +144,6 @@ const HomePage = ()=>{
 }
 
 export default HomePage
+
+// TODO Fungsi Tambah,Edit,Hapus FAQ oleh admin. Download FAQ. Search By Context, Popup tambah User
+// TODO Penggunaan HTML agar supaya bisa input gambar kedalam FAQ

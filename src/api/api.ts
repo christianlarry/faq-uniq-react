@@ -26,6 +26,12 @@ export const getFaqCategory = (config?:SWRConfiguration)=>useSWR<FaqCategoryResp
   config
 )
 
+export const getFaqById = (id:string,config?:SWRConfiguration)=>useSWR<FaqResponseModel>(
+  `faq/${id}`,
+  fetcher,
+  config
+)
+
 // POST LOGIN
 export const postLogin = async (data:LoginModel)=>{
   return await axios.post(`${api_baseUrl}/login`,data)

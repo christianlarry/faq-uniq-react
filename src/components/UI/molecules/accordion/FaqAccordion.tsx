@@ -10,15 +10,19 @@ import AdminActionMenu from "../button-group/AdminActionMenu"
 import ReactMarkdown from "react-markdown"
 import { useAuth } from "../../../../hooks/useAuth"
 import Button from "../../atoms/button/Button"
+import ButtonText from "../../atoms/button/ButtonText"
 import { useNavigate } from "react-router-dom"
 
 interface Props{
   title:string,
   answer:string,
   id:string
+  alwaysOpen?:boolean
 }
 
-const FaqAccordion = ({title,answer,id}:Props) => {
+const FaqAccordion = ({title,answer,id,alwaysOpen=false}:Props) => {
+
+  const navigate = useNavigate()
 
   // LOGIC TO CHECK IF USER IS ADMIN
   const {isAuthenticated} = useAuth()
@@ -37,15 +41,23 @@ const FaqAccordion = ({title,answer,id}:Props) => {
     })
   }
 
+  const handleDetailClick = ()=>{
+    navigate(`/faq/${id}`)
+  }
+
   return (
     <GradientBox gradient="y-t-r">
       <AccordionContainer>
-        <AccordionLabel className="faq-accordion-label">
+        <AccordionLabel className="faq-accordion-label" alwaysOpen={alwaysOpen}>
           <div className="faq-accordion-label-left">
+            {!alwaysOpen &&
             <i className="faq-accordion-chevron">
               <FaChevronDown />
             </i>
-            <span className="faq-accordion-title">{title}</span>
+            }
+            <span className="faq-accordion-title" style={{
+              paddingLeft: alwaysOpen?"10px":0
+            }}>{title}</span>
           </div>
           {isAuthenticated && <div className="faq-admin-action-wrap"><AdminActionMenu/></div>}
         </AccordionLabel>
@@ -56,7 +68,10 @@ const FaqAccordion = ({title,answer,id}:Props) => {
               {/* <div dangerouslySetInnerHTML={{__html: answer}}/> */}
               <ReactMarkdown>{answer}</ReactMarkdown>
             </div>
-            <div style={{display: "flex",justifyContent: "end"}}>
+            <div style={{display: "flex",justifyContent: "space-between",gap: "5px",alignItems: "center"}}>
+              {!alwaysOpen &&
+              <ButtonText text="Detail" onClick={handleDetailClick}/>
+              }
               <Button onClick={handleShareClick}>
                 <span>Share</span>
               </Button>
