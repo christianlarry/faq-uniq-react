@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react"
+import { Fragment, useEffect, useRef, useState } from "react"
 import FaqAccordion from "../../UI/molecules/accordion/FaqAccordion"
 import "./HomePage.css"
 
@@ -8,6 +8,7 @@ import FetchLoader from "../../UI/atoms/loader/FetchLoader"
 import ButtonText from "../../UI/atoms/button/ButtonText"
 import ErrorText from "../../UI/atoms/error/ErrorText"
 import { FaqModel } from "../../../interfaces/faqInterfaces"
+import { useAllFaq } from "../../../hooks/useAllFaq"
 
 const HomePage = ()=>{
 
@@ -16,23 +17,25 @@ const HomePage = ()=>{
   const location = useLocation()
   const navigate = useNavigate()
 
+  const allFaq = useAllFaq()
+
   // STATE
   const [faqApiQuery,setFaqApiQuery] = useState<string>("")
   const [isShowResetBtn,setIsShowResetBtn] = useState<boolean>(false)
   const [faqById,setFaqById] = useState<FaqModel[]>()
 
+  // REF
+  const faqSectionRef = useRef<HTMLElement>(null)
+
   // SWR
   const faqResult = getFaq(faqApiQuery)
-  const allFaqResult = getFaq(undefined,{
-    revalidateOnFocus: false
-  })
 
   useEffect(()=>{
     const {id} = params
     
     // IF THERE'S ID PARAMETER IN URL
-    if(id && allFaqResult.data){
-      let faq = allFaqResult.data.data.filter(val => val._id === id)
+    if(id && allFaq.faq){
+      let faq = allFaq.faq.filter(val => val._id === id)
       
       const filteredFaq = faq.reduce((acc: FaqModel[], current: FaqModel) => {
         // Cek apakah faq dengan _id yang sama sudah ada di acc
@@ -51,7 +54,7 @@ const HomePage = ()=>{
     }else{
       setFaqById(undefined)
     }
-  },[allFaqResult.data])
+  },[allFaq.faq])
 
   useEffect(()=>{
 
@@ -81,6 +84,17 @@ const HomePage = ()=>{
 
   },[location])
 
+  useEffect(()=>{
+    const searchParams = new URLSearchParams(location.search)
+    const category = searchParams.get("category")
+    const subCategory = searchParams.get("sub_category")
+    const search = searchParams.get("search")
+
+    if(faqResult.data && (category || subCategory || search) && faqSectionRef.current){
+      faqSectionRef.current.scrollIntoView({behavior: "smooth"})
+    }
+  },[faqResult.data])
+
   // EVENT HANDLER
   const handleResetFaq = ()=>{
     navigate("/")
@@ -88,12 +102,12 @@ const HomePage = ()=>{
 
   return (
     <>
-      <section id="faq">
+      <section id="faq" ref={faqSectionRef}>
         <div className="section-title faq-section-title">
           <h2>Questions</h2>
           {!faqById && (
             <>
-              <span>({faqResult.data ? faqResult.data.data.length:""} of {allFaqResult.data ? allFaqResult.data.data.length:""})</span>
+              <span>({faqResult.data ? faqResult.data.data.length:""} of {allFaq.faq ? allFaq.faq.length:""})</span>
               {isShowResetBtn &&
                 <ButtonText text="Reset" style={{marginLeft: "5px"}} onClick={handleResetFaq}/>
               }

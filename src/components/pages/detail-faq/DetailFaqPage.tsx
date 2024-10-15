@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import ButtonText from "../../UI/atoms/button/ButtonText"
 import FaqAccordion from "../../UI/molecules/accordion/FaqAccordion"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useAllFaq } from "../../../hooks/useAllFaq"
 import { FaqModel } from "../../../interfaces/faqInterfaces"
 import ErrorText from "../../UI/atoms/error/ErrorText"
@@ -14,7 +14,10 @@ const DetailFaqPage = ()=>{
   const {error,faq} = useAllFaq()
 
   // STATE
-  const [faqById,setFaqById] = useState<FaqModel[]>([])
+  const [faqById,setFaqById] = useState<FaqModel[]>()
+
+  // REF
+  const faqSectionRef = useRef<HTMLElement>(null)
 
   // EVENT HANDLER
   const handleBackClick = ()=>{
@@ -25,7 +28,7 @@ const DetailFaqPage = ()=>{
   useEffect(()=>{
     const {id} = params
     
-    if(faq){
+    if(faq && faq.length > 0){
       const filteredFaq = faq.filter(n => n._id === id)
       
       // BERSIHKAN DUPLIKASI
@@ -35,13 +38,19 @@ const DetailFaqPage = ()=>{
         if(!dups) clearedFaq.push(faq)
       })
 
-      if(clearedFaq.length > 0) setFaqById(clearedFaq)
+      setFaqById(clearedFaq)
     }
   },[faq])
 
+  useEffect(()=>{
+    if(faqById && faqSectionRef.current){
+      faqSectionRef.current.scrollIntoView({behavior:"smooth"})
+    }
+  },[faqById])
+
   return (
     <>
-      <section id="faq">
+      <section id="faq" ref={faqSectionRef}>
         <div className="section-title" style={{display: "flex",alignItems: "center",gap: "5px"}}>
           <h2>Questions</h2>
           <ButtonText text="Back" onClick={handleBackClick}/>
@@ -51,7 +60,7 @@ const DetailFaqPage = ()=>{
           <ErrorText />
           }
 
-          {faqById.length>0 && 
+          {(faqById && faqById.length>0) && 
           <FaqAccordion
             id={faqById[0]._id}
             title={faqById[0].title}
@@ -60,7 +69,7 @@ const DetailFaqPage = ()=>{
           />
           }
 
-          {faqById.length === 0 &&
+          {(faqById && faqById.length === 0) &&
           <ErrorText message="Ups, Faq not found:("/>
           }
         </div>
