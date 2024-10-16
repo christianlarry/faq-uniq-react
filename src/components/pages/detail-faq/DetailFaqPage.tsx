@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import { useAllFaq } from "../../../hooks/useAllFaq"
 import { FaqModel } from "../../../interfaces/faqInterfaces"
 import ErrorText from "../../UI/atoms/error/ErrorText"
+import AddFaqModal from "../../UI/organisms/modal/AddFaqModal"
 
 const DetailFaqPage = ()=>{
 

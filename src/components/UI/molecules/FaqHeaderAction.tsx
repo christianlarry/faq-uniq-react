@@ -8,6 +8,8 @@ import LoginModal from "../organisms/modal/LoginModal"
 import { useAuth } from "../../../hooks/useAuth"
 import AlertSuccess from "../organisms/alert/AlertSuccess"
 import AlertConfirm from "../organisms/alert/AlertConfirm"
+import AddFaqModal from "../organisms/modal/AddFaqModal"
+import DownloadFaqModal from "../organisms/modal/DownloadFaqModal"
 
 const FaqHeaderAction = ()=>{
 
@@ -15,6 +17,8 @@ const FaqHeaderAction = ()=>{
 
   // STATE
   const [showLoginModal,setShowLoginModal] = useState<boolean>(false)
+  const [showAddFaqModal,setShowAddFaqModal] = useState<boolean>(false)
+  const [showDownloadFaqModal,setShowDownloadFaqModal] = useState<boolean>(false)
 
   const confirmLogoutState = useState<boolean>(false)
   const isLogoutState = useState<boolean>(false)
@@ -34,11 +38,11 @@ const FaqHeaderAction = ()=>{
   }
 
   const handleDownloadClick = ()=>{
-    alert("CLICKED DOWNLOAD")
+    setShowDownloadFaqModal(true)
   }
 
   const handleAddClick = ()=>{
-    alert("ADD CLICKED")
+    setShowAddFaqModal(true)
   }
 
   return (
@@ -70,6 +74,9 @@ const FaqHeaderAction = ()=>{
           {showLoginModal &&
             <LoginModal showModalSet={setShowLoginModal}/>
           }
+
+          <AddFaqModal showModalState={[showAddFaqModal,setShowAddFaqModal]}/>
+          <DownloadFaqModal showModalState={[showDownloadFaqModal,setShowDownloadFaqModal]}/>
 
           <AlertConfirm 
           message="Confirm logout?"

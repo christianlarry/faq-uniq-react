@@ -5,7 +5,7 @@ import "./ModalHeader.css"
 
 interface Props{
   children?: React.ReactNode,
-  showModal: React.Dispatch<React.SetStateAction<boolean>>
+  showModal?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const ModalHeader = ({
@@ -17,9 +17,11 @@ const ModalHeader = ({
       <div className="faqu-modal-header-content">
         {children}
       </div>
+      {showModal &&
       <IconButton className="faqu-modal-xmark" onClick={()=>showModal(false)}>
         <FaXmark />
       </IconButton>
+      }
     </div>
   )
 }

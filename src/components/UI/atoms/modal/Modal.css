@@ -40,3 +40,9 @@
   border-radius: inherit;
   background: var(--gradient-red-t-yellow);
 }
+
+.modal-footer-btn-wrap{
+  display: flex;
+  justify-content: end;
+  gap: 5px;
+}
