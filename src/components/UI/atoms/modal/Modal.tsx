@@ -23,7 +23,7 @@ const Modal = ({
 
   return (
     <FocusLock>
-      <div className="faqu-modal">
+      <div className="faqu-modal" onClick={(e:React.MouseEvent)=>e.stopPropagation()}>
         <div className="faqu-modal-wrapper">
           <div className={`faqu-modal-container ${size}`}>
             {children}

@@ -10,6 +10,7 @@ import AlertSuccess from "../organisms/alert/AlertSuccess"
 import AlertConfirm from "../organisms/alert/AlertConfirm"
 import AddFaqModal from "../organisms/modal/AddFaqModal"
 import DownloadFaqModal from "../organisms/modal/DownloadFaqModal"
+import ManageUsersModal from "../organisms/modal/ManageUsersModal"
 
 const FaqHeaderAction = ()=>{
 
@@ -19,6 +20,7 @@ const FaqHeaderAction = ()=>{
   const [showLoginModal,setShowLoginModal] = useState<boolean>(false)
   const [showAddFaqModal,setShowAddFaqModal] = useState<boolean>(false)
   const [showDownloadFaqModal,setShowDownloadFaqModal] = useState<boolean>(false)
+  const [showManageUsersModal,setShowManageUsersModal] = useState<boolean>(false)
 
   const confirmLogoutState = useState<boolean>(false)
   const isLogoutState = useState<boolean>(false)
@@ -46,7 +48,7 @@ const FaqHeaderAction = ()=>{
   }
 
   const handleManageUsersClick = ()=>{
-    alert("Manage users bro!!")
+    setShowManageUsersModal(true)
   }
 
   return (
@@ -84,6 +86,7 @@ const FaqHeaderAction = ()=>{
 
           <AddFaqModal showModalState={[showAddFaqModal,setShowAddFaqModal]}/>
           <DownloadFaqModal showModalState={[showDownloadFaqModal,setShowDownloadFaqModal]}/>
+          <ManageUsersModal showModalState={[showManageUsersModal,setShowManageUsersModal]}/>
 
           <AlertConfirm 
           message="Confirm logout?"
