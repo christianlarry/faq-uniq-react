@@ -1,5 +1,5 @@
 import "./FaqHeaderAction.css"
-import {base64Add,base64Download,base64Login,base64Logout} from "../../../assets/base64Icons"
+import {base64Add,base64Download,base64Login,base64Logout, base64Users} from "../../../assets/base64Icons"
 import IconButton from "../atoms/button/IconButton"
 import { createPortal } from "react-dom"
 import { useState } from "react"
@@ -45,19 +45,26 @@ const FaqHeaderAction = ()=>{
     setShowAddFaqModal(true)
   }
 
+  const handleManageUsersClick = ()=>{
+    alert("Manage users bro!!")
+  }
+
   return (
     <>
       <div className="faq-header-action">
         {isAuthenticated &&
         <>  
+          <IconButton title="Logout" onClick={handleLogoutButtonClick}>
+            <img src={base64Logout} alt="Logout Icon"/>
+          </IconButton>
           <IconButton title="Add FAQ" onClick={handleAddClick}>
             <img src={base64Add} alt="Add Icon"/>
           </IconButton>
           <IconButton title="Download FAQ" onClick={handleDownloadClick}>
             <img src={base64Download} alt="Download Icon"/>
           </IconButton>
-          <IconButton title="Logout" onClick={handleLogoutButtonClick}>
-            <img src={base64Logout} alt="Logout Icon"/>
+          <IconButton title="Manage Users" onClick={handleManageUsersClick}>
+            <img src={base64Users} alt="Manage Users Icon"/>
           </IconButton>
         </>
         }
