@@ -6,7 +6,7 @@ import { useState } from "react"
 
 import LoginModal from "../organisms/modal/LoginModal"
 import { useAuth } from "../../../hooks/useAuth"
-import AlertSuccess from "../organisms/alert/AlertSuccess"
+import AlertSuccess from "../organisms/alert/Alert"
 import AlertConfirm from "../organisms/alert/AlertConfirm"
 import AddFaqModal from "../organisms/modal/AddFaqModal"
 import DownloadFaqModal from "../organisms/modal/DownloadFaqModal"

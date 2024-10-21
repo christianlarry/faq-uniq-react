@@ -6,7 +6,14 @@ import { createPortal } from "react-dom"
 import DeleteFaqModal from "../../organisms/modal/DeleteFaqModal"
 import EditFaqModal from "../../organisms/modal/EditFaqModal"
 
-const AdminActionMenu = ()=>{
+interface Props{
+  data:{
+    title:string,
+    id:string
+  }
+}
+
+const AdminActionMenu = ({data}:Props)=>{
 
   const [showDeleteFaqModal,setShowDeleteFaqModal] = useState<boolean>(false)
   const [showEditFaqModal,setShowEditFaqModal] = useState<boolean>(false)
@@ -36,8 +43,8 @@ const AdminActionMenu = ()=>{
 
       {createPortal((
         <>
-          <DeleteFaqModal showModalState={[showDeleteFaqModal,setShowDeleteFaqModal]}/>
-          <EditFaqModal showModalState={[showEditFaqModal,setShowEditFaqModal]}/>
+          <DeleteFaqModal data={data} showModalState={[showDeleteFaqModal,setShowDeleteFaqModal]}/>
+          <EditFaqModal data={data} showModalState={[showEditFaqModal,setShowEditFaqModal]}/>
         </>
       ),document.body)}
     </>

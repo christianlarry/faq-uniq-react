@@ -5,19 +5,22 @@ import ModalContent from "../../atoms/modal/ModalContent"
 import ModalFooter from "../../atoms/modal/ModalFooter"
 
 import successAnimation from "../../../../assets/json/lottie/success.json"
+import errorAnimation from "../../../../assets/json/lottie/error.json"
 import React from "react"
 
-import "./AlertSuccess.css"
+import "./Alert.css"
 
 interface Props{
-  message:string,
+  message:string
+  state?:"normal"|"success"|"error"
   onNext?:()=>void
   nextText?:string
   showState:[boolean,React.Dispatch<React.SetStateAction<boolean>>]
 }
 
-const AlertSuccess = ({
+const Alert = ({
   message,
+  state="normal",
   nextText="OK",
   onNext=()=>{},
   showState
@@ -32,16 +35,22 @@ const AlertSuccess = ({
     setShow(false)
   }
 
+  const animation = state==="success"?successAnimation:errorAnimation
+
   if(show) return (
     <Modal size="sm">
+
       <ModalContent>
-        <div className="alert-success-wrapper">
-          <Lottie animationData={successAnimation} loop={false}/>
-          <span className="alert-success-message">
+        <div className="alert-wrapper">
+          {state !== "normal" &&
+          <Lottie animationData={animation} loop={false}/>
+          }
+          <span className="alert-message">
             {message}
           </span>
         </div>
       </ModalContent>
+
       <ModalFooter>
         <div className="alert-footer">
           <Button paddingSize="normal" onClick={handleOkClick}>
@@ -57,4 +66,4 @@ const AlertSuccess = ({
   )
 }
 
-export default AlertSuccess
+export default Alert

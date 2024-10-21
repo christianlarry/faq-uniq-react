@@ -1,4 +1,4 @@
-.alert-success-wrapper{
+.alert-wrapper{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,10 +7,9 @@
   text-align: center;
 }
 
-.alert-success-message{
+.alert-message{
   font-weight: 500;
   position: relative;
-  top: -3rem;
   font-size: 1.4rem;
 }
 
@@ -18,10 +17,4 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: end;
-}
-
-@media only screen and (max-width: 400px){
-  .alert-success-message{
-    top: -1.5rem;
-  }
 }

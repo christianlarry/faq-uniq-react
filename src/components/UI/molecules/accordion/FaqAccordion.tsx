@@ -59,7 +59,7 @@ const FaqAccordion = ({title,answer,id,alwaysOpen=false}:Props) => {
               paddingLeft: alwaysOpen?"10px":0
             }}>{title}</span>
           </div>
-          {isAuthenticated && <div className="faq-admin-action-wrap"><AdminActionMenu/></div>}
+          {isAuthenticated && <div className="faq-admin-action-wrap"><AdminActionMenu data={{id,title}}/></div>}
         </AccordionLabel>
         <AccordionContent>
           <div className="faq-accordion-content">

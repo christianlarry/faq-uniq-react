@@ -44,3 +44,15 @@ export const postCheckToken = async (token:string)=>{
     }
   })
 }
+
+// DELETE
+export const deleteFaq = async (id:string)=>{
+
+  const token = localStorage.getItem("token") || ""
+
+  return await axios.delete(`${api_baseUrl}/faq/${id}`,{
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  })
+}

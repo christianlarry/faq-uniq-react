@@ -18,7 +18,7 @@ import { AxiosError } from "axios"
 import ErrorInput from "../../atoms/error/ErrorInput"
 import { useNavigate } from "react-router-dom"
 
-import AlertSuccess from "../alert/AlertSuccess"
+import AlertSuccess from "../alert/Alert"
 
 interface Props{
   showModalSet:React.Dispatch<React.SetStateAction<boolean>>
@@ -107,6 +107,7 @@ const LoginModal = ({showModalSet}:Props) => {
       </ModalContent>
       
       <AlertSuccess 
+      state="success"
       message="Success Login" 
       showState={isLoginState}
       onNext={handleSuccessLogin}/>

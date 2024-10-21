@@ -7,6 +7,10 @@ import ModalHeader from "../../atoms/modal/ModalHeader"
 
 interface Props{
   showModalState:[boolean,React.Dispatch<React.SetStateAction<boolean>>]
+  data:{
+    id:string,
+    title:string
+  }
 }
 
 const EditFaqModal = ({showModalState}:Props)=>{
