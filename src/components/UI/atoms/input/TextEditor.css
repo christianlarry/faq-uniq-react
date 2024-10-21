@@ -1,0 +1,7 @@
+.text-editor *{
+  color: #000;
+  list-style-position: inherit;
+  list-style-type: inherit;
+  margin: revert;
+  padding: revert;
+}
