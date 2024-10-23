@@ -95,6 +95,7 @@ const FaqHeaderAction = ()=>{
           />
 
           <AlertSuccess
+          state="success"
           message="Logout success!"
           showState={isLogoutState}
           />

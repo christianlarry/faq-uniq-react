@@ -1,0 +1,12 @@
+.faq-textarea{
+  background: none;
+  border: none;
+  outline: none;
+  background-color: var(--gray);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-family: var(--font-secondary);
+  color: var(--input-text-color);
+  resize: none;
+}
