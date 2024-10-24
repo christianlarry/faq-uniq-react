@@ -12,6 +12,8 @@ import PlainInput from "../../atoms/input/PlainInput"
 import TextArea from "../../atoms/input/TextArea"
 import { addFaqValidation } from "../../../../validation/faqValidation"
 import ErrorInput from "../../atoms/error/ErrorInput"
+import { postFaq } from "../../../../api/api"
+import { useAuth } from "../../../../hooks/useAuth"
 
 interface Props{
   showModalState:[boolean,React.Dispatch<React.SetStateAction<boolean>>]
@@ -26,19 +28,21 @@ const options = [
 
 const AddFaqModal = ({showModalState}:Props)=>{
   
+  const {token} = useAuth()
+
   // STATE
   const [show,setShow] = showModalState
 
   // DATA STATE
   const [answer,setAnswer] = useState<string>("")
-  const [categoryId,setCategoryId] = useState<string | undefined>("")
+  const [subCategoryId,setSubCategoryId] = useState<string | undefined>("")
   const [questions,setQuestions] = useState<string>("")
   const [title,setTitle] = useState<string>("")
 
   // ERROR STATE
   const [errors, setErrors] = useState<{
     title?: string,
-    categoryId?: string,
+    subCategoryId?: string,
     questions?: string,
     answer?: string,
   }>({});
@@ -50,7 +54,7 @@ const AddFaqModal = ({showModalState}:Props)=>{
   const handleAddClick = ()=>{
     const input = {
       answer,
-      categoryId,
+      subCategoryId,
       questions,
       title
     }
@@ -61,21 +65,34 @@ const AddFaqModal = ({showModalState}:Props)=>{
       const fError = validationRes.error.format()
       setErrors({
         title: fError.title?._errors?.[0],
-        categoryId: fError.categoryId?._errors?.[0],
+        subCategoryId: fError.subCategoryId?._errors?.[0],
         questions: fError.questions?._errors?.[0],
         answer: fError.answer?._errors?.[0],
       });
     }else{
       setErrors({})
 
+      const questionsArr = questions.split(",").map(val=>val.trimStart())
 
+      postFaq(token,{
+        title,
+        answer,
+        id_sub_category: subCategoryId || "",
+        questions: questionsArr
+      })
+        .then(result=>{
+          console.log(result.status)
+        })
+        .catch(err=>{
+          console.log(err)
+        })
     }
   }
 
   useEffect(()=>{
     if(!show){
       setTitle('');
-      setCategoryId('');
+      setSubCategoryId('');
       setQuestions('');
       setAnswer('');
       setErrors({});
@@ -96,8 +113,8 @@ const AddFaqModal = ({showModalState}:Props)=>{
             </div>
             <div className="add-faq-input-group" style={{flex: 1}}>
               <span>Category:</span>
-              <Select options={options} state={[categoryId,setCategoryId]}/>
-              {errors.categoryId && <ErrorInput message={errors.categoryId}/>}
+              <Select options={options} state={[subCategoryId,setSubCategoryId]}/>
+              {errors.subCategoryId && <ErrorInput message={errors.subCategoryId}/>}
             </div>
           </div>
           

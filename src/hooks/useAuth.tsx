@@ -3,7 +3,8 @@ import { postCheckToken } from "../api/api";
 
 interface AuthContextModel{
   isAuthenticated: boolean,
-  logout: ()=>void
+  logout: ()=>void,
+  token:string
 }
 
 const AuthContext = createContext<AuthContextModel | undefined>(undefined)
@@ -14,6 +15,7 @@ export const AuthProvider = ({
   
   // STATE & NAVIGATE
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [token,setToken] = useState<string>("")
 
   useEffect(()=>{
     const token = localStorage.getItem("token")
@@ -27,6 +29,7 @@ export const AuthProvider = ({
           
           if(result.status === 200){
             setIsAuthenticated(true)
+            setToken(token)
           }else{
             setIsAuthenticated(false)
             localStorage.removeItem("token")
@@ -47,7 +50,7 @@ export const AuthProvider = ({
   };
 
   return (
-    <AuthContext.Provider value={{isAuthenticated,logout}}>
+    <AuthContext.Provider value={{isAuthenticated,logout,token}}>
       {children}
     </AuthContext.Provider>
   )

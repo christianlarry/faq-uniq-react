@@ -6,6 +6,13 @@ export interface FaqModel{
   answer:string
 }
 
+export interface PostFaqModel{
+  title:string,
+  id_sub_category:string,
+  questions:string[],
+  answer:string
+}
+
 export interface FaqResponseModel{
   data:FaqModel[]
 }

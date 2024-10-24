@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios"
 import useSWR, { SWRConfiguration } from "swr"
-import { FaqCategoryResponseModel, FaqResponseModel } from "../interfaces/faqInterfaces"
+import { FaqCategoryResponseModel, FaqResponseModel, PostFaqModel } from "../interfaces/faqInterfaces"
 import { LoginModel } from "../interfaces/userInterfaces"
 
 // INIT VARIABEL
@@ -39,6 +39,14 @@ export const postLogin = async (data:LoginModel)=>{
 
 export const postCheckToken = async (token:string)=>{
   return await axios.post(`${api_baseUrl}/check-token`,undefined,{
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  })
+}
+
+export const postFaq = async (token:string,data:PostFaqModel)=>{
+  return await axios.post(`${api_baseUrl}/faq`,data,{
     headers:{
       Authorization: `Bearer ${token}`
     }
