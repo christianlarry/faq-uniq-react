@@ -14,21 +14,16 @@ import { addFaqValidation } from "../../../../validation/faqValidation"
 import ErrorInput from "../../atoms/error/ErrorInput"
 import { postFaq } from "../../../../api/api"
 import { useAuth } from "../../../../hooks/useAuth"
+import { useFaqCategory } from "../../../../hooks/useFaqCategory"
 
 interface Props{
   showModalState:[boolean,React.Dispatch<React.SetStateAction<boolean>>]
 }
 
-const options = [
-  {
-    key: "Category A",
-    value: "gdkdjlkjgajg"
-  }
-]
-
 const AddFaqModal = ({showModalState}:Props)=>{
   
   const {token} = useAuth()
+  const {faqCategory} = useFaqCategory()
 
   // STATE
   const [show,setShow] = showModalState
