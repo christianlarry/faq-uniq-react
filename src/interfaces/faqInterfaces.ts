@@ -3,7 +3,8 @@ export interface FaqModel{
   title:string,
   time_updated:number,
   questions:string[],
-  answer:string
+  answer:string,
+  htmlAnswer:string
 }
 
 export interface PostFaqModel{

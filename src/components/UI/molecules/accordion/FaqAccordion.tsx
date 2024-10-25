@@ -14,13 +14,14 @@ import ButtonText from "../../atoms/button/ButtonText"
 import { useNavigate } from "react-router-dom"
 
 interface Props{
-  title:string,
-  answer:string,
-  id:string
   alwaysOpen?:boolean
+  _id:string,
+  answer:string,
+  title:string,
+  htmlAnswer:string
 }
 
-const FaqAccordion = ({title,answer,id,alwaysOpen=false}:Props) => {
+const FaqAccordion = ({title,answer,_id,htmlAnswer,alwaysOpen=false}:Props) => {
 
   const navigate = useNavigate()
 
@@ -28,7 +29,7 @@ const FaqAccordion = ({title,answer,id,alwaysOpen=false}:Props) => {
   const {isAuthenticated} = useAuth()
 
   const handleShareClick = ()=>{
-    const shareUrl = `${window.location.origin}/faq/${id}`
+    const shareUrl = `${window.location.origin}/faq/${_id}`
 
     navigator.share({
       title: title,
@@ -42,7 +43,7 @@ const FaqAccordion = ({title,answer,id,alwaysOpen=false}:Props) => {
   }
 
   const handleDetailClick = ()=>{
-    navigate(`/faq/${id}`)
+    navigate(`/faq/${_id}`)
   }
 
   return (
@@ -59,14 +60,15 @@ const FaqAccordion = ({title,answer,id,alwaysOpen=false}:Props) => {
               paddingLeft: alwaysOpen?"10px":0
             }}>{title}</span>
           </div>
-          {isAuthenticated && <div className="faq-admin-action-wrap"><AdminActionMenu data={{id,title}}/></div>}
+          {isAuthenticated && <div className="faq-admin-action-wrap"><AdminActionMenu data={{id:_id,title}}/></div>}
         </AccordionLabel>
         <AccordionContent>
           <div className="faq-accordion-content">
             <h5 style={{marginBottom: "1rem"}}><b>Jawaban pertanyaan:  </b></h5>
             <div className="faq-accordion-content-answer">
-              {/* <div dangerouslySetInnerHTML={{__html: answer}}/> */}
-              <ReactMarkdown>{answer}</ReactMarkdown>
+              {(answer && !htmlAnswer) && <ReactMarkdown>{answer}</ReactMarkdown>}
+
+              {htmlAnswer && <div dangerouslySetInnerHTML={{__html: htmlAnswer}}/>} 
             </div>
             <div style={{display: "flex",justifyContent: "space-between",gap: "5px",alignItems: "center"}}>
               {!alwaysOpen &&

@@ -89,7 +89,7 @@ const HomePage = ()=>{
           {faqResult.data && faqResult.data.data.map((faq,i)=>(
             <Fragment key={i}>
               {faq !== null &&
-                <FaqAccordion title={faq.title} answer={faq.answer} id={faq._id}/>
+                <FaqAccordion title={faq.title} answer={faq.answer} _id={faq._id} htmlAnswer={faq.htmlAnswer}/>
               }
             </Fragment>
           ))}
@@ -111,3 +111,4 @@ export default HomePage
 
 // TODO Fungsi Tambah,Edit,Hapus FAQ oleh admin, Popup tambah User
 // TODO Penggunaan HTML supaya bisa input gambar kedalam FAQ
+// TODO Error boundaries, Fix hardcode

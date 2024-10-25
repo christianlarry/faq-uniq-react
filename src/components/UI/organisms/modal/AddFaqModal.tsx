@@ -7,7 +7,7 @@ import ModalHeader from "../../atoms/modal/ModalHeader"
 
 import "./AddFaqModal.css"
 import TextEditor from "../../atoms/input/TextEditor"
-import Select from "../../atoms/input/Select"
+import Select, { OptionsWithGroup } from "../../atoms/input/Select"
 import PlainInput from "../../atoms/input/PlainInput"
 import TextArea from "../../atoms/input/TextArea"
 import { addFaqValidation } from "../../../../validation/faqValidation"
@@ -27,6 +27,7 @@ const AddFaqModal = ({showModalState}:Props)=>{
 
   // STATE
   const [show,setShow] = showModalState
+  const [subCatOptions,setSubCatOptions] = useState<OptionsWithGroup[]>([])
 
   // DATA STATE
   const [answer,setAnswer] = useState<string>("")
@@ -67,6 +68,7 @@ const AddFaqModal = ({showModalState}:Props)=>{
     }else{
       setErrors({})
 
+      // FORMAT QUESTIONS YANG AWALNYA STRING KE ARRAY STRING, DIPISAH BERDASARKAN KOMA/,
       const questionsArr = questions.split(",").map(val=>val.trimStart())
 
       postFaq(token,{
@@ -94,6 +96,27 @@ const AddFaqModal = ({showModalState}:Props)=>{
     }
   },[show])
 
+  useEffect(()=>{
+    if(faqCategory && faqCategory.length > 0){
+      const map = faqCategory.map(val=>{
+        const label = val.name
+        const options = val.sub_category.filter(subCat => subCat != null).map(subCat=>{
+          return {
+            key: subCat.sub_category,
+            value: subCat._id
+          }
+        })
+
+        return {
+          label,
+          options
+        }
+      })
+      
+      setSubCatOptions(map)
+    }
+  },[faqCategory])
+
   if(show) return (
     <Modal focusLock={false}>
       <ModalHeader/>
@@ -108,7 +131,7 @@ const AddFaqModal = ({showModalState}:Props)=>{
             </div>
             <div className="add-faq-input-group" style={{flex: 1}}>
               <span>Category:</span>
-              <Select options={options} state={[subCategoryId,setSubCategoryId]}/>
+              <Select optionsWithGroup={subCatOptions} state={[subCategoryId,setSubCategoryId]}/>
               {errors.subCategoryId && <ErrorInput message={errors.subCategoryId}/>}
             </div>
           </div>
