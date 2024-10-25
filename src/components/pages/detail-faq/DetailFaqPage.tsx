@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react"
 import { useAllFaq } from "../../../hooks/useAllFaq"
 import { FaqModel } from "../../../interfaces/faqInterfaces"
 import ErrorText from "../../UI/atoms/error/ErrorText"
-import AddFaqModal from "../../UI/organisms/modal/AddFaqModal"
 
 const DetailFaqPage = ()=>{
 
@@ -63,9 +62,10 @@ const DetailFaqPage = ()=>{
 
           {(faqById && faqById.length>0) && 
           <FaqAccordion
-            id={faqById[0]._id}
+            _id={faqById[0]._id}
             title={faqById[0].title}
             answer={faqById[0].answer}
+            htmlAnswer={faqById[0].htmlAnswer}
             alwaysOpen
           />
           }

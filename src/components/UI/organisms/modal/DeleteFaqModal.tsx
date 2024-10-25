@@ -7,6 +7,7 @@ import { deleteFaq } from "../../../../api/api"
 
 import { AxiosError } from "axios"
 import Alert from "../alert/Alert"
+import { useNavigate } from "react-router-dom"
 
 interface Props{
   showModalState:[boolean,React.Dispatch<React.SetStateAction<boolean>>]
@@ -17,6 +18,8 @@ interface Props{
 }
 
 const DeleteFaqModal = ({showModalState,data}:Props)=>{
+
+  const navigate = useNavigate()
 
   const [show,setShow] = showModalState
 
@@ -32,8 +35,7 @@ const DeleteFaqModal = ({showModalState,data}:Props)=>{
       const result = await deleteFaq(data.id)
 
       if(result.status === 200){
-        alert("Berhasil hapus data!")
-        setShow(false)
+        setShowSuccessAlert(true)
       }
       
     } catch (err) {
@@ -41,6 +43,11 @@ const DeleteFaqModal = ({showModalState,data}:Props)=>{
         setShowErrorAlert(true)
       }
     }
+  }
+
+  const handleSuccessDeleteFaq = ()=>{
+    setShow(false)
+    navigate("/")
   }
 
   if(show) return (
@@ -67,7 +74,7 @@ const DeleteFaqModal = ({showModalState,data}:Props)=>{
       </ModalFooter>
 
       <Alert state="error" onNext={()=>setShow(false)} message="Failed on deleting FAQ!" showState={[showErrorAlert,setShowErrorAlert]}/>
-      <Alert state="success" onNext={()=>setShow(false)} message="Success delete FAQ!" showState={[showSuccessAlert,setShowSuccessAlert]}/>
+      <Alert state="success" onNext={handleSuccessDeleteFaq} message="Success delete FAQ!" showState={[showSuccessAlert,setShowSuccessAlert]}/>
     </Modal>
   )
 

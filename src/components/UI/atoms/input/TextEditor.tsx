@@ -52,6 +52,9 @@ const TextEditor = ({dataState}:Props)=>{
             Table,
             Undo
           ],
+          mediaEmbed:{
+            previewsInData: true
+          },
           initialData: "",
         } }
         data={editorData}

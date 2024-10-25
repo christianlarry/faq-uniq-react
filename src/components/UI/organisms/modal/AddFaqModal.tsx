@@ -15,12 +15,17 @@ import ErrorInput from "../../atoms/error/ErrorInput"
 import { postFaq } from "../../../../api/api"
 import { useAuth } from "../../../../hooks/useAuth"
 import { useFaqCategory } from "../../../../hooks/useFaqCategory"
+import Alert from "../alert/Alert"
+import { AxiosError } from "axios"
+import { useNavigate } from "react-router-dom"
 
 interface Props{
   showModalState:[boolean,React.Dispatch<React.SetStateAction<boolean>>]
 }
 
 const AddFaqModal = ({showModalState}:Props)=>{
+
+  const navigate = useNavigate()
   
   const {token} = useAuth()
   const {faqCategory} = useFaqCategory()
@@ -28,6 +33,11 @@ const AddFaqModal = ({showModalState}:Props)=>{
   // STATE
   const [show,setShow] = showModalState
   const [subCatOptions,setSubCatOptions] = useState<OptionsWithGroup[]>([])
+
+  // ALERT STATE
+  const [showSuccessAlert,setShowSuccessAlert] = useState<boolean>(false)
+  const [showErrorAlert,setShowErrorAlert] = useState<boolean>(false)
+  const [errorMsg,setErrorMsg] = useState<string>("Failed add new FAQ!")
 
   // DATA STATE
   const [answer,setAnswer] = useState<string>("")
@@ -78,12 +88,23 @@ const AddFaqModal = ({showModalState}:Props)=>{
         questions: questionsArr
       })
         .then(result=>{
-          console.log(result.status)
+          if(result.status === 200){
+            setShowSuccessAlert(true)
+          }
         })
         .catch(err=>{
-          console.log(err)
+          if(err instanceof AxiosError){
+
+            setShowErrorAlert(true)
+            setErrorMsg(err.response?.data.data.errors)
+          }
         })
     }
+  }
+
+  const handleSuccessAddFaq = ()=>{
+    setShow(false)
+    navigate(0)
   }
 
   useEffect(()=>{
@@ -160,6 +181,9 @@ const AddFaqModal = ({showModalState}:Props)=>{
           </Button>
         </div>
       </ModalFooter>
+
+      <Alert state="success" onNext={handleSuccessAddFaq} message="Added new FAQ to database!" showState={[showSuccessAlert,setShowSuccessAlert]}/>
+      <Alert state="error" message={errorMsg} showState={[showErrorAlert,setShowErrorAlert]}/>
     </Modal>
   )
 
