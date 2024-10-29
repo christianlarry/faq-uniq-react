@@ -19,6 +19,7 @@
     "@hookform/resolvers": "^3.9.0",
     "axios": "^1.7.7",
     "ckeditor5": "^43.2.0",
+    "jose": "^5.9.6",
     "lottie-react": "^2.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
