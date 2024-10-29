@@ -25,7 +25,7 @@ const EditFaqModal = ({showModalState}:Props)=>{
     <Modal>
       <ModalHeader/>
       <ModalContent>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat nihil expedita sed id labore quam, cum voluptatum magni! Facere optio aperiam tenetur minus id asperiores consequuntur ea repellat reprehenderit deserunt.
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis voluptates id nostrum nemo qui fugiat possimus. Eum perspiciatis iusto aspernatur, totam tenetur, enim repellat quidem eius suscipit magnam, nesciunt quo.
       </ModalContent>
       <ModalFooter>
         <div className="modal-footer-btn-wrap">
