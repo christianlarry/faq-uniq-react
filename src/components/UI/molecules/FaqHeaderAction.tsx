@@ -8,13 +8,16 @@ import LoginModal from "../organisms/modal/LoginModal"
 import { useAuth } from "../../../hooks/useAuth"
 import AlertSuccess from "../organisms/alert/Alert"
 import AlertConfirm from "../organisms/alert/AlertConfirm"
-import AddFaqModal from "../organisms/modal/AddFaqModal"
 import DownloadFaqModal from "../organisms/modal/DownloadFaqModal"
 import ManageUsersModal from "../organisms/modal/ManageUsersModal"
+import { postFaq } from "../../../api/api"
+import { FormFaqData } from "../../../interfaces/faqInterfaces"
+import { AxiosError } from "axios"
+import FormFaqModal from "../organisms/modal/FormFaqModal"
 
 const FaqHeaderAction = ()=>{
 
-  const {isAuthenticated,logout} = useAuth()
+  const {isAuthenticated,logout,token} = useAuth()
 
   // STATE
   const [showLoginModal,setShowLoginModal] = useState<boolean>(false)
@@ -51,6 +54,27 @@ const FaqHeaderAction = ()=>{
     setShowManageUsersModal(true)
   }
 
+  const handleAddFaqSubmit = ({title,answer,questions,subCategoryId}:FormFaqData)=>{
+    postFaq(token,{
+      title,
+      answer,
+      id_sub_category: subCategoryId,
+      questions: questions
+    })
+      .then(result=>{
+        if(result.status === 200){
+          // setShowSuccessAlert(true)
+        }
+      })
+      .catch(err=>{
+        if(err instanceof AxiosError){
+
+          // setShowErrorAlert(true)
+          // setErrorMsg(err.response?.data.data.errors)
+        }
+      })
+  }
+
   return (
     <>
       <div className="faq-header-action">
@@ -81,7 +105,13 @@ const FaqHeaderAction = ()=>{
       {createPortal((
         <>
           {showLoginModal && <LoginModal onClose={()=>setShowLoginModal(false)}/>}
-          {showAddFaqModal && <AddFaqModal onClose={()=>setShowAddFaqModal(false)}/>}
+          {showAddFaqModal && 
+            <FormFaqModal 
+              onClose={()=>setShowAddFaqModal(false)} 
+              onSubmit={handleAddFaqSubmit}
+              submitText="Add"
+            />
+          }
           {showDownloadFaqModal && <DownloadFaqModal onClose={()=>setShowDownloadFaqModal(false)}/>}
           {showManageUsersModal && <ManageUsersModal onClose={()=>setShowManageUsersModal(false)}/>}
 

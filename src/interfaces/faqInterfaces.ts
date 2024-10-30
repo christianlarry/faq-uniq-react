@@ -33,3 +33,10 @@ export interface FaqSubCategoryModel{
   sub_category:string,
   faqs:string[]
 }
+
+export interface FormFaqData{
+  title:string
+  answer:string
+  subCategoryId:string[]
+  questions:string[]
+}

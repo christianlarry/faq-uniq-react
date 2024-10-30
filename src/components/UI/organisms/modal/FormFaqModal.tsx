@@ -5,35 +5,37 @@ import ModalContent from "../../atoms/modal/ModalContent"
 import ModalFooter from "../../atoms/modal/ModalFooter"
 import ModalHeader from "../../atoms/modal/ModalHeader"
 
-import "./AddFaqModal.css"
+import "./FormFaqModal.css"
 import TextEditor from "../../atoms/input/TextEditor"
 import PlainInput from "../../atoms/input/PlainInput"
 import TextArea from "../../atoms/input/TextArea"
 import { addFaqValidation } from "../../../../validation/faqValidation"
 import ErrorInput from "../../atoms/error/ErrorInput"
-import { postFaq } from "../../../../api/api"
-import { useAuth } from "../../../../hooks/useAuth"
 import { useFaqCategory } from "../../../../hooks/useFaqCategory"
 import Alert from "../alert/Alert"
-import { AxiosError } from "axios"
 import { useNavigate } from "react-router-dom"
 import CustomSelect from "../../atoms/input/CustomSelect"
 import { GroupBase, MultiValue, OptionsOrGroups } from "react-select"
-
-interface Props{
-  onClose:()=>void
-}
+import { FormFaqData } from "../../../../interfaces/faqInterfaces"
 
 interface OptionType{
   label:string
   value:string
 }
 
-const AddFaqModal = ({onClose}:Props)=>{
+interface Props{
+  onClose:()=>void
+  onSubmit:(data:FormFaqData)=>void
+  submitText?:string
+}
+
+const FormFaqModal = ({
+  onClose,
+  onSubmit,
+  submitText="Submit"  
+}:Props)=>{
 
   const navigate = useNavigate()
-  
-  const {token} = useAuth()
   const {faqCategory} = useFaqCategory()
 
   // STATE
@@ -66,7 +68,7 @@ const AddFaqModal = ({onClose}:Props)=>{
     onClose()
   }
 
-  const handleAddClick = ()=>{
+  const handleSubmit = ()=>{
 
     const input = {
       answer,
@@ -91,24 +93,13 @@ const AddFaqModal = ({onClose}:Props)=>{
       // FORMAT QUESTIONS YANG AWALNYA STRING KE ARRAY STRING, DIPISAH BERDASARKAN KOMA/,
       const questionsArr = questions.split(",").map(val=>val.trimStart())
 
-      postFaq(token,{
-        title,
-        answer,
-        id_sub_category: subCategoryId.map(val=>val.value),
+      // JALANKAN ON SUBMIT
+      onSubmit({
+        title:validationRes.data.title,
+        answer: validationRes.data.answer,
+        subCategoryId: subCategoryId.map(val=>val.value),
         questions: questionsArr
       })
-        .then(result=>{
-          if(result.status === 200){
-            setShowSuccessAlert(true)
-          }
-        })
-        .catch(err=>{
-          if(err instanceof AxiosError){
-
-            setShowErrorAlert(true)
-            setErrorMsg(err.response?.data.data.errors)
-          }
-        })
     }
   }
 
@@ -142,15 +133,15 @@ const AddFaqModal = ({onClose}:Props)=>{
     <Modal focusLock={false} onClose={onClose}>
       <ModalHeader/>
       <ModalContent>
-        <section className="add-faq-section">
+        <section className="form-faq-section">
           
-          <div className="add-faq-grid">
-            <div className="add-faq-input-group" style={{flex: 1}}>
+          <div className="form-faq-grid">
+            <div className="form-faq-input-group" style={{flex: 1}}>
               <span>Title:</span>
               <PlainInput value={title} onChange={(e)=>setTitle(e.target.value)} placeholder="FAQ Title"/>
               {errors.title && <ErrorInput message={errors.title}/>}
             </div>
-            <div className="add-faq-input-group" style={{flex: 1}}>
+            <div className="form-faq-input-group" style={{flex: 1}}>
               <span>Category:</span>
               {/* <Select optionsWithGroup={subCatOptions} state={[subCategoryId,setSubCategoryId]}/> */}
               <CustomSelect
@@ -163,13 +154,13 @@ const AddFaqModal = ({onClose}:Props)=>{
             </div>
           </div>
           
-          <div className="add-faq-input-group">
+          <div className="form-faq-input-group">
             <span>Questions:</span>
             <TextArea value={questions} onChange={(e)=>setQuestions(e.target.value)} placeholder="Comma-seperated, ex:Pertanyaan 1,Pertanyaan 2,Pertanyaan 3"/>
             {errors.questions && <ErrorInput message={errors.questions}/>}
           </div>
           
-          <div className="add-faq-input-group">
+          <div className="form-faq-input-group">
             <span>Answer:</span>
             <TextEditor dataState={[answer,setAnswer]}/>
             {errors.answer && <ErrorInput message={errors.answer}/>}
@@ -182,8 +173,8 @@ const AddFaqModal = ({onClose}:Props)=>{
           <Button onClick={handleCancelClick}>
             <span>Cancel</span>
           </Button>
-          <Button onClick={handleAddClick}>
-            <span>Add</span>
+          <Button onClick={handleSubmit}>
+            <span>{submitText}</span>
           </Button>
         </div>
       </ModalFooter>
@@ -194,4 +185,4 @@ const AddFaqModal = ({onClose}:Props)=>{
   )
 }
 
-export default AddFaqModal
+export default FormFaqModal
