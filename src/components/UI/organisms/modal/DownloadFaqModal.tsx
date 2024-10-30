@@ -1,20 +1,20 @@
 import { useState } from "react"
 import Button from "../../atoms/button/Button"
-import Select from "../../atoms/input/Select"
 import Modal from "../../atoms/modal/Modal"
 import ModalContent from "../../atoms/modal/ModalContent"
 import ModalFooter from "../../atoms/modal/ModalFooter"
 import { useAllFaq } from "../../../../hooks/useAllFaq"
 import { downloadFile } from "../../../../utils/fileManager"
+import CustomSelect from "../../atoms/input/CustomSelect"
 
 interface Props{
   onClose:()=>void
 }
 
-const fileTypeData = [
+const options = [
   {
-    key:"TXT",
-    value:"txt"
+    label: "TXT",
+    value: "txt"
   }
 ]
 
@@ -62,7 +62,12 @@ const DownloadFaqModal = ({
       <ModalContent>
         <div style={{display:"flex",flexDirection:"column",gap:"10px"}}>
           <span>Download FAQs as</span>
-          <Select options={fileTypeData} state={[fileType,setFileType]}/>
+          <CustomSelect
+            options={options}
+            placeholder="Select format file..."
+            autoFocus={false}
+            onChange={(val)=>setFileType(val?val.value:undefined)}
+          />
         </div>
       </ModalContent>
       <ModalFooter>
