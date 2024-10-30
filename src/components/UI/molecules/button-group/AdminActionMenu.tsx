@@ -43,8 +43,8 @@ const AdminActionMenu = ({data}:Props)=>{
 
       {createPortal((
         <>
-          <DeleteFaqModal data={data} showModalState={[showDeleteFaqModal,setShowDeleteFaqModal]}/>
-          <EditFaqModal data={data} showModalState={[showEditFaqModal,setShowEditFaqModal]}/>
+          {showDeleteFaqModal && <DeleteFaqModal data={data} onClose={()=>setShowDeleteFaqModal(false)}/>}
+          {showEditFaqModal && <EditFaqModal onClose={()=>setShowEditFaqModal(false)}/>}
         </>
       ),document.body)}
     </>

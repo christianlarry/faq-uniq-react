@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import Button from "../../atoms/button/Button"
 import Modal from "../../atoms/modal/Modal"
 import ModalContent from "../../atoms/modal/ModalContent"
@@ -10,24 +10,25 @@ import Alert from "../alert/Alert"
 import { useNavigate } from "react-router-dom"
 
 interface Props{
-  showModalState:[boolean,React.Dispatch<React.SetStateAction<boolean>>]
+  onClose:()=>void
   data:{
     id:string,
     title:string
   }
 }
 
-const DeleteFaqModal = ({showModalState,data}:Props)=>{
+const DeleteFaqModal = ({
+  onClose,
+  data
+}:Props)=>{
 
   const navigate = useNavigate()
-
-  const [show,setShow] = showModalState
 
   const [showErrorAlert,setShowErrorAlert] = useState<boolean>(false)
   const [showSuccessAlert,setShowSuccessAlert] = useState<boolean>(false)
 
   const handleCancelClick = ()=>{
-    setShow(false)
+    onClose()
   }
 
   const handleDeleteClick = async ()=>{
@@ -46,11 +47,11 @@ const DeleteFaqModal = ({showModalState,data}:Props)=>{
   }
 
   const handleSuccessDeleteFaq = ()=>{
-    setShow(false)
+    onClose()
     navigate("/")
   }
 
-  if(show) return (
+  return (
     <Modal size="sm">
       <ModalContent>
         <p>
@@ -73,12 +74,10 @@ const DeleteFaqModal = ({showModalState,data}:Props)=>{
         </div>
       </ModalFooter>
 
-      <Alert state="error" onNext={()=>setShow(false)} message="Failed on deleting FAQ!" showState={[showErrorAlert,setShowErrorAlert]}/>
+      <Alert state="error" onNext={()=>onClose()} message="Failed on deleting FAQ!" showState={[showErrorAlert,setShowErrorAlert]}/>
       <Alert state="success" onNext={handleSuccessDeleteFaq} message="Success delete FAQ!" showState={[showSuccessAlert,setShowSuccessAlert]}/>
     </Modal>
   )
-
-  return <></>
 }
 
 export default DeleteFaqModal

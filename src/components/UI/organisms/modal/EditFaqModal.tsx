@@ -1,4 +1,3 @@
-import React from "react"
 import Button from "../../atoms/button/Button"
 import Modal from "../../atoms/modal/Modal"
 import ModalContent from "../../atoms/modal/ModalContent"
@@ -6,22 +5,18 @@ import ModalFooter from "../../atoms/modal/ModalFooter"
 import ModalHeader from "../../atoms/modal/ModalHeader"
 
 interface Props{
-  showModalState:[boolean,React.Dispatch<React.SetStateAction<boolean>>]
-  data:{
-    id:string,
-    title:string
-  }
+  onClose:()=>void
 }
 
-const EditFaqModal = ({showModalState}:Props)=>{
-
-  const [show,setShow] = showModalState
+const EditFaqModal = ({
+  onClose
+}:Props)=>{
 
   const handleCancelClick = ()=>{
-    setShow(false)
+    onClose()
   }
 
-  if(show) return (
+  return (
     <Modal>
       <ModalHeader/>
       <ModalContent>
@@ -39,8 +34,6 @@ const EditFaqModal = ({showModalState}:Props)=>{
       </ModalFooter>
     </Modal>
   )
-
-  return <></>
 }
 
 export default EditFaqModal

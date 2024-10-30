@@ -5,20 +5,20 @@ import "./ModalHeader.css"
 
 interface Props{
   children?: React.ReactNode,
-  showModal?: React.Dispatch<React.SetStateAction<boolean>>
+  onClose?:()=>void
 }
 
 const ModalHeader = ({
   children,
-  showModal
+  onClose
 }:Props) => {
   return (
     <div className="faqu-modal-header">
       <div className="faqu-modal-header-content">
         {children}
       </div>
-      {showModal &&
-      <IconButton className="faqu-modal-xmark" onClick={()=>showModal(false)}>
+      {onClose &&
+      <IconButton className="faqu-modal-xmark" onClick={()=>onClose()}>
         <FaXmark />
       </IconButton>
       }

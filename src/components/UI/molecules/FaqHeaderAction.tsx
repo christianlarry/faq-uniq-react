@@ -80,13 +80,10 @@ const FaqHeaderAction = ()=>{
 
       {createPortal((
         <>
-          {showLoginModal &&
-            <LoginModal showModalSet={setShowLoginModal}/>
-          }
-
-          <AddFaqModal showModalState={[showAddFaqModal,setShowAddFaqModal]}/>
-          <DownloadFaqModal showModalState={[showDownloadFaqModal,setShowDownloadFaqModal]}/>
-          <ManageUsersModal showModalState={[showManageUsersModal,setShowManageUsersModal]}/>
+          {showLoginModal && <LoginModal onClose={()=>setShowLoginModal(false)}/>}
+          {showAddFaqModal && <AddFaqModal onClose={()=>setShowAddFaqModal(false)}/>}
+          {showDownloadFaqModal && <DownloadFaqModal onClose={()=>setShowDownloadFaqModal(false)}/>}
+          {showManageUsersModal && <ManageUsersModal onClose={()=>setShowManageUsersModal(false)}/>}
 
           <AlertConfirm 
           message="Confirm logout?"

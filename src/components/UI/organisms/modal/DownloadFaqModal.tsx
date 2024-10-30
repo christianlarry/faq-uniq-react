@@ -8,7 +8,7 @@ import { useAllFaq } from "../../../../hooks/useAllFaq"
 import { downloadFile } from "../../../../utils/fileManager"
 
 interface Props{
-  showModalState: [boolean,React.Dispatch<React.SetStateAction<boolean>>]
+  onClose:()=>void
 }
 
 const fileTypeData = [
@@ -19,7 +19,7 @@ const fileTypeData = [
 ]
 
 const DownloadFaqModal = ({
-  showModalState
+  onClose
 }:Props)=>{
 
   // HOOKS
@@ -27,11 +27,10 @@ const DownloadFaqModal = ({
   const faqs = allFaq.faq
 
   // STATE
-  const [show,setShow] = showModalState
   const [fileType,setFileType] = useState<string>()
 
   const handleCancelClick = ()=>{
-    setShow(false)
+    onClose()
   }
 
   const generateTxtFaqs = () => {
@@ -58,7 +57,7 @@ const DownloadFaqModal = ({
     }
   }
 
-  if(show) return (
+  return (
     <Modal size="sm">
       <ModalContent>
         <div style={{display:"flex",flexDirection:"column",gap:"10px"}}>
@@ -80,8 +79,6 @@ const DownloadFaqModal = ({
       </ModalFooter>
     </Modal>
   )
-
-  return <></>
 }
 
 export default DownloadFaqModal

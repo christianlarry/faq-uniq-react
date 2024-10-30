@@ -6,7 +6,6 @@ import DetailFaqPage from "./components/pages/detail-faq/DetailFaqPage";
 
 // LAYOUT
 import MainLayout from "./components/templates/layout/MainLayout";
-import TestPage from "./components/pages/TestPage";
 
 const AppRouter = () => {
 	return (
@@ -16,7 +15,6 @@ const AppRouter = () => {
 					<Route index element={<Navigate to={"/faq"}/>}/>
 					<Route path="faq" element={<HomePage/>}/>
 					<Route path="faq/:id" element={<DetailFaqPage/>}/>
-					<Route path="test" element={<TestPage/>}/>
 				</Route>
 			</Routes>
 		</Router>

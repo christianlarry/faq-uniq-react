@@ -6,7 +6,7 @@ import ModalContent from "../../atoms/modal/ModalContent"
 import ModalHeader from "../../atoms/modal/ModalHeader"
 
 import "./LoginModal.css"
-import React, { useState } from "react"
+import { useState } from "react"
 
 import {useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
@@ -21,10 +21,10 @@ import { useNavigate } from "react-router-dom"
 import AlertSuccess from "../alert/Alert"
 
 interface Props{
-  showModalSet:React.Dispatch<React.SetStateAction<boolean>>
+  onClose:()=>void
 }
 
-const LoginModal = ({showModalSet}:Props) => {
+const LoginModal = ({onClose}:Props) => {
 
   // STATE
   const [loginError,setLoginError] = useState<AxiosError<any,any>>()
@@ -64,13 +64,13 @@ const LoginModal = ({showModalSet}:Props) => {
   }
 
   const handleSuccessLogin = ()=>{
-    showModalSet(false)
+    onClose()
     navigate(0)
   }
 
   return (
     <Modal>
-      <ModalHeader showModal={showModalSet} />
+      <ModalHeader onClose={onClose} />
       <ModalContent>
         <div className="login-modal-content">
           <div>

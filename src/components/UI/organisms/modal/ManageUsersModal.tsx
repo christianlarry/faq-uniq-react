@@ -1,19 +1,16 @@
-import React from "react"
 import Modal from "../../atoms/modal/Modal"
 import ModalContent from "../../atoms/modal/ModalContent"
 import ModalHeader from "../../atoms/modal/ModalHeader"
 
 interface Props{
-  showModalState:[boolean,React.Dispatch<React.SetStateAction<boolean>>]
+  onClose:()=>void
 }
 
-const ManageUsersModal = ({showModalState}:Props)=>{
+const ManageUsersModal = ({onClose}:Props)=>{
 
-  const [show,setShow] = showModalState
-
-  if(show) return (
+  return (
     <Modal>
-      <ModalHeader showModal={setShow}/>
+      <ModalHeader onClose={onClose}/>
       <ModalContent>
 
         <div className="manage-users-container">
@@ -23,8 +20,6 @@ const ManageUsersModal = ({showModalState}:Props)=>{
       </ModalContent>
     </Modal>
   )
-
-  return <></>
 }
 
 export default ManageUsersModal

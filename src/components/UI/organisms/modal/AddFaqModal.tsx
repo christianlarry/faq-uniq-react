@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Button from "../../atoms/button/Button"
 import Modal from "../../atoms/modal/Modal"
 import ModalContent from "../../atoms/modal/ModalContent"
@@ -20,10 +20,10 @@ import { AxiosError } from "axios"
 import { useNavigate } from "react-router-dom"
 
 interface Props{
-  showModalState:[boolean,React.Dispatch<React.SetStateAction<boolean>>]
+  onClose:()=>void
 }
 
-const AddFaqModal = ({showModalState}:Props)=>{
+const AddFaqModal = ({onClose}:Props)=>{
 
   const navigate = useNavigate()
   
@@ -31,7 +31,6 @@ const AddFaqModal = ({showModalState}:Props)=>{
   const {faqCategory} = useFaqCategory()
 
   // STATE
-  const [show,setShow] = showModalState
   const [subCatOptions,setSubCatOptions] = useState<OptionsWithGroup[]>([])
 
   // ALERT STATE
@@ -54,7 +53,7 @@ const AddFaqModal = ({showModalState}:Props)=>{
   }>({});
 
   const handleCancelClick = ()=>{
-    setShow(false)
+    onClose()
   }
 
   const handleAddClick = ()=>{
@@ -103,19 +102,9 @@ const AddFaqModal = ({showModalState}:Props)=>{
   }
 
   const handleSuccessAddFaq = ()=>{
-    setShow(false)
+    onClose()
     navigate(0)
   }
-
-  useEffect(()=>{
-    if(!show){
-      setTitle('');
-      setSubCategoryId('');
-      setQuestions('');
-      setAnswer('');
-      setErrors({});
-    }
-  },[show])
 
   useEffect(()=>{
     if(faqCategory && faqCategory.length > 0){
@@ -138,7 +127,7 @@ const AddFaqModal = ({showModalState}:Props)=>{
     }
   },[faqCategory])
 
-  if(show) return (
+  return (
     <Modal focusLock={false}>
       <ModalHeader/>
       <ModalContent>
@@ -186,8 +175,6 @@ const AddFaqModal = ({showModalState}:Props)=>{
       <Alert state="error" message={errorMsg} showState={[showErrorAlert,setShowErrorAlert]}/>
     </Modal>
   )
-
-  return <></>
 }
 
 export default AddFaqModal
