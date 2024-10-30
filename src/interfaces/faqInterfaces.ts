@@ -9,7 +9,7 @@ export interface FaqModel{
 
 export interface PostFaqModel{
   title:string,
-  id_sub_category:string,
+  id_sub_category:string[],
   questions:string[],
   answer:string
 }

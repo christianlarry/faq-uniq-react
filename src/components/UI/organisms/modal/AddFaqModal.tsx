@@ -18,7 +18,7 @@ import Alert from "../alert/Alert"
 import { AxiosError } from "axios"
 import { useNavigate } from "react-router-dom"
 import CustomSelect from "../../atoms/input/CustomSelect"
-import { GroupBase, OptionsOrGroups } from "react-select"
+import { GroupBase, MultiValue, OptionsOrGroups } from "react-select"
 
 interface Props{
   onClose:()=>void
@@ -46,7 +46,7 @@ const AddFaqModal = ({onClose}:Props)=>{
 
   // DATA STATE
   const [answer,setAnswer] = useState<string>("")
-  const [subCategoryId,setSubCategoryId] = useState<string | undefined>("")
+  const [subCategoryId,setSubCategoryId] = useState<MultiValue<OptionType>>([])
   const [questions,setQuestions] = useState<string>("")
   const [title,setTitle] = useState<string>("")
 
@@ -58,14 +58,19 @@ const AddFaqModal = ({onClose}:Props)=>{
     answer?: string,
   }>({});
 
+  const handleSubCategoryChange = (selected:MultiValue<OptionType>)=>{
+    setSubCategoryId(selected)
+  }
+
   const handleCancelClick = ()=>{
     onClose()
   }
 
   const handleAddClick = ()=>{
+
     const input = {
       answer,
-      subCategoryId,
+      subCategoryId: subCategoryId.map(val=>val.value),
       questions,
       title
     }
@@ -89,7 +94,7 @@ const AddFaqModal = ({onClose}:Props)=>{
       postFaq(token,{
         title,
         answer,
-        id_sub_category: subCategoryId || "",
+        id_sub_category: subCategoryId.map(val=>val.value),
         questions: questionsArr
       })
         .then(result=>{
@@ -147,13 +152,14 @@ const AddFaqModal = ({onClose}:Props)=>{
             </div>
             <div className="add-faq-input-group" style={{flex: 1}}>
               <span>Category:</span>
-              {/* <Select optionsWithGroup={subCatOptions} state={[subCategoryId,setSubCategoryId]}/>
-              {errors.subCategoryId && <ErrorInput message={errors.subCategoryId}/>} */}
+              {/* <Select optionsWithGroup={subCatOptions} state={[subCategoryId,setSubCategoryId]}/> */}
               <CustomSelect
                 options={subCatOptions}
                 isMulti
-                onChange={(val)=>console.log(val)}
+                onChange={handleSubCategoryChange}
+                value={subCategoryId}
               />
+              {errors.subCategoryId && <ErrorInput message={errors.subCategoryId}/>}
             </div>
           </div>
           
