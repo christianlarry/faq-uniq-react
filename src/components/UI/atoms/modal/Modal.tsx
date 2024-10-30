@@ -2,9 +2,11 @@ import { useEffect } from "react"
 import FocusLock from "react-focus-lock"
 
 import "./Modal.css"
+import { ModalContext } from "../../../../hooks/useModal"
 
 interface Props {
   children: React.ReactNode,
+  onClose:()=>void,
   size?: "lg" | "sm" | "md",
   focusLock?: boolean
 }
@@ -12,7 +14,8 @@ interface Props {
 const Modal = ({
   size = "lg",
   children,
-  focusLock = true
+  focusLock = true,
+  onClose
 }: Props) => {
 
   useEffect(() => {
@@ -24,25 +27,31 @@ const Modal = ({
   }, [])
 
   if (focusLock) return (
-    <FocusLock>
-      <div className="faqu-modal" onClick={(e: React.MouseEvent) => e.stopPropagation()}>
-        <div className="faqu-modal-wrapper">
-          <div className={`faqu-modal-container ${size}`}>
-            {children}
+    <ModalContext.Provider value={{onClose}}>
+      <FocusLock>
+        <div className="faqu-modal" onClick={(e: React.MouseEvent) => e.stopPropagation()}>
+          <div className="faqu-modal-wrapper">
+            <div className={`faqu-modal-container ${size}`}>
+              {children}
+            </div>
           </div>
         </div>
-      </div>
-    </FocusLock>
+      </FocusLock>
+    </ModalContext.Provider>
   )
 
   return (
-    <div className="faqu-modal" onClick={(e: React.MouseEvent) => e.stopPropagation()}>
-      <div className="faqu-modal-wrapper">
-        <div className={`faqu-modal-container ${size}`}>
-          {children}
+    <ModalContext.Provider value={{onClose}}>
+      <FocusLock>
+        <div className="faqu-modal" onClick={(e: React.MouseEvent) => e.stopPropagation()}>
+          <div className="faqu-modal-wrapper">
+            <div className={`faqu-modal-container ${size}`}>
+              {children}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </FocusLock>
+    </ModalContext.Provider>
   )
 }
 
