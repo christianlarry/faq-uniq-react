@@ -52,7 +52,7 @@ const DeleteFaqModal = ({
   }
 
   return (
-    <Modal size="sm">
+    <Modal size="sm" onClose={onClose}>
       <ModalContent>
         <p>
           Are you sure to delete this FAQ?<br/><br/>

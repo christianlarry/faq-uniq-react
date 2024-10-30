@@ -38,7 +38,7 @@ const Alert = ({
   const animation = state==="success"?successAnimation:errorAnimation
 
   if(show) return (
-    <Modal size="sm">
+    <Modal size="sm" onClose={()=>setShow(false)}>
 
       <ModalContent>
         <div className="alert-wrapper">

@@ -17,7 +17,7 @@ const EditFaqModal = ({
   }
 
   return (
-    <Modal>
+    <Modal onClose={onClose}>
       <ModalHeader/>
       <ModalContent>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis voluptates id nostrum nemo qui fugiat possimus. Eum perspiciatis iusto aspernatur, totam tenetur, enim repellat quidem eius suscipit magnam, nesciunt quo.

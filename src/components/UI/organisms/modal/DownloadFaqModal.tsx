@@ -58,7 +58,7 @@ const DownloadFaqModal = ({
   }
 
   return (
-    <Modal size="sm">
+    <Modal size="sm" onClose={onClose}>
       <ModalContent>
         <div style={{display:"flex",flexDirection:"column",gap:"10px"}}>
           <span>Download FAQs as</span>

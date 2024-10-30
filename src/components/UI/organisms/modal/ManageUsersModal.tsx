@@ -9,8 +9,8 @@ interface Props{
 const ManageUsersModal = ({onClose}:Props)=>{
 
   return (
-    <Modal>
-      <ModalHeader onClose={onClose}/>
+    <Modal onClose={onClose}>
+      <ModalHeader withXMark/>
       <ModalContent>
 
         <div className="manage-users-container">

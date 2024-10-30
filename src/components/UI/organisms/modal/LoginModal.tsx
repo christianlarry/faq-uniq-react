@@ -69,8 +69,8 @@ const LoginModal = ({onClose}:Props) => {
   }
 
   return (
-    <Modal>
-      <ModalHeader onClose={onClose} />
+    <Modal onClose={onClose}>
+      <ModalHeader withXMark />
       <ModalContent>
         <div className="login-modal-content">
           <div>

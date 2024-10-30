@@ -128,7 +128,7 @@ const AddFaqModal = ({onClose}:Props)=>{
   },[faqCategory])
 
   return (
-    <Modal focusLock={false}>
+    <Modal focusLock={false} onClose={onClose}>
       <ModalHeader/>
       <ModalContent>
         <section className="add-faq-section">

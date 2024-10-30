@@ -19,10 +19,20 @@ const Modal = ({
 }: Props) => {
 
   useEffect(() => {
+    const keydownEventHandler = (e:KeyboardEvent)=>{
+      if(e.key==="Escape"){
+        onClose()
+      }
+    }
+
+    window.addEventListener("keydown",keydownEventHandler)
+    
     document.body.classList.add("modal-open")
 
     return () => {
       document.body.classList.remove("modal-open")
+
+      window.removeEventListener("keydown",keydownEventHandler)
     }
   }, [])
 

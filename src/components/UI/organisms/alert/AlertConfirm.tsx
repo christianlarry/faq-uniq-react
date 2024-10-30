@@ -33,7 +33,7 @@ const AlertConfirm = ({
   }
 
   if(show) return (
-    <Modal size="sm">
+    <Modal size="sm" onClose={()=>setShow(false)}>
       <ModalContent>
         <div className="alert-confirm-wrapper" style={{padding: "10px 0"}}>
           <p style={{fontSize: 22}}>{message}</p>
