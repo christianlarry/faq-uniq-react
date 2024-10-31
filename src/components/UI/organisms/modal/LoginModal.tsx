@@ -19,6 +19,7 @@ import ErrorInput from "../../atoms/error/ErrorInput"
 import { useNavigate } from "react-router-dom"
 
 import AlertSuccess from "../alert/Alert"
+import LoadingScreen from "../loading-screen/LoadingScreen"
 
 interface Props{
   onClose:()=>void
@@ -29,6 +30,9 @@ const LoginModal = ({onClose}:Props) => {
   // STATE
   const [loginError,setLoginError] = useState<AxiosError<any,any>>()
   const isLoginState = useState<boolean>(false)
+
+  // REQUEST STATE
+  const [isLoading,setIsLoading] = useState<boolean>(false)
 
   // NAVIGATE
   const navigate = useNavigate()
@@ -47,6 +51,9 @@ const LoginModal = ({onClose}:Props) => {
 
   // HANDLER
   const handleLogin = async (data:LoginModel)=>{
+
+    setIsLoading(true)
+
     try {
       
       const result = await postLogin(data)
@@ -60,6 +67,8 @@ const LoginModal = ({onClose}:Props) => {
       if(err instanceof AxiosError){
         setLoginError(err)
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -111,6 +120,8 @@ const LoginModal = ({onClose}:Props) => {
       message="Success Login" 
       showState={isLoginState}
       onNext={handleSuccessLogin}/>
+
+      {isLoading && <LoadingScreen/>}
 
     </Modal>
   )

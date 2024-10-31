@@ -11,6 +11,9 @@ import { AuthProvider } from "../../../hooks/useAuth"
 import { AllFaqProvider } from "../../../hooks/useAllFaq"
 import { FaqCategoryProvider } from "../../../hooks/useFaqCategory"
 
+import {ErrorBoundary} from "react-error-boundary"
+import ISErrorScreen from "../../UI/organisms/error/ISErrorScreen"
+
 interface Props {
   children?: React.ReactNode
 }
@@ -58,44 +61,46 @@ const MainLayout = ({
 
 
   return (
-    <FaqCategoryProvider>
-      <AllFaqProvider>
-        <AuthProvider>
-          <div className="main-layout">
-            <section className="page-header-box">
-              <div ref={pageHeaderSlideWrapRef} className="page-header-slide-wrap">
-                <Header className={!isShowHeader ? "no-border" : undefined} />
-              </div>
-
-              <IconButton className={`slide-down-btn${!isShowHeader? " collapse":""}`} onClick={() => setIsShowHeader(!isShowHeader)}>
-                <FaChevronUp />
-              </IconButton>
-            </section>
-
-            <section>
-              <div className="container">
-                <FaqSearchBox/>
-              </div>
-            </section>
-
-            {/* ASIDE MAIN SECTION */}
-            <section>
-              <div className="container">
-                <div className="sidebar-main-container">
-                  <aside className="sidebar-container">
-                    <Sidebar/>
-                  </aside>
-                  <main className="main-container">
-                    {children || <Outlet />}
-                  </main>
+    <ErrorBoundary fallback={<ISErrorScreen/>}>
+      <FaqCategoryProvider>
+        <AllFaqProvider>
+          <AuthProvider>
+            <div className="main-layout">
+              <section className="page-header-box">
+                <div ref={pageHeaderSlideWrapRef} className="page-header-slide-wrap">
+                  <Header className={!isShowHeader ? "no-border" : undefined} />
                 </div>
-              </div>
-            </section>
 
-          </div>
-        </AuthProvider>
-      </AllFaqProvider>
-    </FaqCategoryProvider>
+                <IconButton className={`slide-down-btn${!isShowHeader? " collapse":""}`} onClick={() => setIsShowHeader(!isShowHeader)}>
+                  <FaChevronUp />
+                </IconButton>
+              </section>
+
+              <section>
+                <div className="container">
+                  <FaqSearchBox/>
+                </div>
+              </section>
+
+              {/* ASIDE MAIN SECTION */}
+              <section>
+                <div className="container">
+                  <div className="sidebar-main-container">
+                    <aside className="sidebar-container">
+                      <Sidebar/>
+                    </aside>
+                    <main className="main-container">
+                      {children || <Outlet />}
+                    </main>
+                  </div>
+                </div>
+              </section>
+
+            </div>
+          </AuthProvider>
+        </AllFaqProvider>
+      </FaqCategoryProvider>
+    </ErrorBoundary>
   )
 
 }

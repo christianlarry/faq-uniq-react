@@ -18,6 +18,7 @@ import { FormFaqData } from "../../../../interfaces/faqInterfaces"
 import { AxiosError, AxiosResponse } from "axios"
 import Alert from "../alert/Alert"
 import { useNavigate } from "react-router-dom"
+import LoadingScreen from "../loading-screen/LoadingScreen"
 
 interface OptionType {
   label: string
@@ -57,13 +58,14 @@ const FormFaqModal = ({
   const [questions, setQuestions] = useState<string>(defaultValues?.questions || "")
   const [title, setTitle] = useState<string>(defaultValues?.title || "")
 
-  // ERROR STATE
+  // ERROR/LOADING STATE
   const [errors, setErrors] = useState<{
     title?: string,
     subCategoryId?: string,
     questions?: string,
     answer?: string,
   }>({});
+  const [isLoading,setIsLoading] = useState<boolean>(false)
 
   // ALERT STATE
   const [errorMsg, setErrorMsg] = useState<string>("Failed add new FAQ!")
@@ -104,6 +106,7 @@ const FormFaqModal = ({
       });
     } else {
       setErrors({})
+      setIsLoading(true)
 
       // FORMAT QUESTIONS YANG AWALNYA STRING KE ARRAY STRING, DIPISAH BERDASARKAN KOMA/,
       const questionsArr = questions.split(",").map(val => val.trimStart())
@@ -125,6 +128,8 @@ const FormFaqModal = ({
           setShowErrorAlert(true)
           setErrorMsg(err.response?.data.errors)
         }
+      } finally {
+        setIsLoading(false)
       }
     }
   }
@@ -200,10 +205,10 @@ const FormFaqModal = ({
         </div>
       </ModalFooter>
 
-
-
       <Alert state="success" onNext={handleSuccessAddFaq} message={successText} showState={[showSuccessAlert, setShowSuccessAlert]} />
       <Alert state="error" message={errorMsg} showState={[showErrorAlert, setShowErrorAlert]} />
+
+      {isLoading && <LoadingScreen/>}
     </Modal>
   )
 }

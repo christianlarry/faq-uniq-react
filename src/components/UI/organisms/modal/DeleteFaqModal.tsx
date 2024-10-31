@@ -8,6 +8,7 @@ import { deleteFaq } from "../../../../api/api"
 import { AxiosError } from "axios"
 import Alert from "../alert/Alert"
 import { useNavigate } from "react-router-dom"
+import LoadingScreen from "../loading-screen/LoadingScreen"
 
 interface Props{
   onClose:()=>void
@@ -26,11 +27,17 @@ const DeleteFaqModal = ({
   const [showErrorAlert,setShowErrorAlert] = useState<boolean>(false)
   const [showSuccessAlert,setShowSuccessAlert] = useState<boolean>(false)
 
+  // REQUEST STATE
+  const [isLoading,setIsLoading] = useState<boolean>(false)
+
   const handleCancelClick = ()=>{
     onClose()
   }
 
   const handleDeleteClick = async ()=>{
+
+    setIsLoading(true)
+
     try {
       const result = await deleteFaq(id)
 
@@ -42,6 +49,8 @@ const DeleteFaqModal = ({
       if(err instanceof AxiosError){
         setShowErrorAlert(true)
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -75,6 +84,8 @@ const DeleteFaqModal = ({
 
       <Alert state="error" onNext={()=>onClose()} message="Failed on deleting FAQ!" showState={[showErrorAlert,setShowErrorAlert]}/>
       <Alert state="success" onNext={handleSuccessDeleteFaq} message="Success delete FAQ!" showState={[showSuccessAlert,setShowSuccessAlert]}/>
+
+      {isLoading && <LoadingScreen/>}
     </Modal>
   )
 }

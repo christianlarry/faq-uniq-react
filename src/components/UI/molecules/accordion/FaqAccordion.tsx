@@ -14,6 +14,8 @@ import ButtonText from "../../atoms/button/ButtonText"
 import { useNavigate } from "react-router-dom"
 import { FaqModel } from "../../../../interfaces/faqInterfaces"
 
+import DOMPurify from "dompurify"
+
 interface Props{
   alwaysOpen?:boolean
   data:FaqModel
@@ -69,7 +71,7 @@ const FaqAccordion = ({
             <div className="faq-accordion-content-answer">
               {(data.answer && !data.htmlAnswer) && <ReactMarkdown>{data.answer}</ReactMarkdown>}
 
-              {data.htmlAnswer && <div dangerouslySetInnerHTML={{__html: data.htmlAnswer}}/>} 
+              {data.htmlAnswer && <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(data.htmlAnswer)}}/>} 
             </div>
             <div style={{display: "flex",justifyContent: "space-between",gap: "5px",alignItems: "center"}}>
               {!alwaysOpen &&
