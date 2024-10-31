@@ -181,7 +181,7 @@ const FormFaqModal = ({
           </div>
 
           <div className="form-faq-input-group">
-            <span>Questions:</span>
+            <span>Questions <span style={{fontStyle: "italic",color: "var(--input-text-color)"}}>(comma-seperated)</span>:</span>
             <TextArea rows={4} value={questions} onChange={(e) => setQuestions(e.target.value)} placeholder="Comma-seperated, ex:Pertanyaan 1,Pertanyaan 2,Pertanyaan 3" />
             {errors.questions && <ErrorInput message={errors.questions} />}
           </div>

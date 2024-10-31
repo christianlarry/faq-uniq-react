@@ -82,7 +82,7 @@ const HomePage = ()=>{
           }
         </div>
         <div className="faq-question-lists">
-          {(faqResult.isLoading) &&
+          {faqResult.isLoading &&
             <FetchLoader message="Loading"/>
           }
 
@@ -109,6 +109,7 @@ const HomePage = ()=>{
 
 export default HomePage
 
-// TODO Fungsi Tambah,Edit,Hapus FAQ oleh admin, Popup tambah User
-// TODO Penggunaan HTML supaya bisa input gambar kedalam FAQ
-// TODO Error boundaries, Fix hardcode, ChatBOT Chainlit ke dalam WEB
+// TODO Popup tambah User
+// TODO Input gambar kedalam FAQ
+// TODO Fix hardcode - send them to .env, ChatBOT Chainlit ke dalam WEB
+// TODO Validasi defaultValues dan Input

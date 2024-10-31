@@ -26,6 +26,7 @@ const DeleteFaqModal = ({
 
   const [showErrorAlert,setShowErrorAlert] = useState<boolean>(false)
   const [showSuccessAlert,setShowSuccessAlert] = useState<boolean>(false)
+  const [errMessage,setErrMessage] = useState<string>("Failed on deleting FAQ!")
 
   // REQUEST STATE
   const [isLoading,setIsLoading] = useState<boolean>(false)
@@ -48,6 +49,7 @@ const DeleteFaqModal = ({
     } catch (err) {
       if(err instanceof AxiosError){
         setShowErrorAlert(true)
+        setErrMessage(err.response?.data.errors)
       }
     } finally {
       setIsLoading(false)
@@ -82,7 +84,7 @@ const DeleteFaqModal = ({
         </div>
       </ModalFooter>
 
-      <Alert state="error" onNext={()=>onClose()} message="Failed on deleting FAQ!" showState={[showErrorAlert,setShowErrorAlert]}/>
+      <Alert state="error" onNext={()=>onClose()} message={errMessage} showState={[showErrorAlert,setShowErrorAlert]}/>
       <Alert state="success" onNext={handleSuccessDeleteFaq} message="Success delete FAQ!" showState={[showSuccessAlert,setShowSuccessAlert]}/>
 
       {isLoading && <LoadingScreen/>}
