@@ -12,27 +12,16 @@ import DownloadFaqModal from "../organisms/modal/DownloadFaqModal"
 import ManageUsersModal from "../organisms/modal/ManageUsersModal"
 import { postFaq } from "../../../api/api"
 import { FormFaqData } from "../../../interfaces/faqInterfaces"
-import { AxiosError } from "axios"
 import FormFaqModal from "../organisms/modal/FormFaqModal"
-import Alert from "../organisms/alert/Alert"
-import { useNavigate } from "react-router-dom"
 
 const FaqHeaderAction = ()=>{
-
-  const navigate = useNavigate()
-  const {isAuthenticated,logout,token} = useAuth()
+  const {isAuthenticated,logout} = useAuth()
 
   // STATE
   const [showLoginModal,setShowLoginModal] = useState<boolean>(false)
   const [showAddFaqModal,setShowAddFaqModal] = useState<boolean>(false)
   const [showDownloadFaqModal,setShowDownloadFaqModal] = useState<boolean>(false)
   const [showManageUsersModal,setShowManageUsersModal] = useState<boolean>(false)
-
-  
-  // ALERT STATE
-  const [showSuccessAlert,setShowSuccessAlert] = useState<boolean>(false)
-  const [showErrorAlert,setShowErrorAlert] = useState<boolean>(false)
-  const [errorMsg,setErrorMsg] = useState<string>("Failed add new FAQ!")
 
   const confirmLogoutState = useState<boolean>(false)
   const isLogoutState = useState<boolean>(false)
@@ -63,30 +52,13 @@ const FaqHeaderAction = ()=>{
     setShowManageUsersModal(true)
   }
 
-  const handleAddFaqSubmit = async ({title,answer,questions,subCategoryId}:FormFaqData)=>{
-    try {
-      const result = await postFaq(token,{
-        title,
-        answer,
-        id_sub_category: subCategoryId,
-        questions: questions
-      })
-
-      if(result.status === 200){
-        setShowSuccessAlert(true)
-      }
-
-    } catch (err) {
-      if(err instanceof AxiosError){
-        setShowErrorAlert(true)
-        setErrorMsg(err.response?.data.errors)
-      }
-    }
-  }
-
-  const handleSuccessAddFaq = ()=>{
-    setShowAddFaqModal(false)
-    navigate(0)
+  const handleAddFaqSubmit = ({title,answer,questions,subCategoryId}:FormFaqData)=>{
+    return postFaq({
+      title,
+      answer,
+      id_sub_category: subCategoryId,
+      questions
+    })
   }
 
   return (
@@ -124,6 +96,7 @@ const FaqHeaderAction = ()=>{
               onClose={()=>setShowAddFaqModal(false)} 
               onSubmit={handleAddFaqSubmit}
               submitText="Add"
+              successText="Added new FAQ to database!"
             />
           }
           {showDownloadFaqModal && <DownloadFaqModal onClose={()=>setShowDownloadFaqModal(false)}/>}
@@ -140,9 +113,6 @@ const FaqHeaderAction = ()=>{
           message="Logout success!"
           showState={isLogoutState}
           />
-
-          <Alert state="success" onNext={handleSuccessAddFaq} message="Added new FAQ to database!" showState={[showSuccessAlert,setShowSuccessAlert]}/>
-          <Alert state="error" message={errorMsg} showState={[showErrorAlert,setShowErrorAlert]}/>
         </>
       ),document.body)}
     </>

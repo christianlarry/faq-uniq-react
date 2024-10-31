@@ -45,7 +45,10 @@ export const postCheckToken = async (token:string)=>{
   })
 }
 
-export const postFaq = async (token:string,data:PostFaqModel)=>{
+export const postFaq = async (data:PostFaqModel)=>{
+
+  const token = localStorage.getItem("token") || ""
+
   return await axios.post(`${api_baseUrl}/faq`,data,{
     headers:{
       Authorization: `Bearer ${token}`
@@ -59,6 +62,18 @@ export const deleteFaq = async (id:string)=>{
   const token = localStorage.getItem("token") || ""
 
   return await axios.delete(`${api_baseUrl}/faq/${id}`,{
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  })
+}
+
+// UPDATE
+export const updateFaq = async (id:string,data:PostFaqModel)=>{
+
+  const token = localStorage.getItem("token") || ""
+
+  return await axios.put(`${api_baseUrl}/faq/${id}`,data,{
     headers:{
       Authorization: `Bearer ${token}`
     }

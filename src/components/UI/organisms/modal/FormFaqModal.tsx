@@ -15,41 +15,47 @@ import { useFaqCategory } from "../../../../hooks/useFaqCategory"
 import CustomSelect from "../../atoms/input/CustomSelect"
 import { GroupBase, MultiValue, OptionsOrGroups } from "react-select"
 import { FormFaqData } from "../../../../interfaces/faqInterfaces"
+import { AxiosError, AxiosResponse } from "axios"
+import Alert from "../alert/Alert"
+import { useNavigate } from "react-router-dom"
 
-interface OptionType{
-  label:string
-  value:string
+interface OptionType {
+  label: string
+  value: string
 }
 
-interface Props{
-  onClose:()=>void
-  onSubmit:(data:FormFaqData)=>void
-  submitText?:string
-  defaultValues?:{
-    answer:string,
-    subCategoryId:MultiValue<OptionType>,
-    questions:string,
-    title:string
-  }
+interface Props {
+  onClose: () => void
+  onSubmit: (data: FormFaqData) => Promise<AxiosResponse<any, any>>
+  submitText?: string
+  defaultValues?: {
+    answer: string,
+    subCategoryId: MultiValue<OptionType>,
+    questions: string,
+    title: string
+  },
+  successText?:string
 }
 
 const FormFaqModal = ({
   onClose,
   onSubmit,
-  submitText="Submit",
-  defaultValues
-}:Props)=>{
+  submitText = "Submit",
+  defaultValues,
+  successText = "Operation success"
+}: Props) => {
 
-  const {faqCategory} = useFaqCategory()
+  const navigate = useNavigate()
+  const { faqCategory } = useFaqCategory()
 
   // STATE
-  const [subCatOptions,setSubCatOptions] = useState<OptionsOrGroups<OptionType,GroupBase<OptionType>>>([])
+  const [subCatOptions, setSubCatOptions] = useState<OptionsOrGroups<OptionType, GroupBase<OptionType>>>([])
 
   // DATA STATE
-  const [answer,setAnswer] = useState<string>(defaultValues?.answer || "")
-  const [subCategoryId,setSubCategoryId] = useState<MultiValue<OptionType>>(defaultValues?.subCategoryId || [])
-  const [questions,setQuestions] = useState<string>(defaultValues?.questions || "")
-  const [title,setTitle] = useState<string>(defaultValues?.title || "")
+  const [answer, setAnswer] = useState<string>(defaultValues?.answer || "")
+  const [subCategoryId, setSubCategoryId] = useState<MultiValue<OptionType>>(defaultValues?.subCategoryId || [])
+  const [questions, setQuestions] = useState<string>(defaultValues?.questions || "")
+  const [title, setTitle] = useState<string>(defaultValues?.title || "")
 
   // ERROR STATE
   const [errors, setErrors] = useState<{
@@ -59,26 +65,36 @@ const FormFaqModal = ({
     answer?: string,
   }>({});
 
-  const handleSubCategoryChange = (selected:MultiValue<OptionType>)=>{
+  // ALERT STATE
+  const [errorMsg, setErrorMsg] = useState<string>("Failed add new FAQ!")
+  const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false)
+  const [showErrorAlert, setShowErrorAlert] = useState<boolean>(false)
+
+  const handleSubCategoryChange = (selected: MultiValue<OptionType>) => {
     setSubCategoryId(selected)
   }
 
-  const handleCancelClick = ()=>{
+  const handleCancelClick = () => {
     onClose()
   }
 
-  const handleSubmit = ()=>{
+  const handleSuccessAddFaq = ()=>{
+    onClose()
+    navigate(0)
+  }
+
+  const handleSubmit = async () => {
 
     const input = {
       answer,
-      subCategoryId: subCategoryId.map(val=>val.value),
+      subCategoryId: subCategoryId.map(val => val.value),
       questions,
       title
     }
 
     const validationRes = addFaqValidation.safeParse(input)
 
-    if(!validationRes.success){
+    if (!validationRes.success) {
       const fError = validationRes.error.format()
       setErrors({
         title: fError.title?._errors?.[0],
@@ -86,27 +102,38 @@ const FormFaqModal = ({
         questions: fError.questions?._errors?.[0],
         answer: fError.answer?._errors?.[0],
       });
-    }else{
+    } else {
       setErrors({})
 
       // FORMAT QUESTIONS YANG AWALNYA STRING KE ARRAY STRING, DIPISAH BERDASARKAN KOMA/,
-      const questionsArr = questions.split(",").map(val=>val.trimStart())
+      const questionsArr = questions.split(",").map(val => val.trimStart())
 
       // JALANKAN ON SUBMIT
-      onSubmit({
-        title:validationRes.data.title,
-        answer: validationRes.data.answer,
-        subCategoryId: subCategoryId.map(val=>val.value),
-        questions: questionsArr
-      })
+      try {
+        const result = await onSubmit({
+          title: validationRes.data.title,
+          answer: validationRes.data.answer,
+          subCategoryId: subCategoryId.map(val => val.value),
+          questions: questionsArr
+        })
+
+        if (result.status === 200) {
+          setShowSuccessAlert(true)
+        }
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          setShowErrorAlert(true)
+          setErrorMsg(err.response?.data.errors)
+        }
+      }
     }
   }
 
-  useEffect(()=>{
-    if(faqCategory && faqCategory.length > 0){
-      const map = faqCategory.map(val=>{
+  useEffect(() => {
+    if (faqCategory && faqCategory.length > 0) {
+      const map = faqCategory.map(val => {
         const label = val.name
-        const options = val.sub_category.filter(subCat => subCat != null).map(subCat=>{
+        const options = val.sub_category.filter(subCat => subCat != null).map(subCat => {
           return {
             label: subCat.sub_category,
             value: subCat._id
@@ -118,24 +145,24 @@ const FormFaqModal = ({
           options
         }
       })
-      
+
       setSubCatOptions(map)
     }
-  },[faqCategory])
+  }, [faqCategory])
 
   return (
     <Modal focusLock={false} onClose={onClose}>
-      <ModalHeader/>
+      <ModalHeader />
       <ModalContent>
         <section className="form-faq-section">
-          
+
           <div className="form-faq-grid">
-            <div className="form-faq-input-group" style={{flex: 1}}>
+            <div className="form-faq-input-group" style={{ flex: 1 }}>
               <span>Title:</span>
-              <PlainInput value={title} onChange={(e)=>setTitle(e.target.value)} placeholder="FAQ Title"/>
-              {errors.title && <ErrorInput message={errors.title}/>}
+              <PlainInput value={title} onChange={(e) => setTitle(e.target.value)} placeholder="FAQ Title" />
+              {errors.title && <ErrorInput message={errors.title} />}
             </div>
-            <div className="form-faq-input-group" style={{flex: 1}}>
+            <div className="form-faq-input-group" style={{ flex: 1 }}>
               <span>Category:</span>
               {/* <Select optionsWithGroup={subCatOptions} state={[subCategoryId,setSubCategoryId]}/> */}
               <CustomSelect
@@ -144,22 +171,22 @@ const FormFaqModal = ({
                 onChange={handleSubCategoryChange}
                 value={subCategoryId}
               />
-              {errors.subCategoryId && <ErrorInput message={errors.subCategoryId}/>}
+              {errors.subCategoryId && <ErrorInput message={errors.subCategoryId} />}
             </div>
           </div>
-          
+
           <div className="form-faq-input-group">
             <span>Questions:</span>
-            <TextArea rows={4} value={questions} onChange={(e)=>setQuestions(e.target.value)} placeholder="Comma-seperated, ex:Pertanyaan 1,Pertanyaan 2,Pertanyaan 3"/>
-            {errors.questions && <ErrorInput message={errors.questions}/>}
+            <TextArea rows={4} value={questions} onChange={(e) => setQuestions(e.target.value)} placeholder="Comma-seperated, ex:Pertanyaan 1,Pertanyaan 2,Pertanyaan 3" />
+            {errors.questions && <ErrorInput message={errors.questions} />}
           </div>
-          
+
           <div className="form-faq-input-group">
             <span>Answer:</span>
-            <TextEditor dataState={[answer,setAnswer]}/>
-            {errors.answer && <ErrorInput message={errors.answer}/>}
+            <TextEditor dataState={[answer, setAnswer]} />
+            {errors.answer && <ErrorInput message={errors.answer} />}
           </div>
-          
+
         </section>
       </ModalContent>
       <ModalFooter>
@@ -172,6 +199,11 @@ const FormFaqModal = ({
           </Button>
         </div>
       </ModalFooter>
+
+
+
+      <Alert state="success" onNext={handleSuccessAddFaq} message={successText} showState={[showSuccessAlert, setShowSuccessAlert]} />
+      <Alert state="error" message={errorMsg} showState={[showErrorAlert, setShowErrorAlert]} />
     </Modal>
   )
 }

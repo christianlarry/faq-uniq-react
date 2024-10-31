@@ -5,9 +5,10 @@ import React, { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 import DeleteFaqModal from "../../organisms/modal/DeleteFaqModal"
 import FormFaqModal from "../../organisms/modal/FormFaqModal"
-import { FaqModel } from "../../../../interfaces/faqInterfaces"
+import { FaqModel, FormFaqData } from "../../../../interfaces/faqInterfaces"
 
 import {marked} from "marked"
+import { updateFaq } from "../../../../api/api"
 
 interface Props{
   data:FaqModel
@@ -42,8 +43,13 @@ const AdminActionMenu = ({data}:Props)=>{
     setShowEditFaqModal(true)
   }
 
-  const handleEditFaqSubmit = ()=>{
-    alert("Submit")
+  const handleEditFaqSubmit = ({answer,questions,subCategoryId,title}:FormFaqData)=>{
+    return updateFaq(data._id,{
+      answer,
+      id_sub_category:subCategoryId,
+      questions,
+      title
+    })
   }
 
   return (
@@ -61,7 +67,7 @@ const AdminActionMenu = ({data}:Props)=>{
         <>
           {showDeleteFaqModal && <DeleteFaqModal id={data._id} title={data.title} onClose={()=>setShowDeleteFaqModal(false)}/>}
           {showEditFaqModal && 
-            <FormFaqModal 
+            <FormFaqModal
               onClose={()=>setShowEditFaqModal(false)} 
               onSubmit={handleEditFaqSubmit}
               submitText="Update"
@@ -71,6 +77,7 @@ const AdminActionMenu = ({data}:Props)=>{
                 questions: data.questions.join(", "),
                 subCategoryId: data.sub_category.map(val=>({value:val._id,label:val.sub_category}))
               }}
+              successText="Update FAQ success!"
             />
           }
         </>
