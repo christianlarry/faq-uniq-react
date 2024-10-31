@@ -4,7 +4,7 @@ import "./AdminActionMenu.css"
 import React, { useState } from "react"
 import { createPortal } from "react-dom"
 import DeleteFaqModal from "../../organisms/modal/DeleteFaqModal"
-import EditFaqModal from "../../organisms/modal/EditFaqModal"
+import FormFaqModal from "../../organisms/modal/FormFaqModal"
 
 interface Props{
   data:{
@@ -30,6 +30,10 @@ const AdminActionMenu = ({data}:Props)=>{
     setShowEditFaqModal(true)
   }
 
+  const handleEditFaqSubmit = ()=>{
+    alert("Submit")
+  }
+
   return (
     <>
       <div className="faq-admin-action-btn">
@@ -44,7 +48,13 @@ const AdminActionMenu = ({data}:Props)=>{
       {createPortal((
         <>
           {showDeleteFaqModal && <DeleteFaqModal data={data} onClose={()=>setShowDeleteFaqModal(false)}/>}
-          {showEditFaqModal && <EditFaqModal onClose={()=>setShowEditFaqModal(false)}/>}
+          {showEditFaqModal && 
+            <FormFaqModal 
+              onClose={()=>setShowEditFaqModal(false)} 
+              onSubmit={handleEditFaqSubmit}
+              submitText="Update"
+            />
+          }
         </>
       ),document.body)}
     </>

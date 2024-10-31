@@ -14,9 +14,12 @@ import { postFaq } from "../../../api/api"
 import { FormFaqData } from "../../../interfaces/faqInterfaces"
 import { AxiosError } from "axios"
 import FormFaqModal from "../organisms/modal/FormFaqModal"
+import Alert from "../organisms/alert/Alert"
+import { useNavigate } from "react-router-dom"
 
 const FaqHeaderAction = ()=>{
 
+  const navigate = useNavigate()
   const {isAuthenticated,logout,token} = useAuth()
 
   // STATE
@@ -24,6 +27,12 @@ const FaqHeaderAction = ()=>{
   const [showAddFaqModal,setShowAddFaqModal] = useState<boolean>(false)
   const [showDownloadFaqModal,setShowDownloadFaqModal] = useState<boolean>(false)
   const [showManageUsersModal,setShowManageUsersModal] = useState<boolean>(false)
+
+  
+  // ALERT STATE
+  const [showSuccessAlert,setShowSuccessAlert] = useState<boolean>(false)
+  const [showErrorAlert,setShowErrorAlert] = useState<boolean>(false)
+  const [errorMsg,setErrorMsg] = useState<string>("Failed add new FAQ!")
 
   const confirmLogoutState = useState<boolean>(false)
   const isLogoutState = useState<boolean>(false)
@@ -54,25 +63,30 @@ const FaqHeaderAction = ()=>{
     setShowManageUsersModal(true)
   }
 
-  const handleAddFaqSubmit = ({title,answer,questions,subCategoryId}:FormFaqData)=>{
-    postFaq(token,{
-      title,
-      answer,
-      id_sub_category: subCategoryId,
-      questions: questions
-    })
-      .then(result=>{
-        if(result.status === 200){
-          // setShowSuccessAlert(true)
-        }
+  const handleAddFaqSubmit = async ({title,answer,questions,subCategoryId}:FormFaqData)=>{
+    try {
+      const result = await postFaq(token,{
+        title,
+        answer,
+        id_sub_category: subCategoryId,
+        questions: questions
       })
-      .catch(err=>{
-        if(err instanceof AxiosError){
 
-          // setShowErrorAlert(true)
-          // setErrorMsg(err.response?.data.data.errors)
-        }
-      })
+      if(result.status === 200){
+        setShowSuccessAlert(true)
+      }
+
+    } catch (err) {
+      if(err instanceof AxiosError){
+        setShowErrorAlert(true)
+        setErrorMsg(err.response?.data.errors)
+      }
+    }
+  }
+
+  const handleSuccessAddFaq = ()=>{
+    setShowAddFaqModal(false)
+    navigate(0)
   }
 
   return (
@@ -126,6 +140,9 @@ const FaqHeaderAction = ()=>{
           message="Logout success!"
           showState={isLogoutState}
           />
+
+          <Alert state="success" onNext={handleSuccessAddFaq} message="Added new FAQ to database!" showState={[showSuccessAlert,setShowSuccessAlert]}/>
+          <Alert state="error" message={errorMsg} showState={[showErrorAlert,setShowErrorAlert]}/>
         </>
       ),document.body)}
     </>

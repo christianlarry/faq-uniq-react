@@ -12,8 +12,6 @@ import TextArea from "../../atoms/input/TextArea"
 import { addFaqValidation } from "../../../../validation/faqValidation"
 import ErrorInput from "../../atoms/error/ErrorInput"
 import { useFaqCategory } from "../../../../hooks/useFaqCategory"
-import Alert from "../alert/Alert"
-import { useNavigate } from "react-router-dom"
 import CustomSelect from "../../atoms/input/CustomSelect"
 import { GroupBase, MultiValue, OptionsOrGroups } from "react-select"
 import { FormFaqData } from "../../../../interfaces/faqInterfaces"
@@ -32,19 +30,13 @@ interface Props{
 const FormFaqModal = ({
   onClose,
   onSubmit,
-  submitText="Submit"  
+  submitText="Submit"
 }:Props)=>{
 
-  const navigate = useNavigate()
   const {faqCategory} = useFaqCategory()
 
   // STATE
   const [subCatOptions,setSubCatOptions] = useState<OptionsOrGroups<OptionType,GroupBase<OptionType>>>([])
-
-  // ALERT STATE
-  const [showSuccessAlert,setShowSuccessAlert] = useState<boolean>(false)
-  const [showErrorAlert,setShowErrorAlert] = useState<boolean>(false)
-  const [errorMsg,setErrorMsg] = useState<string>("Failed add new FAQ!")
 
   // DATA STATE
   const [answer,setAnswer] = useState<string>("")
@@ -101,11 +93,6 @@ const FormFaqModal = ({
         questions: questionsArr
       })
     }
-  }
-
-  const handleSuccessAddFaq = ()=>{
-    onClose()
-    navigate(0)
   }
 
   useEffect(()=>{
@@ -178,9 +165,6 @@ const FormFaqModal = ({
           </Button>
         </div>
       </ModalFooter>
-
-      <Alert state="success" onNext={handleSuccessAddFaq} message="Added new FAQ to database!" showState={[showSuccessAlert,setShowSuccessAlert]}/>
-      <Alert state="error" message={errorMsg} showState={[showErrorAlert,setShowErrorAlert]}/>
     </Modal>
   )
 }
