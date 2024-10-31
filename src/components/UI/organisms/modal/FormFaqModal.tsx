@@ -25,12 +25,19 @@ interface Props{
   onClose:()=>void
   onSubmit:(data:FormFaqData)=>void
   submitText?:string
+  defaultValues?:{
+    answer:string,
+    subCategoryId:MultiValue<OptionType>,
+    questions:string,
+    title:string
+  }
 }
 
 const FormFaqModal = ({
   onClose,
   onSubmit,
-  submitText="Submit"
+  submitText="Submit",
+  defaultValues
 }:Props)=>{
 
   const {faqCategory} = useFaqCategory()
@@ -39,10 +46,10 @@ const FormFaqModal = ({
   const [subCatOptions,setSubCatOptions] = useState<OptionsOrGroups<OptionType,GroupBase<OptionType>>>([])
 
   // DATA STATE
-  const [answer,setAnswer] = useState<string>("")
-  const [subCategoryId,setSubCategoryId] = useState<MultiValue<OptionType>>([])
-  const [questions,setQuestions] = useState<string>("")
-  const [title,setTitle] = useState<string>("")
+  const [answer,setAnswer] = useState<string>(defaultValues?.answer || "")
+  const [subCategoryId,setSubCategoryId] = useState<MultiValue<OptionType>>(defaultValues?.subCategoryId || [])
+  const [questions,setQuestions] = useState<string>(defaultValues?.questions || "")
+  const [title,setTitle] = useState<string>(defaultValues?.title || "")
 
   // ERROR STATE
   const [errors, setErrors] = useState<{
@@ -143,7 +150,7 @@ const FormFaqModal = ({
           
           <div className="form-faq-input-group">
             <span>Questions:</span>
-            <TextArea value={questions} onChange={(e)=>setQuestions(e.target.value)} placeholder="Comma-seperated, ex:Pertanyaan 1,Pertanyaan 2,Pertanyaan 3"/>
+            <TextArea rows={4} value={questions} onChange={(e)=>setQuestions(e.target.value)} placeholder="Comma-seperated, ex:Pertanyaan 1,Pertanyaan 2,Pertanyaan 3"/>
             {errors.questions && <ErrorInput message={errors.questions}/>}
           </div>
           

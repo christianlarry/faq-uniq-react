@@ -11,15 +11,14 @@ import { useNavigate } from "react-router-dom"
 
 interface Props{
   onClose:()=>void
-  data:{
-    id:string,
-    title:string
-  }
+  id:string
+  title:string
 }
 
 const DeleteFaqModal = ({
   onClose,
-  data
+  title,
+  id
 }:Props)=>{
 
   const navigate = useNavigate()
@@ -33,7 +32,7 @@ const DeleteFaqModal = ({
 
   const handleDeleteClick = async ()=>{
     try {
-      const result = await deleteFaq(data.id)
+      const result = await deleteFaq(id)
 
       if(result.status === 200){
         setShowSuccessAlert(true)
@@ -57,9 +56,9 @@ const DeleteFaqModal = ({
         <p>
           Are you sure to delete this FAQ?<br/><br/>
           <span style={{fontStyle:"italic"}}>
-            Title: {data.title} 
+            Title: {title} 
             <br/>
-            ID: {data.id}
+            ID: {id}
           </span>
         </p>
       </ModalContent>

@@ -89,7 +89,7 @@ const HomePage = ()=>{
           {faqResult.data && faqResult.data.data.map((faq,i)=>(
             <Fragment key={i}>
               {faq !== null &&
-                <FaqAccordion title={faq.title} answer={faq.answer} _id={faq._id} htmlAnswer={faq.htmlAnswer}/>
+                <FaqAccordion data={faq}/>
               }
             </Fragment>
           ))}

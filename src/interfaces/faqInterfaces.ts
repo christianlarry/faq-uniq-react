@@ -4,7 +4,8 @@ export interface FaqModel{
   time_updated:number,
   questions:string[],
   answer:string,
-  htmlAnswer:string
+  htmlAnswer:string,
+  sub_category:FaqSubCategoryWithoutFaqsModel[]
 }
 
 export interface PostFaqModel{
@@ -32,6 +33,11 @@ export interface FaqSubCategoryModel{
   _id:string,
   sub_category:string,
   faqs:string[]
+}
+
+export interface FaqSubCategoryWithoutFaqsModel{
+  _id:string,
+  sub_category:string
 }
 
 export interface FormFaqData{

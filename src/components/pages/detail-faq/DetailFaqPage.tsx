@@ -62,10 +62,7 @@ const DetailFaqPage = ()=>{
 
           {(faqById && faqById.length>0) && 
           <FaqAccordion
-            _id={faqById[0]._id}
-            title={faqById[0].title}
-            answer={faqById[0].answer}
-            htmlAnswer={faqById[0].htmlAnswer}
+            data={faqById[0]}
             alwaysOpen
           />
           }

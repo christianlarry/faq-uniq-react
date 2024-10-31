@@ -12,16 +12,17 @@ import { useAuth } from "../../../../hooks/useAuth"
 import Button from "../../atoms/button/Button"
 import ButtonText from "../../atoms/button/ButtonText"
 import { useNavigate } from "react-router-dom"
+import { FaqModel } from "../../../../interfaces/faqInterfaces"
 
 interface Props{
   alwaysOpen?:boolean
-  _id:string,
-  answer:string,
-  title:string,
-  htmlAnswer:string
+  data:FaqModel
 }
 
-const FaqAccordion = ({title,answer,_id,htmlAnswer,alwaysOpen=false}:Props) => {
+const FaqAccordion = ({
+  alwaysOpen=false,
+  data
+}:Props) => {
 
   const navigate = useNavigate()
 
@@ -29,10 +30,10 @@ const FaqAccordion = ({title,answer,_id,htmlAnswer,alwaysOpen=false}:Props) => {
   const {isAuthenticated} = useAuth()
 
   const handleShareClick = ()=>{
-    const shareUrl = `${window.location.origin}/faq/${_id}`
+    const shareUrl = `${window.location.origin}/faq/${data._id}`
 
     navigator.share({
-      title: title,
+      title: data.title,
       text: "Check out this FAQ!",
       url: shareUrl
     }).then(()=>{
@@ -43,7 +44,7 @@ const FaqAccordion = ({title,answer,_id,htmlAnswer,alwaysOpen=false}:Props) => {
   }
 
   const handleDetailClick = ()=>{
-    navigate(`/faq/${_id}`)
+    navigate(`/faq/${data._id}`)
   }
 
   return (
@@ -58,17 +59,17 @@ const FaqAccordion = ({title,answer,_id,htmlAnswer,alwaysOpen=false}:Props) => {
             }
             <span className="faq-accordion-title" style={{
               paddingLeft: alwaysOpen?"10px":0
-            }}>{title}</span>
+            }}>{data.title}</span>
           </div>
-          {isAuthenticated && <div className="faq-admin-action-wrap"><AdminActionMenu data={{id:_id,title}}/></div>}
+          {isAuthenticated && <div className="faq-admin-action-wrap"><AdminActionMenu data={data}/></div>}
         </AccordionLabel>
         <AccordionContent>
           <div className="faq-accordion-content">
             <h5 style={{marginBottom: "1rem"}}><b>Jawaban pertanyaan:  </b></h5>
             <div className="faq-accordion-content-answer">
-              {(answer && !htmlAnswer) && <ReactMarkdown>{answer}</ReactMarkdown>}
+              {(data.answer && !data.htmlAnswer) && <ReactMarkdown>{data.answer}</ReactMarkdown>}
 
-              {htmlAnswer && <div dangerouslySetInnerHTML={{__html: htmlAnswer}}/>} 
+              {data.htmlAnswer && <div dangerouslySetInnerHTML={{__html: data.htmlAnswer}}/>} 
             </div>
             <div style={{display: "flex",justifyContent: "space-between",gap: "5px",alignItems: "center"}}>
               {!alwaysOpen &&
