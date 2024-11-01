@@ -113,20 +113,37 @@ const FormFaqModal = ({
 
       // JALANKAN ON SUBMIT
       try {
-        const result = await onSubmit({
+
+        const submitData = {
           title: validationRes.data.title,
           answer: validationRes.data.answer,
           subCategoryId: subCategoryId.map(val => val.value),
           questions: questionsArr
-        })
+        }
+
+        // CEK APAKAH DEFAULT VALUES DAN INPUT TERBARU SAMA ATAU TIDAK
+        if(defaultValues){
+          const checkDataEqual = (
+            submitData.title === defaultValues.title &&
+            submitData.answer === defaultValues.answer &&
+            submitData.questions.join(", ") === defaultValues.questions &&
+            submitData.subCategoryId.join(",") === defaultValues.subCategoryId.map(val=>val.value).join(",")
+          )
+
+          if(checkDataEqual) throw new Error("No updates made, data is the same.")
+        }
+
+        const result = await onSubmit(submitData)
 
         if (result.status === 200) {
           setShowSuccessAlert(true)
         }
       } catch (err) {
+        setShowErrorAlert(true)
         if (err instanceof AxiosError) {
-          setShowErrorAlert(true)
           setErrorMsg(err.response?.data.errors)
+        }else if (err instanceof Error){
+          setErrorMsg(err.message)
         }
       } finally {
         setIsLoading(false)
