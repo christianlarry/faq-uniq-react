@@ -3,6 +3,8 @@
   cursor: pointer;
   transition: transform 0.1s;
   width: 35px;
+
+  color: var(--white);
 }
 
 .icon-btn > i >:first-child{

@@ -1,16 +1,30 @@
 import axios, { AxiosResponse } from "axios"
 import useSWR, { SWRConfiguration } from "swr"
 import { FaqCategoryResponseModel, FaqResponseModel, PostFaqModel } from "../interfaces/faqInterfaces"
-import { LoginModel } from "../interfaces/userInterfaces"
+import { LoginModel, UserResponseModel } from "../interfaces/userInterfaces"
 
 // INIT VARIABEL
 const api_baseUrl = "http://localhost:3000/api/v1/"
 
 // FETCHER
 export const fetcher = async <T>(url:string,query:string=''):Promise<T>=>{
-  const response:AxiosResponse<T> = await axios.get(api_baseUrl+url+query)
+
+  const token = localStorage.getItem("token")
+
+  const response:AxiosResponse<T> = await axios.get(api_baseUrl+url+query,{
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
   
   return response.data
+}
+
+// GET TOKEN
+const getToken = ()=>{
+  const lsTokenKey = "token"
+
+  return localStorage.getItem(lsTokenKey) || ""
 }
 
 // ENDPOINT
@@ -47,7 +61,7 @@ export const postCheckToken = async (token:string)=>{
 
 export const postFaq = async (data:PostFaqModel)=>{
 
-  const token = localStorage.getItem("token") || ""
+  const token = getToken()
 
   return await axios.post(`${api_baseUrl}/faq`,data,{
     headers:{
@@ -59,7 +73,7 @@ export const postFaq = async (data:PostFaqModel)=>{
 // DELETE
 export const deleteFaq = async (id:string)=>{
 
-  const token = localStorage.getItem("token") || ""
+  const token = getToken()
 
   return await axios.delete(`${api_baseUrl}/faq/${id}`,{
     headers:{
@@ -71,9 +85,28 @@ export const deleteFaq = async (id:string)=>{
 // UPDATE
 export const updateFaq = async (id:string,data:PostFaqModel)=>{
 
-  const token = localStorage.getItem("token") || ""
+  const token = getToken()
 
   return await axios.put(`${api_baseUrl}/faq/${id}`,data,{
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  })
+}
+
+// USERS ENDPOINT
+export const getUsers = (config?:SWRConfiguration)=>useSWR<UserResponseModel>(
+  `user`,
+  fetcher,
+  config
+)
+
+// DELETE
+export const deleteUser = async (id:string)=>{
+
+  const token = getToken()
+
+  return await axios.delete(`${api_baseUrl}/user/${id}`,{
     headers:{
       Authorization: `Bearer ${token}`
     }

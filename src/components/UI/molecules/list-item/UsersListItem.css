@@ -1,0 +1,14 @@
+.users-item{
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  min-width: 700px;
+}
+
+.users-item-username{flex: 4;}
+.users-item-email{flex: 4;}
+.users-item-action{flex: 1;}
+
+.users-item-action i{
+  font-size: 1rem;
+}

@@ -30,9 +30,11 @@ const Input = forwardRef<HTMLInputElement, Props>(({
           <input ref={ref} {...props} id={randomId} className={`input-control ${className?className:""}`} type={type} />
         </div>
       </div>
+      {errors &&
       <div style={{marginTop: 10}}>
-        {errors && <ErrorInput message={errors}/>}
+        <ErrorInput message={errors}/>
       </div>
+      }
     </div>
   )
 })
