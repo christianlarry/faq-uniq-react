@@ -11,5 +11,11 @@ export interface UserModel{
 }
 
 export interface UserResponseModel{
-  data: UserModel[]
+  data:UserModel[]
+}
+
+export interface PostUserModel{
+  email:string
+  username:string
+  password:string
 }

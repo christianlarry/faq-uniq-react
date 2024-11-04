@@ -7,4 +7,6 @@
   background-color: var(--gray);
   border-radius: 10px;
   color: var(--input-text-color);
+
+  width: 100%;
 }

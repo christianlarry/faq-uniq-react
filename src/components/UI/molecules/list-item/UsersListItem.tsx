@@ -6,6 +6,7 @@ import "./UsersListItem.css"
 import { UserModel } from "../../../../interfaces/userInterfaces"
 import { useState } from "react"
 import DeleteUserModal from "../../organisms/modal/DeleteUserModal"
+import { mutate } from "swr"
 
 interface Props{
   data:UserModel
@@ -43,7 +44,7 @@ const UsersListItem = ({data}:Props) => {
       {isShowDeleteModal &&
         <DeleteUserModal 
           data={data}
-          onClose={()=>setIsShowDeleteModal(false)} 
+          onClose={()=>{setIsShowDeleteModal(false);mutate("user")}} 
         />
       }
     </div>

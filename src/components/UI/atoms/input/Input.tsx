@@ -20,14 +20,14 @@ const Input = forwardRef<HTMLInputElement, Props>(({
 
   return (
     <div>
-      <div className="input-box">
-        <div className="input-group">
+      <div className="faq-input-box">
+        <div className="faq-input-group">
           {IconElement &&
-          <label className="input-label" htmlFor={randomId}>
+          <label className="faq-input-label" htmlFor={randomId}>
             <IconElement/>
           </label>
           }
-          <input ref={ref} {...props} id={randomId} className={`input-control ${className?className:""}`} type={type} />
+          <input ref={ref} {...props} id={randomId} className={`faq-input-control ${className?className:""}`} type={type} />
         </div>
       </div>
       {errors &&

@@ -1,4 +1,4 @@
-.input-box{
+.faq-input-box{
   position: relative;
   z-index: 1;
   border: 1px solid transparent;
@@ -9,7 +9,7 @@
   justify-content: center;
 }
 
-.input-box::before{
+.faq-input-box::before{
   content: "";
   display: block;
   position: absolute;
@@ -22,7 +22,7 @@
   top: 1.4px; right: 0; bottom: 0; left: 1px;
 }
 
-.input-group{
+.faq-input-group{
   width: 100%;
   background-color: var(--gray);
   border-radius: 50px;
@@ -34,7 +34,7 @@
   overflow: hidden;
 }
 
-.input-label{
+.faq-input-label{
   padding: 15px 15px;
   padding-right: 0;
   height: 100%;
@@ -43,6 +43,23 @@
   display: block;
 }
 
-.input-label > svg{
+.faq-input-label > svg{
   display: block;
+}
+
+.faq-input-control{
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  color: var(--input-text-color);
+
+  display: block;
+
+  padding: 10px 15px;
+  text-align: center;
+  
+  font-size: 1rem;
+  font-style: italic;
 }
