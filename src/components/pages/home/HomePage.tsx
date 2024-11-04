@@ -7,7 +7,7 @@ import FetchLoader from "../../UI/atoms/loader/FetchLoader";
 import ButtonText from "../../UI/atoms/button/ButtonText";
 import ErrorText from "../../UI/atoms/error/ErrorText";
 import { useAllFaq } from "../../../hooks/useAllFaq";
-import { generateAccessToken } from '../../../utils/generateToken'; // Import fungsi generateAccessToken
+import { generateAccessToken } from "../../../utils/generateToken";
 
 const HomePage = () => {
   // HOOKS INIT
@@ -65,7 +65,7 @@ const HomePage = () => {
   useEffect(() => {
     const generateAndMountWidget = async () => {
       // Hasilkan token akses
-      const accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZGVudGlmaWVyIjoidXNlcl8xX2RldmVsb3BtZW50IiwibWV0YWRhdGEiOnsic2Vzc2lvbl9pZCI6IjQ2a2poZm5ibWwyN3NwOXJkNGpqbG9hbjJ0bnFqZmNtIiwidXNlcl9uYW1lIjoiVU5JUSBERVYiLCJhcGlfdG9rZW4iOiJCZWFyZXIgZXlKaGJHY2lPaUpJVXpJMU5pSXNJbXRwWkNJNkltUmxkaUo5LmV5SmtZWFJoSWpwN0luVnpaWElpT25zaVlXTmpiM1Z1ZEY5cFpDSTZJakVpTENKaWRYTnBibVZ6YzE5cFpDSTZJakVpTENKaWRYTnBibVZ6YzE5dVlXMWxJam9pSWl3aVpXMWhhV3dpT2lKaFpHMXBibWx6ZEhKaGRHOXlRSFZ1YVhFdVpHVjJJaXdpYm1GdFpTSTZJbFZPU1ZFZ1JFVldJaXdpY0dodmJtVWlPaUkyTWpnMU56UXlNalUzT0RnMklpd2lkWE5sY2w5cFpDSTZJakVpTENKMWMyVnlYM1I1Y0dVaU9pSmhaRzFwYmlKOUxDSjFjMlZ5WDNKdmJHVWlPbnNpYjNWMGJHVjBYMkZqWTJWemN5STZJakk1TERRd0xEUXhMRFF5TERRekxEUTBMRFExTERRMkxEUTNMRFV3TERnM0xEZzVMREV4TWl3ek5qUXNOVE0yTERVM01DdzFOemdzTlRjNUxEWXhNQ3cyTlRBc05qVXlMRFkxT0NKOWZTd2laWGh3SWpveE56TXdORFl3TlRBNExDSnBZWFFpT2pFM016QTBOREkxTURnc0ltcDBhU0k2SW1ZMllUTXlOalpsWVdRMU0yTTJNamhrWWpGaU1USTJNRFkwT0RVMFl6ZzFJaXdpYm1KbUlqb3hOek13TkRReU5UQTRmUS5UX3oxTzNIUi14MzBIQ2tMdEV4ZkU5eXI5Xy0weGpFN3Qyb3djMGw2ZF8wIiwiZW52IjoiZGV2ZWxvcG1lbnQifSwiZXhwIjoxNzMwNDUzMzA4fQ.zGPxtDSw1mzlrcUbd9G_yEp9MyqdRoG8WUVdnUbt8xQ" //await generateAccessToken("user-1", { name: "John Doe" });
+      const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoidXNlci0xIiwibmFtZSI6IkpvaG4gRG9lIiwiZXhwIjoxNzMyMDAyOTg4LCJpYXQiOjE3MzA3MDY5ODh9.ubdPGygZ8xReo0G7kuePHpD0m9STXFRDDMfcdfsRKYs";
       console.log("Generated Access Token:", accessToken); // Log token untuk verifikasi
 
       const script = document.createElement("script");
