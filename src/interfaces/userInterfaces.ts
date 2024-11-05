@@ -19,3 +19,12 @@ export interface PostUserModel{
   username:string
   password:string
 }
+
+export interface EditUserModel{
+  email:string
+  username:string
+}
+
+export interface UpdateUserPasswordModel{
+  password:string
+}

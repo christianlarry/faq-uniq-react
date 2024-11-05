@@ -5,53 +5,55 @@ import ModalContent from "../../atoms/modal/ModalContent"
 import ModalFooter from "../../atoms/modal/ModalFooter"
 import ModalHeader from "../../atoms/modal/ModalHeader"
 import {SubmitHandler} from "react-hook-form"
-import { PostUserModel } from "../../../../interfaces/userInterfaces"
-import { registerUser } from "../../../../api/api"
+import { EditUserModel, UserModel } from "../../../../interfaces/userInterfaces"
+import { updateUser } from "../../../../api/api"
 import { AxiosError } from "axios"
 import LoadingScreen from "../loading-screen/LoadingScreen"
 import Alert from "../alert/Alert"
-import AddUserForm from "../form/AddUserForm"
+import EditUserForm from "../form/EditUserForm"
 
 interface Props{
   onClose:()=>void
+  data:UserModel
 }
 
-const AddUserModal = ({
-  onClose
+const EditUserModal = ({
+  onClose,
+  data
 }:Props)=>{
 
   // STATE
   const [isLoading,setIsLoading] = useState<boolean>(false)
-  const [isPostedUser,setIsPostedUser] = useState<boolean>(false)
-  const [isFailedPostUser,setIsFailedPostUser] = useState<boolean>(false)
+  const [isEditedUser,setIsEditedUser] = useState<boolean>(false)
+  const [isEditedPostUser,setIsFailedEditUser] = useState<boolean>(false)
 
-  const [failedPostUserMsg,setFailedPostUserMsg] = useState<string>("Failed add user!")
+  const [failedRequestMsg,setFailedRequestMsg] = useState<string>("Failed edit user!")
 
   // REF
-  const addUserFormRef = useRef<HTMLFormElement>(null)
+  const editUserFormRef = useRef<HTMLFormElement>(null)
 
   // EVENT HANDLER
   const handleAddClick = ()=>{
-    if(addUserFormRef.current){
-      addUserFormRef.current.requestSubmit()
+    if(editUserFormRef.current){
+      editUserFormRef.current.requestSubmit()
     }
   }
 
-  const onSubmit:SubmitHandler<PostUserModel> = async (data)=>{
+  const onSubmit:SubmitHandler<EditUserModel> = async (formData)=>{
     setIsLoading(true)
 
     try {
-      const result = await registerUser(data)
+      const result = await updateUser(data._id,formData)
       
       if(result.status === 200){
-        setIsPostedUser(true)
+        setIsEditedUser(true)
       }
       
     } catch (err) {
-      setIsFailedPostUser(true)
+      setIsFailedEditUser(true)
 
       if(err instanceof AxiosError && err.response){
-        setFailedPostUserMsg(err.response.data.errors)
+        setFailedRequestMsg(err.response.data.errors)
       }
     } finally{
       setIsLoading(false)
@@ -64,7 +66,14 @@ const AddUserModal = ({
       <ModalContent>
 
         <section>
-          <AddUserForm ref={addUserFormRef} onSubmit={onSubmit}/>
+          <EditUserForm 
+          ref={editUserFormRef} 
+          onSubmit={onSubmit} 
+          defaultValues={{
+            email:data.email,
+            username:data.username
+          }}
+          />
         </section>
 
       </ModalContent>
@@ -83,15 +92,15 @@ const AddUserModal = ({
       <Alert
         state="success"
         message="Success add new user to DB!"
-        showState={[isPostedUser,setIsPostedUser]}
+        showState={[isEditedUser,setIsEditedUser]}
         onNext={onClose}
       />
 
       <Alert
         state="error"
-        message={failedPostUserMsg}
-        showState={[isFailedPostUser,setIsFailedPostUser]}
-        onNext={()=>setIsFailedPostUser(false)}
+        message={failedRequestMsg}
+        showState={[isEditedPostUser,setIsFailedEditUser]}
+        onNext={()=>setIsFailedEditUser(false)}
       />
 
       {isLoading && <LoadingScreen/>}
@@ -99,4 +108,4 @@ const AddUserModal = ({
   )
 }
 
-export default AddUserModal
+export default EditUserModal

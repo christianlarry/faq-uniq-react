@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios"
 import useSWR, { SWRConfiguration } from "swr"
 import { FaqCategoryResponseModel, FaqResponseModel, PostFaqModel } from "../interfaces/faqInterfaces"
-import { LoginModel, PostUserModel, UserResponseModel } from "../interfaces/userInterfaces"
+import { EditUserModel, LoginModel, PostUserModel, UserResponseModel } from "../interfaces/userInterfaces"
 
 // INIT VARIABEL
 const api_baseUrl = "http://localhost:3000/api/v1/"
@@ -105,6 +105,16 @@ export const registerUser = async (data:PostUserModel)=>{
   const token = getToken()
 
   return await axios.post(`${api_baseUrl}/register`,data,{
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  })
+}
+
+export const updateUser = async (id:string,data:EditUserModel)=>{
+  const token = getToken()
+
+  return await axios.post(`${api_baseUrl}/user/${id}`,data,{
     headers:{
       Authorization: `Bearer ${token}`
     }

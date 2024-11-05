@@ -7,6 +7,7 @@ import { UserModel } from "../../../../interfaces/userInterfaces"
 import { useState } from "react"
 import DeleteUserModal from "../../organisms/modal/DeleteUserModal"
 import { mutate } from "swr"
+import EditUserModal from "../../organisms/modal/EditUserModal"
 
 interface Props{
   data:UserModel
@@ -15,13 +16,14 @@ interface Props{
 const UsersListItem = ({data}:Props) => {
 
   const [isShowDeleteModal,setIsShowDeleteModal] = useState<boolean>(false)
+  const [isShowEditModal,setIsShowEditModal] = useState<boolean>(false)
 
   const handleDeleteBtnClick = ()=>{
     setIsShowDeleteModal(true)
   }
 
   const handleEditBtnClick = ()=>{
-    alert("edit")
+    setIsShowEditModal(true)
   }
 
   return (
@@ -45,6 +47,13 @@ const UsersListItem = ({data}:Props) => {
         <DeleteUserModal 
           data={data}
           onClose={()=>{setIsShowDeleteModal(false);mutate("user")}} 
+        />
+      }
+
+      {isShowEditModal &&
+        <EditUserModal
+          onClose={()=>{setIsShowEditModal(false);mutate("user")}}
+          data={data}
         />
       }
     </div>
