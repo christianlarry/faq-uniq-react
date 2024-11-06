@@ -40,9 +40,13 @@ const EditUserModal = ({
   }
 
   const onSubmit:SubmitHandler<EditUserModel> = async (formData)=>{
-    setIsLoading(true)
-
     try {
+    
+      const isDataEqual = formData.email===data.email && formData.username===data.username
+      
+      if(isDataEqual) throw new Error("Nothing's changed, mate!")
+      
+      setIsLoading(true)
       const result = await updateUser(data._id,formData)
       
       if(result.status === 200){
@@ -54,6 +58,8 @@ const EditUserModal = ({
 
       if(err instanceof AxiosError && err.response){
         setFailedRequestMsg(err.response.data.errors)
+      }else if(err instanceof Error){
+        setFailedRequestMsg(err.message)
       }
     } finally{
       setIsLoading(false)
@@ -84,7 +90,7 @@ const EditUserModal = ({
             <span>Cancel</span>
           </Button>
           <Button onClick={handleAddClick}>
-            <span>Add</span>
+            <span>Update</span>
           </Button>
         </div>
       </ModalFooter>

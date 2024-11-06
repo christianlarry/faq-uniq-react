@@ -9,7 +9,7 @@ const api_baseUrl = "http://localhost:3000/api/v1/"
 // FETCHER
 export const fetcher = async <T>(url:string,query:string=''):Promise<T>=>{
 
-  const token = localStorage.getItem("token")
+  const token = getToken()
 
   const response:AxiosResponse<T> = await axios.get(api_baseUrl+url+query,{
     headers: {
@@ -22,7 +22,7 @@ export const fetcher = async <T>(url:string,query:string=''):Promise<T>=>{
 
 // GET TOKEN
 const getToken = ()=>{
-  const lsTokenKey = "token"
+  const lsTokenKey = "loginToken"
 
   return localStorage.getItem(lsTokenKey) || ""
 }
@@ -114,7 +114,7 @@ export const registerUser = async (data:PostUserModel)=>{
 export const updateUser = async (id:string,data:EditUserModel)=>{
   const token = getToken()
 
-  return await axios.post(`${api_baseUrl}/user/${id}`,data,{
+  return await axios.put(`${api_baseUrl}/user/${id}`,data,{
     headers:{
       Authorization: `Bearer ${token}`
     }

@@ -59,7 +59,7 @@ const LoginModal = ({onClose}:Props) => {
       const result = await postLogin(data)
       const token = result.data.data.token
 
-      localStorage.setItem("token",token)
+      localStorage.setItem("loginToken",token)
 
       isLoginState[1](true)
 

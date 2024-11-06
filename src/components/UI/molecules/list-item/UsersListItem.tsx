@@ -27,20 +27,22 @@ const UsersListItem = ({data}:Props) => {
   }
 
   return (
-    <div className="users-item">
-      <div className="users-item-username">
-        <Input IconElement={FaUser} readOnly disabled value={data.username} />
-      </div>
-      <div className="users-item-email">
-        <Input IconElement={FaEnvelope} readOnly disabled value={data.email} />
-      </div>
-      <div className="users-item-action">
-        <IconButton onClick={handleEditBtnClick}>
-          <i><FaPen /></i>
-        </IconButton>
-        <IconButton onClick={handleDeleteBtnClick}>
-          <i><FaTrash /></i>
-        </IconButton>
+    <>
+      <div className="users-item">
+        <div className="users-item-username">
+          <Input IconElement={FaUser} readOnly disabled value={data.username} />
+        </div>
+        <div className="users-item-email">
+          <Input IconElement={FaEnvelope} readOnly disabled value={data.email} />
+        </div>
+        <div className="users-item-action">
+          <IconButton onClick={handleEditBtnClick}>
+            <i><FaPen /></i>
+          </IconButton>
+          <IconButton onClick={handleDeleteBtnClick}>
+            <i><FaTrash /></i>
+          </IconButton>
+        </div>
       </div>
 
       {isShowDeleteModal &&
@@ -56,7 +58,7 @@ const UsersListItem = ({data}:Props) => {
           data={data}
         />
       }
-    </div>
+    </>
   )
 }
 
