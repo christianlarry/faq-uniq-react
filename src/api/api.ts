@@ -4,7 +4,15 @@ import { FaqCategoryResponseModel, FaqResponseModel, PostFaqModel } from "../int
 import { EditUserModel, LoginModel, PostUserModel, UpdateUserPasswordModel, UserResponseModel } from "../interfaces/userInterfaces"
 
 // INIT VARIABEL
-const api_baseUrl = "http://localhost:3000/api/v1/"
+const api_baseUrl = import.meta.env.VITE_API_BASE_URL || ""
+const login_token_key = "loginToken"
+
+// GET TOKEN
+const getToken = ()=>{
+  const lsTokenKey = login_token_key
+
+  return localStorage.getItem(lsTokenKey) || ""
+}
 
 // FETCHER
 export const fetcher = async <T>(url:string,query:string=''):Promise<T>=>{
@@ -18,13 +26,6 @@ export const fetcher = async <T>(url:string,query:string=''):Promise<T>=>{
   })
   
   return response.data
-}
-
-// GET TOKEN
-const getToken = ()=>{
-  const lsTokenKey = "loginToken"
-
-  return localStorage.getItem(lsTokenKey) || ""
 }
 
 // ENDPOINT
