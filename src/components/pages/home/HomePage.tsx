@@ -7,7 +7,6 @@ import FetchLoader from "../../UI/atoms/loader/FetchLoader";
 import ButtonText from "../../UI/atoms/button/ButtonText";
 import ErrorText from "../../UI/atoms/error/ErrorText";
 import { useAllFaq } from "../../../hooks/useAllFaq";
-import { generateAccessToken } from "../../../utils/generateToken";
 
 const HomePage = () => {
   // HOOKS INIT
@@ -61,37 +60,6 @@ const HomePage = () => {
       faqSectionRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [faqResult.data]);
-
-  useEffect(() => {
-    const generateAndMountWidget = async () => {
-      // Hasilkan token akses
-      const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoidXNlci0xIiwibmFtZSI6IkpvaG4gRG9lIiwiZXhwIjoxNzMyMDAyOTg4LCJpYXQiOjE3MzA3MDY5ODh9.ubdPGygZ8xReo0G7kuePHpD0m9STXFRDDMfcdfsRKYs";
-      console.log("Generated Access Token:", accessToken); // Log token untuk verifikasi
-
-      const script = document.createElement("script");
-      script.src = `${import.meta.env.VITE_COPILOT_SERVER}/copilot/index.js`;
-      script.async = true;
-      script.onload = () => {
-        window.mountChainlitWidget({
-          chainlitServer: import.meta.env.VITE_COPILOT_SERVER,
-          accessToken: accessToken, // Gunakan token yang dihasilkan
-          theme: "dark",
-          button: {
-            style: {
-              bgcolor: "#494949",
-              color: "#fff",
-              bgcolorHover: "#FD9E28",
-              boxShadow: "#f0f0f0",
-              size: "45px",
-            },
-          },
-        });
-      };
-      document.body.appendChild(script);
-    };
-
-    generateAndMountWidget();
-  }, []);
 
   // EVENT HANDLER
   const handleResetFaq = () => {

@@ -142,3 +142,8 @@ export const deleteUser = async (id:string)=>{
     }
   })
 }
+
+// GET CHAINLIT CHATBOT TOKEN
+export const postGenerateChainlitToken = async ()=>{
+  return await axios.post(`${api_baseUrl}/generate-token`)
+}

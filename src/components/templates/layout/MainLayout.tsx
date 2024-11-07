@@ -13,6 +13,7 @@ import { FaqCategoryProvider } from "../../../hooks/useFaqCategory"
 
 import {ErrorBoundary} from "react-error-boundary"
 import ISErrorScreen from "../../UI/organisms/error/ISErrorScreen"
+import { postGenerateChainlitToken } from "../../../api/api"
 
 interface Props {
   children?: React.ReactNode
@@ -59,6 +60,49 @@ const MainLayout = ({
   // ALL FAQ DATA
   
 
+
+  useEffect(() => {
+    const generateAndMountWidget = async () => {
+
+      const result = await postGenerateChainlitToken()
+      
+      if(result.status !== 200){
+        console.log("Failed generate chainlit token!")
+        return
+      }
+
+      if(!result.data.data.token){
+        console.log("Token not found!")
+        return
+      }
+
+      // Hasilkan token akses
+      const accessToken = result.data.data.token;
+
+      const script = document.createElement("script");
+      script.src = `${import.meta.env.VITE_COPILOT_SERVER}/copilot/index.js`;
+      script.async = true;
+      script.onload = () => {
+        window.mountChainlitWidget({
+          chainlitServer: import.meta.env.VITE_COPILOT_SERVER,
+          accessToken: accessToken, // Gunakan token yang dihasilkan
+          theme: "dark",
+          button: {
+            style: {
+              bgcolor: "#494949",
+              color: "#fff",
+              bgcolorHover: "#FD9E28",
+              boxShadow: "#f0f0f0",
+              size: "45px",
+            },
+          },
+        });
+      };
+      document.body.appendChild(script);
+    };
+
+    generateAndMountWidget();
+  }, []);
 
   return (
     <ErrorBoundary fallback={<ISErrorScreen/>}>
