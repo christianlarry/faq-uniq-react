@@ -9,4 +9,6 @@
   font-family: var(--font-secondary);
   color: var(--input-text-color);
   resize: none;
+
+  width: 100%;
 }

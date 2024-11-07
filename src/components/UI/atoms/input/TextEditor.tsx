@@ -12,7 +12,9 @@ import {
   MediaEmbed,
   Paragraph,
   Table,
-  Undo
+  Undo,
+  EventInfo,
+  Editor
 } from 'ckeditor5';
 
 import 'ckeditor5/ckeditor5.css';
@@ -20,12 +22,16 @@ import 'ckeditor5/ckeditor5.css';
 import "./TextEditor.css"
 
 interface Props{
-  dataState:[string,React.Dispatch<React.SetStateAction<string>>]
+  data:string|undefined|null
+  onChange?:(event: EventInfo, editor: Editor) => void
+  onBlur?:(event: EventInfo, editor: Editor) => void
 }
 
-const TextEditor = ({dataState}:Props)=>{
-
-  const [editorData, setEditorData] = dataState
+const TextEditor = ({
+data,
+onChange,
+onBlur
+}:Props)=>{
 
   return (
     <div className='text-editor'>
@@ -57,11 +63,9 @@ const TextEditor = ({dataState}:Props)=>{
           },
           initialData: "",
         } }
-        data={editorData}
-        onChange={(_e,editor)=>{
-          const data = editor.getData()
-          setEditorData(data)
-        }}
+        data={data}
+        onChange={onChange}
+        onBlur={onBlur}
       />
     </div>
   )

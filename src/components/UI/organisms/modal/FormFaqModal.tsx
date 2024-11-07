@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useRef, useState } from "react"
 import Button from "../../atoms/button/Button"
 import Modal from "../../atoms/modal/Modal"
 import ModalContent from "../../atoms/modal/ModalContent"
@@ -6,35 +6,19 @@ import ModalFooter from "../../atoms/modal/ModalFooter"
 import ModalHeader from "../../atoms/modal/ModalHeader"
 
 import "./FormFaqModal.css"
-import TextEditor from "../../atoms/input/TextEditor"
-import PlainInput from "../../atoms/input/PlainInput"
-import TextArea from "../../atoms/input/TextArea"
-import { addFaqValidation } from "../../../../validation/faqValidation"
-import ErrorInput from "../../atoms/error/ErrorInput"
-import { useFaqCategory } from "../../../../hooks/useFaqCategory"
-import CustomSelect from "../../atoms/input/CustomSelect"
-import { GroupBase, MultiValue, OptionsOrGroups } from "react-select"
-import { FormFaqData } from "../../../../interfaces/faqInterfaces"
+import { EditFaqFormModel, FormFaqData } from "../../../../interfaces/faqInterfaces"
 import { AxiosError, AxiosResponse } from "axios"
 import Alert from "../alert/Alert"
 import { useNavigate } from "react-router-dom"
 import LoadingScreen from "../loading-screen/LoadingScreen"
-
-interface OptionType {
-  label: string
-  value: string
-}
+import EditFaqForm from "../form/EditFaqForm"
+import { SubmitHandler } from "react-hook-form"
 
 interface Props {
   onClose: () => void
   onSubmit: (data: FormFaqData) => Promise<AxiosResponse<any, any>>
   submitText?: string
-  defaultValues?: {
-    answer: string,
-    subCategoryId: MultiValue<OptionType>,
-    questions: string,
-    title: string
-  },
+  defaultValues?: EditFaqFormModel,
   successText?:string
 }
 
@@ -47,34 +31,16 @@ const FormFaqModal = ({
 }: Props) => {
 
   const navigate = useNavigate()
-  const { faqCategory } = useFaqCategory()
 
-  // STATE
-  const [subCatOptions, setSubCatOptions] = useState<OptionsOrGroups<OptionType, GroupBase<OptionType>>>([])
+  // REF
+  const editFaqFormRef = useRef<HTMLFormElement>(null)
 
-  // DATA STATE
-  const [answer, setAnswer] = useState<string>(defaultValues?.answer || "")
-  const [subCategoryId, setSubCategoryId] = useState<MultiValue<OptionType>>(defaultValues?.subCategoryId || [])
-  const [questions, setQuestions] = useState<string>(defaultValues?.questions || "")
-  const [title, setTitle] = useState<string>(defaultValues?.title || "")
-
-  // ERROR/LOADING STATE
-  const [errors, setErrors] = useState<{
-    title?: string,
-    subCategoryId?: string,
-    questions?: string,
-    answer?: string,
-  }>({});
   const [isLoading,setIsLoading] = useState<boolean>(false)
 
   // ALERT STATE
   const [errorMsg, setErrorMsg] = useState<string>("Failed add new FAQ!")
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false)
   const [showErrorAlert, setShowErrorAlert] = useState<boolean>(false)
-
-  const handleSubCategoryChange = (selected: MultiValue<OptionType>) => {
-    setSubCategoryId(selected)
-  }
 
   const handleCancelClick = () => {
     onClose()
@@ -85,39 +51,25 @@ const FormFaqModal = ({
     navigate(0)
   }
 
-  const handleSubmit = async () => {
-
-    const input = {
-      answer,
-      subCategoryId: subCategoryId.map(val => val.value),
-      questions,
-      title
+  const handleSubmitBtnClick = ()=>{
+    if(editFaqFormRef.current){
+      editFaqFormRef.current.requestSubmit()
     }
+  }
 
-    const validationRes = addFaqValidation.safeParse(input)
-
-    if (!validationRes.success) {
-      const fError = validationRes.error.format()
-      setErrors({
-        title: fError.title?._errors?.[0],
-        subCategoryId: fError.subCategoryId?._errors?.[0],
-        questions: fError.questions?._errors?.[0],
-        answer: fError.answer?._errors?.[0],
-      });
-    } else {
-      setErrors({})
+  const handleSubmit:SubmitHandler<EditFaqFormModel> = async (formData) => {
       setIsLoading(true)
 
       // FORMAT QUESTIONS YANG AWALNYA STRING KE ARRAY STRING, DIPISAH BERDASARKAN KOMA/,
-      const questionsArr = questions.split(",").map(val => val.trimStart())
+      const questionsArr = formData.questions.split(",").map(val => val.trimStart())
 
       // JALANKAN ON SUBMIT
       try {
 
         const submitData = {
-          title: validationRes.data.title,
-          answer: validationRes.data.answer,
-          subCategoryId: subCategoryId.map(val => val.value),
+          title: formData.title,
+          answer: formData.answer,
+          subCategoryId: formData.subCategoryId.map(val => val.value),
           questions: questionsArr
         }
 
@@ -148,66 +100,20 @@ const FormFaqModal = ({
       } finally {
         setIsLoading(false)
       }
-    }
+    
   }
-
-  useEffect(() => {
-    if (faqCategory && faqCategory.length > 0) {
-      const map = faqCategory.map(val => {
-        const label = val.name
-        const options = val.sub_category.filter(subCat => subCat != null).map(subCat => {
-          return {
-            label: subCat.sub_category,
-            value: subCat._id
-          }
-        })
-
-        return {
-          label,
-          options
-        }
-      })
-
-      setSubCatOptions(map)
-    }
-  }, [faqCategory])
 
   return (
     <Modal focusLock={false} onClose={onClose}>
       <ModalHeader />
       <ModalContent>
-        <section className="form-faq-section">
+        <section>
 
-          <div className="form-faq-grid">
-            <div className="form-faq-input-group" style={{ flex: 1 }}>
-              <span>Title:</span>
-              <PlainInput value={title} onChange={(e) => setTitle(e.target.value)} placeholder="FAQ Title" />
-              {errors.title && <ErrorInput message={errors.title} />}
-            </div>
-            <div className="form-faq-input-group" style={{ flex: 1 }}>
-              <span>Category:</span>
-              {/* <Select optionsWithGroup={subCatOptions} state={[subCategoryId,setSubCategoryId]}/> */}
-              <CustomSelect
-                options={subCatOptions}
-                isMulti
-                onChange={handleSubCategoryChange}
-                value={subCategoryId}
-              />
-              {errors.subCategoryId && <ErrorInput message={errors.subCategoryId} />}
-            </div>
-          </div>
-
-          <div className="form-faq-input-group">
-            <span>Questions <span style={{fontStyle: "italic",color: "var(--input-text-color)"}}>(comma-seperated)</span>:</span>
-            <TextArea rows={4} value={questions} onChange={(e) => setQuestions(e.target.value)} placeholder="Comma-seperated, ex:Pertanyaan 1,Pertanyaan 2,Pertanyaan 3" />
-            {errors.questions && <ErrorInput message={errors.questions} />}
-          </div>
-
-          <div className="form-faq-input-group">
-            <span>Answer:</span>
-            <TextEditor dataState={[answer, setAnswer]} />
-            {errors.answer && <ErrorInput message={errors.answer} />}
-          </div>
+          <EditFaqForm 
+            onSubmit={handleSubmit} 
+            ref={editFaqFormRef}
+            defaultValues={defaultValues}
+          />
 
         </section>
       </ModalContent>
@@ -216,7 +122,7 @@ const FormFaqModal = ({
           <Button onClick={handleCancelClick}>
             <span>Cancel</span>
           </Button>
-          <Button onClick={handleSubmit}>
+          <Button onClick={handleSubmitBtnClick}>
             <span>{submitText}</span>
           </Button>
         </div>

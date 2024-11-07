@@ -1,5 +1,5 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import FormRow from "../../molecules/form-layout/FormRow"
+import FormContainer from "../../molecules/form-layout/FormContainer"
 import InputGroup from "../../molecules/input-group/InputGroup"
 import PlainInput from "../../atoms/input/PlainInput"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -26,7 +26,7 @@ const AddUserForm = forwardRef<HTMLFormElement,Props>(({onSubmit},ref) => {
   
   return (
     <form ref={ref} onSubmit={handleSubmit(onSubmit)}>
-      <FormRow>
+      <FormContainer>
         <InputGroup label="Username:" htmlFor="username" errors={errors.username?.message}>
           <Controller
             name="username"
@@ -69,7 +69,7 @@ const AddUserForm = forwardRef<HTMLFormElement,Props>(({onSubmit},ref) => {
             )}
           />
         </InputGroup>
-      </FormRow>
+      </FormContainer>
     </form>
   )
 })

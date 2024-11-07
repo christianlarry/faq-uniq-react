@@ -1,9 +1,9 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import FormRow from "../../molecules/form-layout/FormRow"
+import FormContainer from "../../molecules/form-layout/FormContainer"
 import InputGroup from "../../molecules/input-group/InputGroup"
 import PlainInput from "../../atoms/input/PlainInput"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { updateUserPasswordValidation, updateUserValidation } from "../../../../validation/userValidation"
+import { updateUserPasswordValidation } from "../../../../validation/userValidation"
 import { forwardRef } from "react"
 import { UpdateUserPasswordModel } from "../../../../interfaces/userInterfaces"
 
@@ -26,7 +26,7 @@ const ChangePasswordForm = forwardRef<HTMLFormElement,Props>(({
   
   return (
     <form ref={ref} onSubmit={handleSubmit(onSubmit)}>
-      <FormRow>
+      <FormContainer>
 
         <InputGroup label="Password:" htmlFor="password" errors={errors.password?.message}>
           <Controller
@@ -41,7 +41,7 @@ const ChangePasswordForm = forwardRef<HTMLFormElement,Props>(({
             )}
           />
         </InputGroup>
-      </FormRow>
+      </FormContainer>
     </form>
   )
 })

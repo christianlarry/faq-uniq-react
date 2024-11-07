@@ -1,3 +1,5 @@
+import { MultiValue } from "react-select"
+
 export interface FaqModel{
   _id:string,
   title:string,
@@ -45,4 +47,16 @@ export interface FormFaqData{
   answer:string
   subCategoryId:string[]
   questions:string[]
+}
+
+interface OptionType {
+  label: string
+  value: string
+}
+
+export interface EditFaqFormModel{
+  answer: string,
+  subCategoryId: MultiValue<OptionType>,
+  questions: string,
+  title: string
 }
