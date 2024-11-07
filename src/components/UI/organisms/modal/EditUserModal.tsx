@@ -11,6 +11,8 @@ import { AxiosError } from "axios"
 import LoadingScreen from "../loading-screen/LoadingScreen"
 import Alert from "../alert/Alert"
 import EditUserForm from "../form/EditUserForm"
+import ChangePasswordModal from "./ChangePasswordModal"
+import ButtonText from "../../atoms/button/ButtonText"
 
 interface Props{
   onClose:()=>void
@@ -21,6 +23,9 @@ const EditUserModal = ({
   onClose,
   data
 }:Props)=>{
+
+  // MODAL STATE
+  const [isChangePasswordModalShow,setIsChangePasswordModalShow] = useState<boolean>(false)
 
   // STATE
   const [isLoading,setIsLoading] = useState<boolean>(false)
@@ -82,6 +87,10 @@ const EditUserModal = ({
           />
         </section>
 
+        <section style={{marginTop: "1rem"}}>
+          <ButtonText text="Change password?" onClick={()=>setIsChangePasswordModalShow(true)}/>
+        </section>
+
       </ModalContent>
 
       <ModalFooter>
@@ -110,6 +119,13 @@ const EditUserModal = ({
       />
 
       {isLoading && <LoadingScreen/>}
+
+      {isChangePasswordModalShow && 
+      <ChangePasswordModal 
+        onClose={()=>setIsChangePasswordModalShow(false)}
+        data={data}
+        />
+      }
     </Modal>
   )
 }

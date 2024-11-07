@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios"
 import useSWR, { SWRConfiguration } from "swr"
 import { FaqCategoryResponseModel, FaqResponseModel, PostFaqModel } from "../interfaces/faqInterfaces"
-import { EditUserModel, LoginModel, PostUserModel, UserResponseModel } from "../interfaces/userInterfaces"
+import { EditUserModel, LoginModel, PostUserModel, UpdateUserPasswordModel, UserResponseModel } from "../interfaces/userInterfaces"
 
 // INIT VARIABEL
 const api_baseUrl = "http://localhost:3000/api/v1/"
@@ -115,6 +115,16 @@ export const updateUser = async (id:string,data:EditUserModel)=>{
   const token = getToken()
 
   return await axios.put(`${api_baseUrl}/user/${id}`,data,{
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  })
+}
+
+export const updateUserPassword = async (id:string,data:UpdateUserPasswordModel)=>{
+  const token = getToken()
+
+  return await axios.put(`${api_baseUrl}/user/${id}/password`,data,{
     headers:{
       Authorization: `Bearer ${token}`
     }
